@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="https://www.google.com/jsapi=AIzaSyAsHfvyodyQAXjMsIuzLBkO1kH47sPIw6E"></script>
+    <script type="text/javascript">
+
+      // Load the Google Onscreen Keyboard API
+      google.load("elements", "1", {
+          packages: "keyboard"
+      });
+
+      function onLoad() {
+        var kbd = new google.elements.keyboard.Keyboard(
+          [google.elements.keyboard.LayoutCode.RUSSIAN],
+          ['t1']);
+      }
+
+      google.setOnLoadCallback(onLoad);
+    </script>
+  </head>
+  <body>
+  Type in Russian<br/>
+  <textarea id="t1" style="width: 600px; height: 200px;"></textarea>
+  </body>
+</html>

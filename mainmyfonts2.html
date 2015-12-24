@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <title>View Myanmar Text with Fonts
+   </title>
+
+  <link rel="stylesheet" type="text/css" href="/css/fonts.css">
+  
+   <script type="text/javascript" src="/js/shake-n-break.js">
+   </script>
+
+  <script type="text/javascript" src="/js/myzu.js">
+  </script>
+
+  </head>
+  
+  <body onload="onload()">
+
+    <h1>Test Myanmar text with several Myanmar fonts</h1>
+    <p>Just paste your Myanmar text into the "Test" field. The characters will be shown
+    in the fonts, and hex codes will be shown.
+    
+    <div>
+      <p><strong>Test:</strong>
+      <p>
+      <input type="text" id="TestEntry" class='notosans' size="40"
+        onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
+         (shown in NotoSans font)
+      <div id="detectedZU"></div>
+    </div>
+
+    <hr>
+
+    <div>
+      <textarea id="z1"  class='zawgyi_one'
+        rows="1" cols="40">{{default_zawgyi}}</textarea>
+              Zawgyi One
+    </div>
+    
+    <div>
+      <textarea id="myazedi" class='myazedi'
+        rows="1" cols="40">{{default_myazedi}}</textarea>
+      Myazedi
+    </div>
+    
+    <hr>
+
+    <div>
+      <textarea id="notoSans"  class='notosans'
+        rows="1" cols="40">{{default_unicode}}</textarea>
+      NotoSans Myanmar
+    </div>
+    
+    <hr>
+    
+    <div>
+    <p>Hex:</p>
+      <input type="text" id="hexText" onchange="enterHex()" size="100"/>
+      
+      <input type="submit" value="Convert hex to text" onSubmit="enterHex()" />
+      <input type="button" value="-> scratch" onclick="copyText('hexText', 'scratchText')" />
+      <input type="button" value="-> Unicode" onclick="hexToOutput('hexText', 'notoSans')" />
+
+    </div>
+    
+    <div>
+    <p>Scratch pad:</P>
+    <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
+       <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans')" />
+   
+    <hr>
+    <br />
+    <form action="/feedback" method="get">
+      <input type="submit" value="Send feedback" />
+    </form>  
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Segment Myanmar Text
+   </title>
+
+  <link rel="stylesheet" type="text/css" href="/css/fonts.css">
+  
+   <script type="text/javascript" src="/js/shake-n-break.js">
+   </script>
+
+  <script type="text/javascript" src="/js/myzu.js">
+  </script>
+
+  <script type="text/javascript">
+  // Fill in with JavaScript!
+  function segmentTo(inField, outField) {
+
+    var m1 = document.getElementById(outField);
+    
+    var message = "Segmentation is not yet available!";
+    m1.value = message;
+  }
+  </script>
+  </head>
+  
+  <body onload="onload()">
+
+    <h1>Segment Myanmar text</h1>
+    <p>
+    <div>
+      <textarea id="text1"  class='notosans'
+        rows="4" cols="40">{{t1}}</textarea>
+      Text 1
+     </div>
+     <input type="button" value="hex to text" onclick="hexToOutput('text1', 'text1')" />
+     <input type="button" value="Segment" onclick="segmentTo('text1', 'segmented')" />
+
+
+    <div>
+      <textarea id="segmented"  class='notosans'
+        rows="4" cols="40">{{t2}}</textarea>
+      Text 2
+    </div>
+         <input type="button" value="hex to text" onclick="hexToOutput('text2', 'text2')" />
+
+    <hr>
+    <br />
+    <form action="/feedback" method="get">
+      <input type="submit" value="Send feedback" />
+    </form>  
+  </body>
+</html>

@@ -1,0 +1,148 @@
+<html>
+  <head>
+    <title>Convert Myanmar Text with Fonts
+   </title>
+
+  <link rel="stylesheet" type="text/css" href="/css/fonts.css">
+  
+   <script type="text/javascript" src="/js/shake-n-break.js">
+   </script>
+
+  <script type="text/javascript" src="/js/myzu.js">
+  </script>
+  
+  <script type="text/javascript" >
+  // Code to request transliteration (conversion) and handle the return. 
+  function convertRequest(source, type) {
+    // Get the text and prepare the call to server.
+    source_element = document.getElementById(source);
+    
+    text_in = source_element.value;
+    
+    // Prepare for the call to the backendvar xmlhttp;
+	if (window.XMLHttpRequest)
+	  {
+	  // code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {
+	  // code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+
+    // Deal with the results	  
+    xmlhttp.onreadystatechange=function()
+	{
+	  if(xmlhttp.readyState==4) {
+	      var returned_json = xmlhttp.responseText
+		  var output_area = document.getElementById('convertedText');
+		  var json_obj = JSON.parse(returned_json);
+		  // alert(json_obj.converted);
+
+          output_area.innerHTML = json_obj.converted;
+		  var hex_area = document.getElementById('convertedHex');
+          hex_area.value = textToHex(json_obj.converted);
+          
+		  var msg_area = document.getElementById('msgArea');
+          msg_area.innerHTML = json_obj.msg;         
+     }
+	}
+	
+	// Set up the call.
+	target = "/convert/?text=" + text_in + "&type=" + type;
+	xmlhttp.open("GET", target, true);
+	xmlhttp.send(null);	  
+  }
+  
+  function compareConvert(area1,area2) {
+    // Open a comparison window with the resulting text.
+	var text1 = document.getElementById(area1).value;
+	var text2 = document.getElementById(area2).value;
+   
+   compareUrl = "compare/?text1=" + text1 +  "&text2=" + text2;
+   window.location=compareUrl;   
+  }
+  </script>
+
+
+  </head>
+  
+  <body onload="onload()">
+
+    <h1>Test Myanmar text conversion with several Myanmar fonts</h1>
+    <p>Just paste your Myanmar text into the "Test" field. The characters will be shown
+    in the fonts, and hex codes will be shown.
+    
+    <div>
+      <p><strong>Test:</strong>
+      <p>
+      <input type="text" id="TestEntry" class='notosans' size="40"
+        onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
+         (shown in NotoSans font)
+      <div id="detectedZU"></div>
+    </div>
+
+    <hr>
+
+    <div>
+      <textarea id="z1"  class='zawgyi_one'
+        rows="1" cols="40">{{default_zawgyi}}</textarea>
+              Zawgyi One
+      <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
+      <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z')" />
+
+    </div>
+    
+    <div>
+      <textarea id="myazedi" class='myazedi'
+        rows="1" cols="40">{{default_myazedi}}</textarea>
+      Myazedi
+      <input type="button" value="-> hex" onclick="textToHexField('myazedi', 'hexText')" />
+      <input type="button" value="-> Unicode" onclick="convertRequest('myazedi', 'M')" />
+    </div>
+    
+    <hr>
+    <div>
+    Converted output:     <div id="msgArea" class='notosans14'> </div> 
+      <textarea id="convertedText"  class='notosans'
+        rows="1" cols="40">{{default_unicode}}</textarea>
+      <textarea id="convertedHex"  class='notosans14'
+        rows="2" cols="40">{{default_unicode}}</textarea>
+    </div>
+    <hr>
+    <div>
+      <textarea id="notoSans"  class='notosans'
+        rows="1" cols="40">{{default_unicode}}</textarea>
+      NotoSans Myanmar
+      <input type="button" value="Compare with converted"
+       onclick="compareConvert('notoSans','convertedText')" />
+    </div>
+    <div id="msgArea" class='notosans14'> 
+    </div> 
+    <hr>
+    
+    <div>
+    <p>Hex:</p>
+      <input type="text" id="hexText" onchange="enterHex()" size="100"/>
+      
+      <input type="submit" value="Convert hex to text" onSubmit="enterHex()" />
+      <input type="button" value="-> scratch" onclick="copyText('hexText', 'scratchText')" />
+      <input type="button" value="-> Unicode" onclick="hexToOutput('hexText', 'notoSans')" />
+      <input type="button" value="-> Zawgyi" onclick="hexToOutput('hexText', 'z1')" />
+      <input type="button" value="-> Myazedi" onclick="hexToOutput('hexText', 'myazedi')" />
+
+    </div>
+    
+    <div>
+    <p>Scratch pad:</P>
+    <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
+       <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans')" />
+   
+    <hr>
+    <br />
+    <form action="/feedback" method="get">
+      <input type="submit" value="Send feedback" />
+    </form>  
+  </body>
+</html>

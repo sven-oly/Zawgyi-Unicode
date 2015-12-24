@@ -1,0 +1,54 @@
+  @font-face {
+    font-family: ZawgyiOne;
+    src: url(/fonts/ZawgyiOne.ttf);
+  }
+
+  @font-face {
+    font-family: Zawgyi2008;
+    src: url(/fonts/ZawgyiOne2008.ttf);
+  }
+  
+  @font-face {
+    font-family: MyaZedi;
+    src: url(/fonts/MyaZedi06.ttf);
+  }
+
+  @font-face {
+    font-family: NotoSans;
+    src: url(/fonts/NotoSansMyanmar-Regular.ttf);
+  }
+
+  @font-face {
+    font-family: Padauk;
+    src: url(/fonts/Padauk.ttf);
+  }
+    
+  .zawgyi_one {
+    font-family: ZawgyiOne;
+    font-size:28px;
+   }
+   
+  .zawgyi_2008 {
+    font-family: Zawgyi2008;
+    font-size:28px;
+  }
+
+  .myazedi {
+    font-family: MyaZedi;
+    font-size:28px;
+  }
+  
+  .notosans {
+    font-family: NotoSans;
+    font-size:26px;
+  }
+  
+  .notosans14 {
+    font-family: NotoSans;
+    font-size:14px;
+  }
+
+  .padauk {
+    font-family: Padauk;
+    font-size:30px;
+  }
