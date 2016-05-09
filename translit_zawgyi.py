@@ -139,6 +139,8 @@ $zmedialra > \u103c;
 \u103E\u103D > \u103D\u103E ;
 \u1038 ([$vowelmedial]) > $1 \u1038;
 \u1038 ([\u1036\u1037\u103A]) > $1 \u1038;
+# NEW 5-May-2016
+\u1036 \u102f > \u102f \u1036;
 #### Stage 6
 ::Null;
 ($consonant) \u103B \u103A > $1 \u103A \u103B;
@@ -164,6 +166,8 @@ $zmedialra > \u103c;
 \u103C \u103C+ > \u103C;
 \u103D \u103D+ > \u103D;
 \u103E \u103E+ > \u103E;
+# NEW 5-May-2016
+\u1036 \u1036+ > \u1036;
 #
 #Try to correctly render diacritics after a space.
 #

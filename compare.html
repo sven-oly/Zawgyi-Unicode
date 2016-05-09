@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>View Myanmar Text with Fonts
+    <title>Cherokee Numerals
    </title>
 
   <link rel="stylesheet" type="text/css" href="/css/fonts.css">
@@ -96,18 +96,16 @@
   
   <body onload="onload()">
 
-    <h1>Compare Myanmar text</h1>
+    <h1>Cherokee Numerals</h1>
     <p>
     <div>
       <textarea id="text1"  class='notosans'
         rows="4" cols="40">{{t1}}</textarea>
       Text 1
      </div>
-     <input type="button" value="hex to text" onclick="hexToOutput('text1', 'text1')" />
-     <input type="button" value="hex bytes to text" onclick="hexBytesToOutput('text1', 'text1')" />
-     <input type="button" value="hex bytes to hex chars" onclick="hexBytesToHexChars('text1', 'text1')" />
-
-
+     <input type="button" value="Convert" onclick="hexToOutput('text1', 'text1')" />
+ 
+   <h1>Western Numerals</h1>   
     <div>
       <textarea id="text2"  class='notosans'
         rows="4" cols="40">{{t2}}</textarea>
@@ -115,18 +113,7 @@
     </div>
          <input type="button" value="hex to text" onclick="hexToOutput('text2', 'text2')" />
 
-    <hr>
-    <div>
-      <input type="button" value="Compare"
-       onclick="compareText('text1', 'text2')" />
-    </div>
     
-    <div>
-    <p>Compare results:</P>
-    <textarea id="diffinfo" class='notosans14' rows="4" cols="40"></textarea>
-    
-    <hr>
-    <br />
     <form action="/feedback" method="get">
       <input type="submit" value="Send feedback" />
     </form>  

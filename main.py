@@ -8,6 +8,11 @@ import webapp2
 
 from google.appengine.ext.webapp import template
 
+# For internationalization
+from django.utils.translation import ugettext as _
+from django.conf import settings
+
+import chrNumerals
 import convertText
 import detector
 import sendmail
@@ -340,9 +345,6 @@ class madlibHandler(webapp2.RequestHandler):
 
     path = os.path.join(os.path.dirname(__file__), 'madlibresults.html')
     self.response.out.write(template.render(path, template_values))
-    
-  
-
 
 
 # Return help for commands
@@ -370,8 +372,99 @@ class HelpHandler(webapp2.RequestHandler):
     self.response.out.write('commands:%s' % helpText)
    
 
+# Return help for commands
+class chrNumeralsHandler(webapp2.RequestHandler):
+  def get(self):
+    text = self.request.get('number', '')
+    debug = self.request.get('debug', 'off')
+    logging.info('input number is %s' % text)
 
+    if text == '' or text == None:
+      numeralList = []
+    else:
+      numeralList = chrNumerals.digitalToSequoah(int(text))
 
+    messageTrans = 'no translation'
+    # TODO: Activate this. messageTrans = _("testmsg")
+    
+    template_values = {
+        'number': text,
+        'numeralList': numeralList,
+        'debug_state': debug,
+        'testMsg': messageTrans
+	}
+	
+    
+    path = os.path.join(os.path.dirname(__file__), 'chrNumerals.html')
+    self.response.out.write(template.render(path, template_values))
+
+# Handles decimal conversion from front end.
+class chrDecimalNumeralsHandler(webapp2.RequestHandler):
+  def get(self):
+    text = self.request.get('number', '')
+    debug = self.request.get('debug', 'off')
+    logging.info('input number is %s' % text)
+    if text == '' or text == None:
+      numeralList = []
+    else:
+      text = text.replace(',', '')
+      lists = numeralList = chrNumerals.digitalToSequoah(int(text))
+      numeralList = lists[1]
+      stringList = lists[0]
+    logging.info('digitalToSequoah =  %s' % numeralList)
+   
+    template_values = {
+        'number': text, 'numeralList': numeralList, 
+        'stringList': stringList,
+        'debug_state': debug
+    }
+    self.response.out.write(json.dumps(template_values))
+
+def intWithCommas(x):
+    #if type(x) not in [type(0), type(0L)]:
+    #    raise TypeError("Parameter must be an integer.")
+    if x < 0:
+        return '-' + intWithCommas(-x)
+    result = ''
+    while x >= 1000:
+        x, r = divmod(x, 1000)
+        result = ",%03d%s" % (r, result)
+    return "%d%s" % (x, result)
+    
+# Handles CHR numerals to decimal conversion from front end.
+class chrToDecimalHandler(webapp2.RequestHandler):
+  def get(self):
+    debug = self.request.get('debug', 'off')
+    codes = self.request.get('chrCodes', '')
+    logging.info('input number is %s' % codes)
+    if codes == '' or codes == None:
+      codes = []
+      decimal = -1
+      formattedValue = 'PROBLEMS'  
+    else:
+      decimal = chrNumerals.processCodes(codes)
+      formattedValue = intWithCommas(decimal)
+      logging.info('FORMATTED = %s' % formattedValue)
+    template_values = {
+        'decimal': decimal,
+        'formatted': formattedValue,
+     	'codes': codes,
+        'debug_state': debug
+	}
+    self.response.out.write(json.dumps(template_values))
+
+# Calls tests, shows results.
+class sequoyahTestHandler(webapp2.RequestHandler):
+  def get(self):
+    test1Results = chrNumerals.testChrToDec()  
+    test2Results = chrNumerals.testDecToChr()
+    template_values = {
+      'CHR to decimal': test1Results,
+      'Decimal to CHR': test2Results,
+      'debug_state': 'on'
+	}
+    self.response.out.write(json.dumps(template_values))
+          
 # Main handler setup.
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
@@ -386,6 +479,11 @@ app = webapp2.WSGIApplication([
     ('/segment/', SegmentHandler),
     ('/convertBtoC/', convertBtoCHandler),
     ('/help/', HelpHandler),
-    ('/madlib/', madlibHandler)
+    ('/madlib/', madlibHandler),
+    ('/sequoyahsNumerals/', chrNumeralsHandler),
+    ('/setDecimalNumerals/', chrDecimalNumeralsHandler),
+    ('/chrToDecimal/', chrToDecimalHandler),
+    ('/sequoyahTest/', sequoyahTestHandler)
+
 
   ], debug=True)

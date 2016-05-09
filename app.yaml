@@ -18,9 +18,21 @@ handlers:
 - url: /js
   static_dir: js
   
+- url: /images
+  static_dir: images
+    
+- url: /sounds
+  static_dir: sounds
+
 - url: .*
   script: main.app
+
+- url: /translations
+  static_dir: translations
 
 libraries:
 - name: webapp2
   version: "2.5.2"
+- name: django
+  version: latest
+
