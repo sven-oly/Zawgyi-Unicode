@@ -22,12 +22,69 @@
     font-family: Padauk;
     src: url(/fonts/Padauk.ttf);
   }
-    
+
+  @font-face {
+    font-family: UniMon;
+    src: url(/fonts/UniMon.ttf);
+  }
+
+  @font-face {
+    font-family: UniMonSmall;
+    src: url(/fonts/UniMon_small.ttf);
+  }
+  
+  @font-face {
+    font-family: Mon;
+    src: url(/fonts/Mon.ttf);
+  }
+
+  @font-face {
+    font-family: MonUni;
+    src: url(/fonts/MonUni.ttf);
+  }
+
+  @font-face {
+    font-family: RamanyaUnicode;
+    src: url(/fonts/RamanyaUnicode.ttf);
+  }
+      
+  @font-face {
+    font-family: MonAnonta;
+    src: url(/fonts/mm3anonta_1 Update 2013.ttf);
+  }
+
+  @font-face {
+    font-family: KNU;
+    src: url(/fonts/knu.TTF);
+  }
+
+  @font-face {
+    font-family: ShanUnicode;
+    src: url(/fonts/Shan Unicode.ttf);
+  }   
+
+  @font-face {
+    font-family: ShanUnicode2;
+    src: url(/fonts/ShanUnicode.ttf);
+  }
+  
+  @font-face {
+    font-family: PangLong;
+    src: url(/fonts/PangLong_2011feb7.ttf);
+  }
+
+  @font-face {
+    font-family: ZawgyiTai;
+    src: url(/fonts/ZawgyiTai-2013.ttf);
+  }  
+
   .zawgyi_one {
     font-family: ZawgyiOne;
     font-size:28px;
    }
-   
+  textarea.zawgyi_one {
+    height:36px;
+  }   
   .zawgyi_2008 {
     font-family: Zawgyi2008;
     font-size:28px;
@@ -52,3 +109,58 @@
     font-family: Padauk;
     font-size:30px;
   }
+
+  .unimon {
+    font-family: UniMon;
+    font-size:30px;
+  }
+
+  .unimon_small {
+    font-family: UniMonSmall;
+    font-size:30px;
+  }
+
+.mon {
+    font-family: Mon;
+    font-size:30px;
+  }
+
+.monuni {
+    font-family: MonUni;
+    font-size:30px;
+  }
+
+.ramanya {
+    font-family: RamanyaUnicode;
+    font-size:30px;
+  }
+  
+.monanonta  {
+    font-family: MonAnonta;
+    font-size:30px;
+  }
+  
+.knu  {
+    font-family: KNU;
+    font-size:40px;
+  }
+
+.shanUnicode  {
+    font-family: ShanUnicode;
+    font-size:30px;
+  }
+
+.shanUnicode2 {
+    font-family: ShanUnicode2;
+    font-size:27px;
+  }  
+
+.panglong {
+    font-family: PangLong;
+    font-size:27px;
+}
+
+.ZawgyiTai {
+    font-family: ZawgyiTai;
+    font-size:27px;
+  }  

@@ -15,10 +15,9 @@
   // Code to request transliteration (conversion) and handle the return. 
   function convertRequest(source, type) {
     // Get the text and prepare the call to server.
-    source_element = document.getElementById(source);
-    
-    text_in = source_element.value;
-    
+    source_element = document.getElementById(source);  
+    text_in = encodeURIComponent(source_element.value);
+
     // Prepare for the call to the backendvar xmlhttp;
 	if (window.XMLHttpRequest)
 	  {
@@ -58,15 +57,7 @@
 	// xmlhttp.setRequestHeader("Content-length", target.length);
 	xmlhttp.send(null);	  
   }
-  
-  function compareConvert(area1,area2) {
-    // Open a comparison window with the resulting text.
-	var text1 = document.getElementById(area1).value;
-	var text2 = document.getElementById(area2).value;
-   
-   compareUrl = "compare/?text1=" + text1 +  "&text2=" + text2;
-   window.location=compareUrl;   
-  }
+
   </script>
 
 

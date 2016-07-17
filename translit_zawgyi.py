@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Modern Burmese digits & Unicode code points.
-ZAWGYI_description = u'Zawgyi conversion'
-ZAWGYI_UNICODE_TRANSLITERATE = u"""# Modern Burmese digits & Unicode code points.
+import sys
+
+# Zawgyi font encoding conversion to Unicode form
+
+Description = ZAWGYI_description = u'UniMon font encoding conversion'
+
+TRANS_LIT_RULES = ZAWGYI_UNICODE_TRANSLITERATE = u"""# Modern Burmese digits & Unicode code points.
 $nondigits = [^\u1040-\u1049];
 $space = '\u0020';
 $consonant = [\u1000-\u1021];
@@ -176,3 +180,21 @@ $zmedialra > \u103c;
 
 date_entered = '18-July-2015'
 description = 'First try for transliteration rules for Zawgyi to Unicode'
+
+def printRules():
+  print 'Rules for %s' % Description
+  lines = TRANS_LIT_RULES.split('\n')
+  ruleNum = 0
+  for line in lines:
+    line = line.strip()
+    if len(line) > 0 and line[0] != '#':
+      print ('%4d\t%s' % (ruleNum, line))
+      ruleNum += 1
+
+def main(argv=None):
+  printRules()
+
+
+if __name__ == "__main__":
+    print 'ARGS = %s' % sys.argv 
+    sys.exit(main(sys.argv))

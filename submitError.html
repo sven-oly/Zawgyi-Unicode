@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <title>Report an error
+   </title>
+
+  <link rel="stylesheet" type="text/css" href="/css/fonts.css">
+  
+   <script type="text/javascript" src="/js/shake-n-break.js"></script>
+
+  <script type="text/javascript" src="/js/myzu.js"></script>
+  
+  <script type="text/javascript" >
+  // Code to request transliteration (conversion) and handle the return. 
+  function convertRequest(source, type) {
+    // Get the text and prepare the call to server.
+    source_element = document.getElementById(source);
+    text_in = encodeURIComponent(source_element.value);
+     
+    // Prepare for the call to the backendvar xmlhttp;
+	if (window.XMLHttpRequest)
+	  {
+	  // code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {
+	  // code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+
+    // Deal with the results	  
+    xmlhttp.onreadystatechange=function()
+	{
+	  if(xmlhttp.readyState==4) {
+	      var returned_json = xmlhttp.responseText
+		  var output_area = document.getElementById('convertedText');
+		  var json_obj = JSON.parse(returned_json);
+		  // alert(json_obj.converted);
+
+          output_area.innerHTML = json_obj.converted;
+		  var hex_area = document.getElementById('convertedHex');
+          hex_area.value = textToHex(json_obj.converted);
+          
+		  var msg_area = document.getElementById('msgArea');
+          msg_area.innerHTML = json_obj.msg;         
+     }
+	}
+	
+	// Set up the call.
+	var target = "/convert/?text=" + text_in + "&type=" + type +
+	  "&noreturn=1";
+	//xmlhttp.open("POST", target, true);
+	xmlhttp.open("GET", target, true);
+	var size = target.length;
+	// xmlhttp.setRequestHeader("Content-length", target.length);
+	xmlhttp.send(null);	  
+  }
+  </script>
+
+  </head>
+  
+  <body onload="onload()">
+
+    <h1>Submit error report on convert / show</h1>
+    
+    <div>
+      <p><strong>Data giving problem:</strong>
+      <p>
+      <input type="text" id="TestEntry" class='notosans' size="40"
+        onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
+         (shown in NotoSans font)
+    </div>
+
+    <div>
+      <p><strong>Expected result:</strong>
+      <p>
+      <input type="text" id="Expected" class='notosans' size="40"
+        onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter expected output>" />
+         (shown in NotoSans font)
+    </div>
+    
+	<div>
+	<p>Comment:
+      <textarea id="commentArea"  
+        rows="1" cols="40"></textarea>
+	</div>
+
+	<div>
+	<p>Language:
+    <input type="text" id="TestEntry" class='notosans' size="40"
+        onchange="enterTestText(true)" value="{{input_text}}"
+        placeholder="<enter language name here>" />
+	</div>
+	
+    <hr>
+
+
+    <form action="/store_error_sample" method="get">
+      <input type="submit" value="Submit report" />
+    </form>  
+  </body>
+</html>

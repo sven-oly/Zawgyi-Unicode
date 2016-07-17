@@ -4,6 +4,7 @@
 import json
 import logging
 import os
+import urllib
 import webapp2
 
 from google.appengine.ext.webapp import template
@@ -18,41 +19,57 @@ import detector
 import sendmail
 import transliterate
 import translit_myazedi
+import translit_uni_mon  # For UniMon text -> UniCode
+import translit_mon  # For Mon text -> UniCode
+import translit_knu  # For Karen KNU encoded text -> UniCode
 import translit_zawgyi  # import ZAWGYI_UNICODE_TRANSLITERATE, description
 import translittests
 
+# Data store
+import testString
 
 # Globals
 default_zawgyi = 'z ဘယ္'
 default_z2008= 'z2008 ယခင္သိုႛ'
 default_unicode = 'u လောက်က'
 default_myazedi = 'm ဆီၾဒင္'
-
+default_unimon = 'ကၝကၞကၟ'
+default_knu = 'w> *h> vdm bSD vdm td. xD. vX bD u x. xH w rX. w> wdm usJR'
 default_converter = None
 myazedi_converter = None
+unimon_converter = None
+mon_converter = None
+knu_converter = None
 
+def SetDefaultTemplate(text):
+  if text:
+    template_values = {
+      'input_text': text,
+      'default_zawgyi': text,
+      'default_z2008': text,
+      'default_unicode': text,
+      'default_myazedi': text,
+      'default_unimon': text
+    }
+  else:
+    template_values = {
+      'input_text': text,
+      'default_zawgyi': 'z ဘယ္',
+      'default_z2008': 'z2008 ယခင္သိုႛ',
+      'default_unicode': 'u လောက်က',
+      'default_myazedi': 'm ဆီၾဒင္',
+      'default_unimon': default_unimon,
+      'default_knu': default_knu,
+      
+    }
+  return template_values
 
 class MainHandler(webapp2.RequestHandler):
   def get(self):
   
     text = self.request.get("text", "")
-  
-    if text:
-      template_values = {
-        'input_text': text,
-        'default_zawgyi': text,
-        'default_z2008': text,
-        'default_unicode': text,
-        'default_myazedi': text
-      }
-    else:
-        template_values = {
-        'input_text': text,
-        'default_zawgyi': 'z ဘယ္',
-        'default_z2008': 'z2008 ယခင္သိုႛ',
-        'default_unicode': 'u လောက်က',
-        'default_myazedi': 'm ဆီၾဒင္'
-      }      
+    template_values = SetDefaultTemplate(text)
+      
     path = os.path.join(os.path.dirname(__file__), 'mainmyfonts.html')
     self.response.out.write(template.render(path, template_values))
 
@@ -62,22 +79,8 @@ class MainHandler2(webapp2.RequestHandler):
   
     text = self.request.get("text", "")
   
-    if text:
-      template_values = {
-        'input_text': text,
-        'default_zawgyi': text,
-        'default_z2008': text,
-        'default_unicode': text,
-        'default_myazedi': text
-      }
-    else:
-        template_values = {
-        'input_text': text,
-        'default_zawgyi': 'z ဘယ္',
-        'default_z2008': 'z2008 ယခင္သိုႛ',
-        'default_unicode': 'u လောက်က',
-        'default_myazedi': 'm ဆီၾဒင္'
-      }      
+    template_values = SetDefaultTemplate(text)
+        
     path = os.path.join(os.path.dirname(__file__), 'mainmyfonts2.html')
     self.response.out.write(template.render(path, template_values))
 
@@ -116,6 +119,7 @@ class CompareTextHandler(webapp2.RequestHandler):
       't2': text2
     }
   
+    logging.info('CompareTextHandler: %s vs %s' % (text1, text2))
     path = os.path.join(os.path.dirname(__file__), 'compare.html')
     self.response.out.write(template.render(path, template_values))
 
@@ -131,7 +135,10 @@ class ConvertHandler(webapp2.RequestHandler):
   def get(self):
     global default_converter
     global myazedi_converter
-    
+    global unimon_converter
+    global mon_converter
+    global knu_converter
+
     if not default_converter:
       default_converter = transliterate.Transliterate(
         translit_zawgyi.ZAWGYI_UNICODE_TRANSLITERATE,
@@ -140,32 +147,64 @@ class ConvertHandler(webapp2.RequestHandler):
     text = unicode(self.request.get('text')) # .encode('utf-8')
     input_type = self.request.get('type', 'Z')
     debug = self.request.get('debug', None)
+    
+    input = urllib.unquote(text) #   .decode('utf-8')
 
     noreturn = self.request.get('noreturn', None)
     msg = ''
     
-    
+    logging.info('CONVERT %d characters' % len(input))
+
     if input_type == 'M':
       if not myazedi_converter:
         myazedi_converter = transliterate.Transliterate(
           translit_myazedi.MYAZEDI_UNICODE_TRANSLITERATE,
           translit_myazedi.MYAZEDI_description)
-      result = myazedi_converter.transliterate(text, debug)
+      result = myazedi_converter.transliterate(input, debug)
       msg = 'Myazedi conversion'
     elif input_type == 'Z':
       # Zawgyi
-      result = default_converter.transliterate(text)
+      result = default_converter.transliterate(input)
       msg = 'From Zawgyi'
+    elif input_type == "UM":
+      if not unimon_converter:
+        unimon_converter = transliterate.Transliterate(
+          translit_uni_mon.UNIMON_UNICODE_TRANSLITERATE,
+          translit_uni_mon.UNIMON_description)
+      result = unimon_converter.transliterate(input, debug)
+      msg = 'UniMon conversion'    
+    elif input_type == "MON":
+      if not mon_converter:
+        mon_converter = transliterate.Transliterate(
+          translit_mon.MON_UNICODE_TRANSLITERATE,
+          translit_mon.MON_description)
+      result = mon_converter.transliterate(input, debug)
+      msg = 'Mon conversion'    
+    elif input_type == "KNU":
+      if not knu_converter:
+        knu_converter = transliterate.Transliterate(
+          translit_knu.KNU_UNICODE_TRANSLITERATE,
+          translit_knu.KNU_description)
+      # Preprocess with string substitution
+      # logging.info('***knu input = %s' % input);
+      for rep in translit_knu.KNU_substitutions:
+        text = input.replace(rep[0], rep[1])
+        input = text
+      result = knu_converter.transliterate(input, debug)
+      # logging.info('***knu result = %s' % result);
+      msg = 'Karen conversion'    
     else:
       msg = 'Unknown encoding!'
       result = 'No conversion attempted.'
     
     self.response.headers['Content-Type'] = 'application/json'   
-    if text:
+    if input:
       if noreturn:
         returntext = ''
       else:
          returntext = text
+
+      logging.info('RESULT has %d characters' % len(result))
      
       # Call the converter on this text data.
       obj = { 'input': returntext,
@@ -184,23 +223,82 @@ class ConvertHandler(webapp2.RequestHandler):
     self.response.out.write(json.dumps(obj))
 
 
-# Shows user interface for converting from Zawgyi to 
+# Shows user interface for converting from Zawgyi & Myazedi 
 class ConvertUIHandler(webapp2.RequestHandler):
   # Show feedback form.
   def get(self):
     text = self.request.get("text", "")
-    template_values = {
-      'msg': 'No text'
-     }
-   
-    if text:
-      template_values = {
-        'input_text': text,
-        'default_zawgyi': text,
-        'default_myazedi': text
-      }
-  
+    template_values = SetDefaultTemplate(text)
+    
     path = os.path.join(os.path.dirname(__file__), 'convert.html')
+    self.response.out.write(template.render(path, template_values))
+
+# Shows user interface for converting from Zawgyi, Myazedi, and Mon fonts. 
+class Convert2UIHandler(webapp2.RequestHandler):
+  # Show feedback form.
+  def get(self):
+    text = self.request.get("text", "")
+    template_values = SetDefaultTemplate(text)
+    
+    path = os.path.join(os.path.dirname(__file__), 'convert2.html')
+    self.response.out.write(template.render(path, template_values))
+
+# Shows user interface for converting from Zawgyi, Myazedi, and Mon fonts. 
+class MonHandler(webapp2.RequestHandler):
+  # Show feedback form.
+  def get(self):
+    text = self.request.get("text", "")
+    template_values = SetDefaultTemplate(text)
+    
+    path = os.path.join(os.path.dirname(__file__), 'mon.html')
+    self.response.out.write(template.render(path, template_values))
+
+# Shows user interface for converting from Zawgyi, Myazedi, and Mon fonts. 
+class KarenHandler(webapp2.RequestHandler):
+  # Show feedback form.
+  def get(self):
+    text = self.request.get("text", "")
+    template_values = SetDefaultTemplate(text)
+    
+    path = os.path.join(os.path.dirname(__file__), 'karen.html')
+    self.response.out.write(template.render(path, template_values))
+
+# Shows user interface for Shan fonts and conversions. 
+class ShanHandler(webapp2.RequestHandler):
+  # Show feedback form.
+  def get(self):
+    text = self.request.get("text", "")
+    template_values = SetDefaultTemplate(text)
+
+    logging.info('SHAN: %s' % text)
+    
+    path = os.path.join(os.path.dirname(__file__), 'shan.html')
+    self.response.out.write(template.render(path, template_values))
+
+# Shows user interface for Shan fonts and conversions. 
+class SubmitErrorHandler(webapp2.RequestHandler):
+  # Show feedback form.
+  def get(self):
+    text = self.request.get("text", "")
+    template_values = SetDefaultTemplate(text)
+
+    logging.info('Submit error: %s' % text)
+    
+    path = os.path.join(os.path.dirname(__file__), 'submitError.html')
+    self.response.out.write(template.render(path, template_values))
+
+
+class StoreErrorHandle(webapp2.RequestHandler):
+  # Show feedback form.
+  def get(self):
+    text = self.request.get("text", "")
+    template_values = SetDefaultTemplate(text)
+
+    logging.info('StoreErrorHandle error: %s' % text)
+    
+    # TODO: Create a new error entry and store it.
+    
+    path = os.path.join(os.path.dirname(__file__), 'storedError.html')
     self.response.out.write(template.render(path, template_values))
 
 
@@ -359,12 +457,18 @@ class HelpHandler(webapp2.RequestHandler):
     ('/feedback', FeedbackHandler),
     ('/detect/', DetectionHandler),
     ('/convertui/', ConvertUIHandler),
+    ('/convert2/', Convert2UIHandler),
     ('/convert/', ConvertHandler),
     ('/getrules/', GetRulesHandler),
     ('/compare/', CompareTextHandler),
     ('/testtransliteration/', TestTranslitHandler),
     ('/segment/', SegmentHandler),
     ('/convertBtoC/', convertBtoCHandler),
+    ('/convert2ui/', convertBtoCHandler),
+    ('/mon/', MmonHandler),
+    ('/karen/', KarenHandler),
+    ('/shan/', ShanHandler),
+    ('/submiterror/', SubmitErrorHandler),
     ('/help/', HelpHandler)
     """
 
@@ -472,13 +576,21 @@ app = webapp2.WSGIApplication([
     ('/feedback', FeedbackHandler),
     ('/detect/', DetectionHandler),
     ('/convertui/', ConvertUIHandler),
+    ('/convert2/', Convert2UIHandler),
     ('/convert/', ConvertHandler),
     ('/getrules/', GetRulesHandler),
     ('/compare/', CompareTextHandler),
     ('/testtransliteration/', TestTranslitHandler),
     ('/segment/', SegmentHandler),
     ('/convertBtoC/', convertBtoCHandler),
+    ('/zawgyi/', ConvertUIHandler),
+    ('/karen/', KarenHandler),
+    ('/mon/', MonHandler),
+    ('/shan/', ShanHandler),
     ('/help/', HelpHandler),
+    ('/entererror/', SubmitErrorHandler),
+    ('store_error_sample', StoreErrorHandle),
+    
     ('/madlib/', madlibHandler),
     ('/sequoyahsNumerals/', chrNumeralsHandler),
     ('/setDecimalNumerals/', chrDecimalNumeralsHandler),

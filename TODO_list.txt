@@ -1,0 +1,24 @@
+TODO list:
+
+1. Finish calculator FSM.
+
+2. Handle decimals
+
+3. Handle negatives
+
+4. Localize the UI into CHR and EN
+
+
+Android App:
+
+1. Start the project
+
+2. Translate decimal & CHR conversions to Java
+
+3. Get converter working both ways
+
+4. Translate FSM to Java
+
+5. Hook up everything
+
+6. Publish for John Ross

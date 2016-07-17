@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import codecs
 import logging
 import re
 import sys
@@ -10,6 +11,8 @@ import types
 # Default transliteration rules
 import translit_myazedi
 import translit_zawgyi
+import translit_knu
+import translit_uni_mon
 
 # Take a transliteration rule with phases.
 # Extract shortcuts such as "$nondigits = [^\u1040-\u1049];
@@ -42,20 +45,24 @@ class Phase():
   def fillRules(self, rulelist):
     # set up pattern and subst value for each rule
     index = 0
+    # print '%d rules in rulelist, phase %d' % (len(rulelist), self.phase_id)
     for rule1 in rulelist:
+      rule1 = rule1.strip()
       rule = re.sub('\n', '', rule1)
       if rule:
         parts = rule.split('>')
         pattern = re.sub(' ', '', parts[0]) # but don't remove quoted space
+        # print '  rule %d is %s parts' % (index, parts)
         try:
           subst = re.sub(' ', '', uStringsFixPlaceholder(parts[1]))
           #subst = re.sub(' ', '', uStringsToText(parts[1]))
+          newPair = (pattern, subst)
+          self.rules.append(newPair)
+          self.RuleList.append(Rule(pattern, subst, index))  # Rule objects
         except IndexError, e:
           print 'Error e = %s. Phase %s, %d rule = %s' % (e, self.phase_id, index, rule1)
+          print '  Rule = >>%s<< %d' % (rule, len(rule))
           break
-        newPair = (pattern, subst)
-        self.rules.append(newPair)
-        self.RuleList.append(Rule(pattern, subst, index))  # Rule objects
       index += 1
 
   def getRules(self):
@@ -371,7 +378,36 @@ def testList(transliterator):
       print '  Result hex =   %s' % uStringToHex(resultList[i])
       print '  Expected hex = %s' % uStringToHex(eList[i])    
 
+
+def transliterateFile(trans, fileName):
+  # Open a file, read the text, and transliterate it, line by line.
+  print '** transliterateFile %s' % (fileName)
+  infile = codecs.open(fileName, "r", "utf-8")
+  lineNum = 0
+  for line in infile:
+    outline = trans.transliterate(line)
+    print '%s\t%s' % (lineNum, outline)
+  return
+  
 def main(argv=None):
+ 
+  if len(argv) > 1:
+    print argv
+    inType = argv[1]
+    inFile = argv[2]
+    print inType, inFile
+
+    if inType == 'knu':
+      trans = Transliterate(translit_knu.KNU_UNICODE_TRANSLITERATE)
+    elif inType == 'zawgyi':
+      trans = Transliterate(translit_zawgyi.ZAWGYI_UNICODE_TRANSLITERATE)
+    elif inType == 'mon':
+      trans = Transliterate(translit_zawgyi.ZAWGYI_UNICODE_TRANSLITERATE)
+    elif inType == 'shanthai':
+      trans = Transliterate(translit_zawgyi.ZAWGYI_UNICODE_TRANSLITERATE)
+  
+    transliterateFile(trans, inFile)
+    return 
 
   trans = Transliterate(translit_zawgyi.ZAWGYI_UNICODE_TRANSLITERATE)
   
@@ -384,7 +420,7 @@ def main(argv=None):
   biggerTest(trans)
   biggerTest2(trans)
 
-  return
+  #return
   
   test1 = u'ေျခႀက'  # 1031 103b 1001 1080 1000
   result1 = trans.transliterate(test1)
@@ -398,10 +434,11 @@ def main(argv=None):
   
   print '-------------\n'
 
-  biggerTest()
+  # biggerTest()
   
   return
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    print 'ARGS = %s' % sys.argv 
+    sys.exit(main(sys.argv))

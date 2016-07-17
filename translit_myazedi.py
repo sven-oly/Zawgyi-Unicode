@@ -5,8 +5,9 @@ import logging
 import re
 import sys
 
-MYAZEDI_description = 'Transliteration rules for Myazedi to Unicode'
-MYAZEDI_UNICODE_TRANSLITERATE = u"""# Modern Burmese digits & Unicode code points.
+Description = MYAZEDI_description = 'Transliteration rules for Myazedi to Unicode'
+
+TRANS_LIT_RULES = MYAZEDI_UNICODE_TRANSLITERATE = u"""# Modern Burmese digits & Unicode code points.
 $nondigits = [^\u1040-\u1049];
 $space = '\u0020';
 $consonant = [\u1000-\u1021];
@@ -186,3 +187,22 @@ testStrings = [
   (u'universal', 'tjynfjynfqkdif&m vl@tcGifhta&; a=unmpmwrf;',
 	u'အပြည်ပြည်ဆိုင်ရာ လူ့အခွင့်အရေး ကြေညာစာတမ်း')
   ]
+
+
+def printRules():
+  print 'Rules for %s' % Description
+  lines = TRANS_LIT_RULES.split('\n')
+  ruleNum = 0
+  for line in lines:
+    line = line.strip()
+    if len(line) > 0 and line[0] != '#':
+      print ('%4d\t%s' % (ruleNum, line))
+      ruleNum += 1
+
+def main(argv=None):
+  printRules()
+
+
+if __name__ == "__main__":
+    print 'ARGS = %s' % sys.argv 
+    sys.exit(main(sys.argv))

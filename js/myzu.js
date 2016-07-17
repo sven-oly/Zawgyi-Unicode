@@ -12,6 +12,24 @@ function onload() {
   }
 }
 
+
+// Toggle the region id.
+function showhide(id) {
+  var e = document.getElementById(id);
+  e.style.display = (e.style.display == 'block') ? 'none' : 'block';
+}
+
+function compareConvert(area1,area2) {
+  // Open a comparison window with the resulting text.
+  var text1 = document.getElementById(area1).value;
+  var text2 = document.getElementById(area2).value;
+   
+  compareUrl = "/compare/?text1=" + text1 +  "&text2=" + text2;
+  xmlhttp.open("GET", compareUrl, true);
+
+  window.location=compareUrl;   
+}
+  
 function enterTestText(updateHex) {
   var infield = document.getElementById("TestEntry");
   var intext = infield.value;
@@ -59,6 +77,56 @@ function enterTestText(updateHex) {
     outElement.innerHTML = intext;
   }
   
+  // Mon fonts
+  outElement = document.getElementById("um");
+  if (outElement) {
+    outElement.innerHTML = intext;
+  }
+  outElement = document.getElementById("unimon_small");
+  if (outElement) {
+    outElement.innerHTML = intext;
+  }
+  outElement = document.getElementById("ramanya");
+  if (outElement) {
+    outElement.innerHTML = intext;
+  }
+  outElement = document.getElementById("mon");
+  if (outElement) {
+    outElement.innerHTML = intext;
+  }
+  outElement = document.getElementById("monuni");
+  if (outElement) {
+    outElement.innerHTML = intext;
+  }
+  outElement = document.getElementById("monanonta");
+  if (outElement) {
+    outElement.innerHTML = intext;
+  }
+
+  // Karen fonts
+  outElement = document.getElementById("knu");
+  if (outElement) {
+    outElement.innerHTML = intext;
+  }
+
+  // Shan fonts
+  outElement = document.getElementById("shanunicode");
+  if (outElement) {
+    outElement.innerHTML = intext;
+  }
+  outElement = document.getElementById("shanunicode2");
+  if (outElement) {
+    outElement.innerHTML = intext;
+  }
+  outElement = document.getElementById("panglong");
+  if (outElement) {
+    outElement.innerHTML = intext;
+  }
+  outElement = document.getElementById("ZawgyiTai");
+  if (outElement) {
+    outElement.innerHTML = intext;
+  }
+
   if (updateHex) {
     var hexText = document.getElementById("hexText");
     hexText.value = textToHex(intext);
