@@ -62,12 +62,22 @@
   <body onload="onload()">
 
     <h1>Submit error report on convert / show</h1>
+
+    <form action="/store_error_sample" method="get">
     
+    <p>Type: {{type}}
     <div>
       <p><strong>Data giving problem:</strong>
       <p>
       <input type="text" id="TestEntry" class='notosans' size="40"
-        onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
+        onchange="enterTestText(true)" value="{{input}}" placeholder="<enter text here>" />
+         (shown in NotoSans font)
+    </div>
+    <div>
+      <p><strong>Actual result:</strong>
+      <p>
+      <input type="text" id="TestEntry" class='notosans' size="40"
+        onchange="enterTestText(true)" value="{{converted}}" placeholder="<enter text here>" />
          (shown in NotoSans font)
     </div>
 
@@ -88,14 +98,13 @@
 	<div>
 	<p>Language:
     <input type="text" id="TestEntry" class='notosans' size="40"
-        onchange="enterTestText(true)" value="{{input_text}}"
+        onchange="enterTestText(true)" value="{{input}}"
         placeholder="<enter language name here>" />
 	</div>
 	
     <hr>
 
 
-    <form action="/store_error_sample" method="get">
       <input type="submit" value="Submit report" />
     </form>  
   </body>

@@ -140,6 +140,7 @@ TRANS_LIT_RULES = KNU_UNICODE_TRANSLITERATE = u"""
 \u1031 ($consonant) ([^\u103B-\u103E]) > $1 \u1031 $2;
 \u103C \u103A \u1039 ($consonant) > \u103A \u1039 $1 \u103C;
 \u1036 ($umedial+) > $1 \u1036;
+\u1038 ([\u1036\u1037\u103A\u102d\u102f\u1032\u103d]) > $1 \u1038;
 ##### Stage 4
 ::Null;
 ([\u103C\u103D\u103E]+) \u103B > \u103B $1;
@@ -152,6 +153,10 @@ TRANS_LIT_RULES = KNU_UNICODE_TRANSLITERATE = u"""
 \u1037 ($umedial+) > $1 \u1037;
 ($vowelsign+) ($umedial+) > $2 $1;
 ($consonant) ([\u102B-\u1032\u1036\u103B-\u103E]) \u103A ($consonant)> $1 \u103A $2 $3;
+# Karen
+\u102c \u103a > \u103a \u102c;
+\u1038 ([\u1036\u1037\u103A\u102d\u102e\u102f\u1032\u103d]) > $1 \u1038;
+\u1032 \u103d > \u103d \u1032 ;
 ##### Stage 5.  More reorderings
 ::Null;
 ([\u1031]+) ($umedial+) > $2 $1;
@@ -160,10 +165,13 @@ TRANS_LIT_RULES = KNU_UNICODE_TRANSLITERATE = u"""
 ([\u103D\u103E]) \u103C > \u103C $1;
 \u103E\u103D > \u103D\u103E ;
 \u1038 ([$vowelmedial]) > $1 \u1038;
-\u1038 ([\u1036\u1037\u103A]) > $1 \u1038;
 # NEW 5-May-2016
 \u1036 \u102f > \u102f \u1036;
 \u103c \u102f ($consonant) > $1 \u103c \u102f;
+\u1038 ([\u1036\u1037\u103A\u102d\u102f\u1032\u103d]) > $1 \u1038 ;
+\u102c \u102f > \u102f \u102c ;
+\u103a \u102e > \u102e \u103a ;
+\u1030 \u102d > \u102d \u1030 ;
 #### Stage 6
 ::Null;
 ($consonant) \u103B \u103A > $1 \u103A \u103B;
@@ -171,6 +179,7 @@ TRANS_LIT_RULES = KNU_UNICODE_TRANSLITERATE = u"""
 ([\u103D\u103E]) \u103C > \u103C $1;
 \u103E\u103D > \u103D\u103E ;
 ([\u102D-\u1030\u1032]) \u103A ($consonant) \u103A > $1 $2 \u103A;
+
 \u102D \u103A > \u102D;
 \u102E \u103A > \u102E;
 \u102F \u103A > \u102F;
@@ -192,6 +201,11 @@ TRANS_LIT_RULES = KNU_UNICODE_TRANSLITERATE = u"""
 # NEW 5-May-2016
 \u1036 \u1036+ > \u1036;
 \u103c \u102f ($consonant) > $1 \u103c \u102f;
+# Sep-2016
+\u1063 (\u102e) > $1 \u1063 ;
+\u1064 (\u102f)  > $1 \u1064 ;
+\u1032 \u1032 > \u1032 \u1032 ;
+\u1032 \u103d > \u103d \u1032 ;
 
 #
 #Try to correctly render diacritics after a space.

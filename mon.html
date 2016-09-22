@@ -1,8 +1,15 @@
+<!DOCTYPE HTML>
 <html>
   <head>
     <title>MonText with Fonts
    </title>
 
+  <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
+  <![endif]-->
+  
   <link rel="stylesheet" type="text/css" href="/css/fonts.css">
   
    <script type="text/javascript" src="/js/shake-n-break.js">
@@ -15,19 +22,20 @@
   // Code to request transliteration (conversion) and handle the return. 
   function convertRequest(source, type) {
     // Get the text and prepare the call to server.
-    source_element = document.getElementById(source);    
-    text_in = encodeURIComponent(source_element.value);
+    var source_element = document.getElementById(source);    
+    var text_in = encodeURIComponent(source_element.value);
+    var xmlhttp;
     
     // Prepare for the call to the backendvar xmlhttp;
 	if (window.XMLHttpRequest)
 	  {
 	  // code for IE7+, Firefox, Chrome, Opera, Safari
-	  xmlhttp=new XMLHttpRequest();
+	  xmlhttp = new XMLHttpRequest();
 	  }
 	else
 	  {
 	  // code for IE6, IE5
-	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 	  }
 
     // Deal with the results	  
@@ -74,76 +82,135 @@
   </head>
   
   <body onload="onload()">
+  
+    <div class="container">
+    <div class='span-1'>
+    </div>
+    <div class="span-23 last">
 
-    <h1>Test Mon text conversion with several Mon fonts</h1>
-    <p>Just paste your Mon language text into the "Test" field. The characters will be shown
-    in the fonts, and hex codes will be shown.
-    
-    <p><a href="http://burmese.monnews.org/" target="_blank">Sample Mon text in Unicode</a>
-    <p><a href="http://www.kaowao.org/mon/" target="_blank">Sample Mon / Mon 2012 font data</a>
+		<h1>Test Mon text conversion</h1>
+		<p>Just paste your Mon language text into the "Test" field. The characters will be shown
+		in the fonts, and hex codes will be shown.
+    </div>
+        
+  <div>
+		<div class="span-16">    <p>Try: <a href="http://burmese.monnews.org/" target="_blank">Sample Unicode text</a>
+		or 
+    <a href="http://www.kaowao.org/mon/" target="_blank">Sample Mon / Mon 2012 font data</a>
+    or <a href="http://zawgyi-unicode-test.appspot.com/mon/?text=%E1%80%82%E1%80%B1%20%E1%80%82%E1%80%BC%E1%80%82%E1%80%A2%20%E1%80%82%E1%80%A6%20%E1%80%82%E1%80%A8%20%E1%80%82%E1%80%AA%20%E1%80%82%E1%80%B3%20%E1%80%82%E1%80%B4%20%E1%80%82%E1%80%B5%20%E1%80%82%E1%80%B9%20%E1%80%82%E1%80%BA%20%E1%80%82%E1%80%BB%20%E1%80%82%E1%80%BC%20%E1%80%82%E1%80%BD%20%E1%80%82%E1%80%BE%20%E1%80%82%E1%80%BF%20%E1%80%82%E1%81%8E%20%E1%80%82%E1%81%90%20%E1%80%82%E1%81%91%20%E1%80%82%E1%81%92%20%E1%80%82%E1%81%93%20%E1%80%82%E1%81%94%20%E1%80%82%E1%81%95%20%E1%80%82%E1%81%96%20%E1%80%82%E1%81%97%20%E1%80%82%E1%81%98%20%E1%80%82%E1%81%99%20%E1%80%82%E1%81%9A%20%E1%80%82%E1%81%9B%20%E1%80%82%E1%81%9C%20%E1%80%82%E1%81%9D%20%E1%80%82%E1%81%9E%20%E1%80%82%E1%81%9F%20%E1%80%82%E1%82%98%20%E1%80%82%E1%82%99%20%E1%80%82%E1%82%9A%20%E1%80%82%E1%82%9B%20%E1%80%82%E1%82%9C%20%E1%80%82%E1%82%9D%20%E1%80%82%E1%82%9E%20%E1%80%82%E1%82%9F"
+    target="_blank">Test non-standard characters</a>
     <div>
       <p><strong>Input the test data:</strong>
-      <p>
       <input type="text" id="TestEntry" class='notosans' size="40"
         onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
-         (shown in NotoSans font)
-      <div id="detectedZU"></div>
+         <br />(shown in NotoSans font)
+      <div id="detectedZU" style="display: none;"></div>
+    </div>
+    </div>
+		<div class="span-4 last">
+			<a href="/burmese/">Burmese & Zawgyi</a> <br />
+			<a href="/shan/">Shan</a> <br />
+			<a href="/mon/">Mon</a> <br />
+			<a href="/karen/">Karen</a>
+
+	    	<br /><br />
+            <input type='button' value='Toggle fonts'
+                onClick="showhide('other_fonts'); return false;" />
+        </div>
     </div>
 
     <hr>
 
+  <div id='other_fonts' style="display: inline;">
     <div>
+      <div onClick="showhide('zawgyiSection'); return false;" /> Zawgyi One</div>
+      <div id='zawgyiSection' style="display: none;">
       <textarea id="z1"  class='zawgyi_one'
         rows="1" cols="40">{{default_zawgyi}}</textarea>
-              Zawgyi One
-      <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
-      <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z')" />
+      <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z');" />
+      </div>
     </div>
 
     <div>
-      <textarea id="um"  class='unimon'
-        rows="1" cols="40">{{default_unimon}}</textarea>
-              MonUni / Mon 2010
-      <input type="button" value="-> hex" onclick="textToHexField('um', 'hexText')" />
-      <input type="button" value="-> Unicode" onclick="convertRequest('um', 'UM')" />
+      <div onClick="showhide('umSection'); return false;" />UniMon / Mon 2010</div>
+      <div id='umSection' style="display: none;">
+        <textarea id="um"  class='unimon'
+          rows="1" cols="40">{{default_unimon}}</textarea>
+        <input type="button" value="-> Unicode" onclick="convertRequest('um', 'UNIMON');" />
+      </div>
     </div>
 
     <div>
-      <textarea id="mon"  class='mon'
-        rows="1" cols="40">{{default_unimon}}</textarea>
-              Mon / Mon 2012
-      <input type="button" value="-> hex" onclick="textToHexField('mon', 'hexText')" />
-      <input type="button" value="-> Unicode" onclick="convertRequest('mon', 'MON')" />
+      <div onClick="showhide('monSection'); return false;" />Mon</div>
+      <div id='monSection'>
+        <textarea id="mon" class='mon' form="mon_form" name='sampleText'
+          rows="1" cols="40">{{default_unimon}}</textarea>
+        <form id='mon_form' action="/feedback/" method="get">
+          <input type="submit" value="Send feedback" />
+          <input name='language' value='Mon'> <input name='font' value='mon'>
+        </form>
+        <input type="button" value="-> Unicode" onclick="convertRequest('mon', 'MON')" />
+      </div>
     </div>
-
+ 
+     <div>
+      <div onClick="showhide('mon2012Section'); return false;" />Mon 2012</div>
+      <div id='mon2012Section'  style="display: none;">
+      <textarea id="mon2012"  class='mon2012'
+        rows="1" cols="40">{{default_unimon}}</textarea>
+      <!--
+        <input type="button" value="-> Unicode" onclick="convertRequest('mon2012', 'MON2012')" />
+        -->
+        </div>
+    </div>
+       <div>
+      <div onClick="showhide('monUniSection'); return false;" />MonUni</div>
+      <div id="monUniSection"  style="display: none;">
       <textarea id="monuni"  class='monuni'
         rows="1" cols="40">{{default_unimon}}</textarea>
-              MonUni
-      <input type="button" value="-> hex" onclick="textToHexField('mon', 'hexText')" />
-      <input type="button" value="-> Unicode" onclick="convertRequest('mon', 'MON')" />
-    </div>
-    
-      <textarea id="unimon_small"  class='unimon_small'
-        rows="1" cols="40">{{default_unimon}}</textarea>
-              Unimon Small
-      <input type="button" value="-> hex" onclick="textToHexField('mon', 'hexText')" />
-      <input type="button" value="-> Unicode" onclick="convertRequest('mon', 'MON')" />
+
+        <input type="button" value="-> Unicode" onclick="convertRequest('monuni', 'MONUNI')" />
+        </div>
     </div>
     
     <div>
-      <textarea id="ramanya"  class='ramanya'
+     <div onClick="showhide('uniMonSmallSection'); return false;" />UniMon small</div>
+     <div id="uniMonSmallSection"  style="display: none;">
+     <textarea id="unimon_small"  class='unimon_small'
         rows="1" cols="40">{{default_unimon}}</textarea>
-        RamanyaUnicode
-      <input type="button" value="-> hex" onclick="textToHexField('mon', 'hexText')" />
-      <input type="button" value="-> Unicode" onclick="convertRequest('mon', 'MON')" />
+      <input type="button" value="-> Unicode" onclick="convertRequest('unimon_small', 'unimon_small')" />
+      </div>
     </div>
     
     <div>
-      <textarea id="monanonta"  class='monanonta'
+     <div onClick="showhide('uniMonSection'); return false;" />UniMon</em></div>
+     <div id="uniMonSection"  style="display: none;">
+     <textarea id="unimon"  class='unimon'
         rows="1" cols="40">{{default_unimon}}</textarea>
-              Mon Anonta
-      <input type="button" value="-> hex" onclick="textToHexField('monanonta', 'hexText')" />
+      <!--
+        <input type="button" value="-> Unicode" onclick="convertRequest('unimon', 'UNIMON')" />
+        -->
+        </div>
+    </div>
+
+    <div>
+     <div onClick="showhide('ramayaSection'); return false;" />Ramanya <em>Unicode</em></div>
+     <div id="ramayaSection"  style="display: none;">
+     <textarea id="ramanya"  class='ramanya'
+        rows="1" cols="40">{{default_unimon}}</textarea>
+      <!--
+        <input type="button" value="-> Unicode" onclick="convertRequest('ramanya', 'RANANYA')" />
+        -->
+        </div>
     </div>    
+    <div>
+     <div onClick="showhide('monAnontaSection'); return false;" />Mon Anonta</em></div>
+     <div id="monAnontaSection"  style="display: none;">
+           <textarea id="monanonta"  class='monanonta'
+        rows="1" cols="40">{{default_unimon}}</textarea>
+      </div>
+    </div>    
+  </div> <!-- id='other_fonts' -->
 
     <hr>
     <div>
@@ -154,6 +221,7 @@
         rows="2" cols="40">{{default_unicode}}</textarea>
     </div>
     <hr>
+
     <div>
       <textarea id="notoSans"  class='notosans'
         rows="1" cols="40">{{default_unicode}}</textarea>
@@ -180,11 +248,13 @@
     <p>Scratch pad:</P>
     <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
        <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans')" />
-   
+    </div>
     <hr>
     <br />
-    <form action="/feedback" method="get">
+    <form action="/feedback/?" method="get">
       <input type="submit" value="Send feedback" />
-    </form>  
+    </form>
+    
+    </div> <!-- container -->
   </body>
 </html>

@@ -5,9 +5,11 @@ import sys
 
 import transliterate
 
+# Mon 2010 & Unimon (maybe)
+
 # Modern Burmese digits & Unicode code points.
 # UniMon is mostly Zawgyi, but some differences.
-Description = UNIMON_description = u'UniMon conversion'
+Description = UNIMON_description = u'Mon 2010 / UniMon conversion'
 TRANS_LIT_RULES = UNIMON_UNICODE_TRANSLITERATE = u"""#
 $nondigits = [^\u1040-\u1049];
 $space = '\u0020';
@@ -30,13 +32,37 @@ $zmedialra = [\u103B\u107E-\u1083];
 \u200b > ;
 
 # UniMon specific conversions
-\u1022 > \u105d ;
-\u1035 > \u1034 ;
-\u1050 > \u105c ;
+\u1022 > \u1007 \u103b \u103e ;
+\u1026 > \u102d \u1032 ;
+\u1028 > \u1000 \u1031 \u102f \u1036 \u102c ;
+\u1033 > \u102f ;
+\u1034 > \u1030 ;
+\u1035 > \u1032 \u102b ;
+\u1039 > \u103a ;
+\u103a > \u103b ;
+\u103b > \u103c ;
+\u103c > \u103d ;
+\u103d > \u103e ;
+\u103e > \u1033 ;
+\u103f > \u1015 \u1039 \u100d \u1032 ;
+
+\u102a > \u1035 ;
+\u103e > \u105e ;
+\u103f > \u105f ;
+\u1050 > \u1039 \u1021 ;
+($consonant) \u1051 > $ukinzi $1 \u1033 ;
+\u1052 > \u1039 \u101e ;
+\u1053 > \u1039 \u1021 ;
+\u1054 > \u1039 \u100a ;
+\u1055 > \u1039 \u100e ;
+\u1056 > \u1036 \u102b ;
+($consonant) \u1057 > $ukinzi $1 \u102b ;
+
 \u105b > \u1039 \u101b ;
 \u105c > \u1060 ;
 \u105d > \u1039 \u101e ;
 \u105e > \u1039 \u105c ;
+\u105f > \u1030 \u1021;
 # \u1059;  Maybe unmapped?
 
 $zmedialra > \u103c;

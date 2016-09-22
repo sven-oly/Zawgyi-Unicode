@@ -13,13 +13,19 @@ from google.appengine.ext.webapp import template
 from django.utils.translation import ugettext as _
 from django.conf import settings
 
-import chrNumerals
+import charRanges
+import convertHandler
 import convertText
 import detector
+import feedback
+import fontrules
+import detector
+
 import sendmail
 import transliterate
 import translit_myazedi
 import translit_uni_mon  # For UniMon text -> UniCode
+import translit_monuni  # For Mon "Unicode" text -> UniCode
 import translit_mon  # For Mon text -> UniCode
 import translit_knu  # For Karen KNU encoded text -> UniCode
 import translit_zawgyi  # import ZAWGYI_UNICODE_TRANSLITERATE, description
@@ -116,7 +122,9 @@ class CompareTextHandler(webapp2.RequestHandler):
 
     template_values = {
       't1': text1,
-      't2': text2
+      'font1': self.request.get("font1", "notosans"),
+      't2': text2,
+      'font2': self.request.get("font2", "notosans")
     }
   
     logging.info('CompareTextHandler: %s vs %s' % (text1, text2))
@@ -144,11 +152,14 @@ class ConvertHandler(webapp2.RequestHandler):
         translit_zawgyi.ZAWGYI_UNICODE_TRANSLITERATE,
         translit_zawgyi.ZAWGYI_description)
     
-    text = unicode(self.request.get('text')) # .encode('utf-8')
+    text = unicode(self.request.get('text'))
+    logging.info('text         = %s' % text)
     input_type = self.request.get('type', 'Z')
+    strip_spaces = self.request.get('strip_spaces', None)
     debug = self.request.get('debug', None)
     
     input = urllib.unquote(text) #   .decode('utf-8')
+    logging.info('decoded text = %s' % text)
 
     noreturn = self.request.get('noreturn', None)
     msg = ''
@@ -166,20 +177,27 @@ class ConvertHandler(webapp2.RequestHandler):
       # Zawgyi
       result = default_converter.transliterate(input)
       msg = 'From Zawgyi'
-    elif input_type == "UM":
+    elif input_type == "UNIMON":  # Also Mon 2010 (mostly)
       if not unimon_converter:
         unimon_converter = transliterate.Transliterate(
           translit_uni_mon.UNIMON_UNICODE_TRANSLITERATE,
           translit_uni_mon.UNIMON_description)
       result = unimon_converter.transliterate(input, debug)
-      msg = 'UniMon conversion'    
+      msg = translit_uni_mon.UNIMON_description   
+    elif input_type == "MONUNI":
+      if not mon_uni_converter:
+        mon_uni_converter = transliterate.Transliterate(
+          translit_mon.MON_MONUNI_TRANSLITERATE,
+          translit_mon.MON_MONUNI_description)
+      result = mon_converter.transliterate(input, debug)
+      msg = 'Mon Unicode conversion'    
     elif input_type == "MON":
       if not mon_converter:
         mon_converter = transliterate.Transliterate(
           translit_mon.MON_UNICODE_TRANSLITERATE,
           translit_mon.MON_description)
       result = mon_converter.transliterate(input, debug)
-      msg = 'Mon conversion'    
+      msg = translit_mon.MON_description
     elif input_type == "KNU":
       if not knu_converter:
         knu_converter = transliterate.Transliterate(
@@ -190,11 +208,16 @@ class ConvertHandler(webapp2.RequestHandler):
       for rep in translit_knu.KNU_substitutions:
         text = input.replace(rep[0], rep[1])
         input = text
+        
+      logging.info('***knu strip_spaces = %s' % strip_spaces);
+      if strip_spaces:
+         input = input.replace(' ', '')
+       
       result = knu_converter.transliterate(input, debug)
       # logging.info('***knu result = %s' % result);
       msg = 'Karen conversion'    
     else:
-      msg = 'Unknown encoding!'
+      msg = 'Unknown encoding = %s!' % input_type
       result = 'No conversion attempted.'
     
     self.response.headers['Content-Type'] = 'application/json'   
@@ -213,6 +236,8 @@ class ConvertHandler(webapp2.RequestHandler):
               'converted': result,
               'detector_description': default_converter.description,
               'noreturn': noreturn,
+              'inputSize': len(input),
+              'resultSize': len(result),
               'errmsg': None }
     else:
       obj = { 'input': text,
@@ -275,32 +300,6 @@ class ShanHandler(webapp2.RequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'shan.html')
     self.response.out.write(template.render(path, template_values))
 
-# Shows user interface for Shan fonts and conversions. 
-class SubmitErrorHandler(webapp2.RequestHandler):
-  # Show feedback form.
-  def get(self):
-    text = self.request.get("text", "")
-    template_values = SetDefaultTemplate(text)
-
-    logging.info('Submit error: %s' % text)
-    
-    path = os.path.join(os.path.dirname(__file__), 'submitError.html')
-    self.response.out.write(template.render(path, template_values))
-
-
-class StoreErrorHandle(webapp2.RequestHandler):
-  # Show feedback form.
-  def get(self):
-    text = self.request.get("text", "")
-    template_values = SetDefaultTemplate(text)
-
-    logging.info('StoreErrorHandle error: %s' % text)
-    
-    # TODO: Create a new error entry and store it.
-    
-    path = os.path.join(os.path.dirname(__file__), 'storedError.html')
-    self.response.out.write(template.render(path, template_values))
-
 
 # Given 'Z' or 'M', return the rules and description as JSON.
 class GetRulesHandler(webapp2.RequestHandler):
@@ -359,42 +358,6 @@ class TestTranslitHandler(webapp2.RequestHandler):
       self.response.out.write('%s\n' % result)    
  
   
-class FeedbackHandler(webapp2.RequestHandler):
-  # Show feedback form.
-  def get(self):
-  
-    template_values = {
-    
-    }
-    path = os.path.join(os.path.dirname(__file__), 'feedback.html')
-    self.response.out.write(template.render(path, template_values))
-
-  def post(self):
-    # Handle response to feedback data.  
-
-    sender_name = self.request.get('name')
-    description = self.request.get('description')
-    sender_email = self.request.get('email')
-
-    logging.info('Sender: %s (%s)\n' % (sender_name, sender_email))
-    logging.info("Description received = '%s'\n" % description)
-
-    email_body = ('sender: %s (%s)\n \nDescription: %s\n' %
-                   (sender_name, sender_email, description))
-
-    result = sendmail.send_mail('smtpauth.earthlink.net',
-         None, 'cwcornelius@gmail.com','cwcornelius@gmail.com',
-         'Feedback', email_body, False)
-          
-    template_values = {
-      'result': result
-    }
-    logging.info("EMail result: %s\n" % (result))
-
-    path = os.path.join(os.path.dirname(__file__), 'sendfeedback.html')
-    self.response.out.write(template.render(path, template_values))
-
-
 # Trial segmentation
 class SegmentHandler(webapp2.RequestHandler):
 
@@ -430,6 +393,17 @@ class convertBtoCHandler(webapp2.RequestHandler):
 
     self.response.out.write(json.dumps(obj))    
 
+# Show the ranges for the languages
+class RangeHandler(webapp2.RequestHandler):
+  def get(self):
+    for lang in charRanges.codeList:
+      lang.expand()
+    template_values = {'ranges': charRanges.codeList,
+    }
+    path = os.path.join(os.path.dirname(__file__), 'ranges.html')
+    self.response.out.write(template.render(path, template_values))
+
+
 # test for madlib handling
 class madlibHandler(webapp2.RequestHandler):
   def get(self):
@@ -457,6 +431,8 @@ class HelpHandler(webapp2.RequestHandler):
     ('/feedback', FeedbackHandler),
     ('/detect/', DetectionHandler),
     ('/convertui/', ConvertUIHandler),
+    ('/burmese/', ConvertUIHandler),
+    ('/zawgyi/', ConvertUIHandler),
     ('/convert2/', Convert2UIHandler),
     ('/convert/', ConvertHandler),
     ('/getrules/', GetRulesHandler),
@@ -468,6 +444,10 @@ class HelpHandler(webapp2.RequestHandler):
     ('/mon/', MmonHandler),
     ('/karen/', KarenHandler),
     ('/shan/', ShanHandler),
+    ('/ranges/', RangeHandler),
+    ('/detect/', markovDetect.DetectHandler),
+    ('/detectResult/', markovDetect.DetectResultHandler),
+
     ('/submiterror/', SubmitErrorHandler),
     ('/help/', HelpHandler)
     """
@@ -477,53 +457,6 @@ class HelpHandler(webapp2.RequestHandler):
    
 
 # Return help for commands
-class chrNumeralsHandler(webapp2.RequestHandler):
-  def get(self):
-    text = self.request.get('number', '')
-    debug = self.request.get('debug', 'off')
-    logging.info('input number is %s' % text)
-
-    if text == '' or text == None:
-      numeralList = []
-    else:
-      numeralList = chrNumerals.digitalToSequoah(int(text))
-
-    messageTrans = 'no translation'
-    # TODO: Activate this. messageTrans = _("testmsg")
-    
-    template_values = {
-        'number': text,
-        'numeralList': numeralList,
-        'debug_state': debug,
-        'testMsg': messageTrans
-	}
-	
-    
-    path = os.path.join(os.path.dirname(__file__), 'chrNumerals.html')
-    self.response.out.write(template.render(path, template_values))
-
-# Handles decimal conversion from front end.
-class chrDecimalNumeralsHandler(webapp2.RequestHandler):
-  def get(self):
-    text = self.request.get('number', '')
-    debug = self.request.get('debug', 'off')
-    logging.info('input number is %s' % text)
-    if text == '' or text == None:
-      numeralList = []
-    else:
-      text = text.replace(',', '')
-      lists = numeralList = chrNumerals.digitalToSequoah(int(text))
-      numeralList = lists[1]
-      stringList = lists[0]
-    logging.info('digitalToSequoah =  %s' % numeralList)
-   
-    template_values = {
-        'number': text, 'numeralList': numeralList, 
-        'stringList': stringList,
-        'debug_state': debug
-    }
-    self.response.out.write(json.dumps(template_values))
-
 def intWithCommas(x):
     #if type(x) not in [type(0), type(0L)]:
     #    raise TypeError("Parameter must be an integer.")
@@ -535,67 +468,38 @@ def intWithCommas(x):
         result = ",%03d%s" % (r, result)
     return "%d%s" % (x, result)
     
-# Handles CHR numerals to decimal conversion from front end.
-class chrToDecimalHandler(webapp2.RequestHandler):
-  def get(self):
-    debug = self.request.get('debug', 'off')
-    codes = self.request.get('chrCodes', '')
-    logging.info('input number is %s' % codes)
-    if codes == '' or codes == None:
-      codes = []
-      decimal = -1
-      formattedValue = 'PROBLEMS'  
-    else:
-      decimal = chrNumerals.processCodes(codes)
-      formattedValue = intWithCommas(decimal)
-      logging.info('FORMATTED = %s' % formattedValue)
-    template_values = {
-        'decimal': decimal,
-        'formatted': formattedValue,
-     	'codes': codes,
-        'debug_state': debug
-	}
-    self.response.out.write(json.dumps(template_values))
-
-# Calls tests, shows results.
-class sequoyahTestHandler(webapp2.RequestHandler):
-  def get(self):
-    test1Results = chrNumerals.testChrToDec()  
-    test2Results = chrNumerals.testDecToChr()
-    template_values = {
-      'CHR to decimal': test1Results,
-      'Decimal to CHR': test2Results,
-      'debug_state': 'on'
-	}
-    self.response.out.write(json.dumps(template_values))
-          
+  
 # Main handler setup.
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/t2/', MainHandler2),
-    ('/feedback', FeedbackHandler),
-    ('/detect/', DetectionHandler),
     ('/convertui/', ConvertUIHandler),
     ('/convert2/', Convert2UIHandler),
-    ('/convert/', ConvertHandler),
+    ('/convert/', convertHandler.ConvertHandler),  # Handles backend conversions.
     ('/getrules/', GetRulesHandler),
     ('/compare/', CompareTextHandler),
     ('/testtransliteration/', TestTranslitHandler),
     ('/segment/', SegmentHandler),
     ('/convertBtoC/', convertBtoCHandler),
     ('/zawgyi/', ConvertUIHandler),
+    ('/burmese/', ConvertUIHandler),
     ('/karen/', KarenHandler),
     ('/mon/', MonHandler),
     ('/shan/', ShanHandler),
+    ('/fontrules/', fontrules.FontRulesHandler),
     ('/help/', HelpHandler),
-    ('/entererror/', SubmitErrorHandler),
-    ('store_error_sample', StoreErrorHandle),
-    
-    ('/madlib/', madlibHandler),
-    ('/sequoyahsNumerals/', chrNumeralsHandler),
-    ('/setDecimalNumerals/', chrDecimalNumeralsHandler),
-    ('/chrToDecimal/', chrToDecimalHandler),
-    ('/sequoyahTest/', sequoyahTestHandler)
 
+    ('/feedback/', feedback.FeedbackHandler),
+    ('/entererror/', feedback.SubmitErrorHandler),
+    ('/store_error_sample/', feedback.StoreErrorHandler),
+    ('/getfeedback/', feedback.GetFeedbackHandler),
+    
+    ('/detect/', detector.DetectHandler),
+    ('/detectResult/', detector.DetectResultHandler),
+    ('/ComputeModel/', detector.ComputeModel),
+    
+    ('/ranges/', RangeHandler),
+    
+    ('/madlib/', madlibHandler)
 
   ], debug=True)

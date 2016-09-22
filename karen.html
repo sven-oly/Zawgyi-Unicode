@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html>
   <head>
     <title>Karen Text with Fonts
@@ -56,8 +57,12 @@
 	}
 	
 	// Set up the call.
+	var checked = document.getElementById("strip_blanks").checked;
 	var target = "/convert/?text=" + text_in + "&type=" + type +
 	  "&noreturn=1";
+	if (checked) {
+	  target = target + "&strip_spaces=true";
+  	}
 	//xmlhttp.open("POST", target, true);
 	xmlhttp.open("GET", target, true);
 	var size = target.length;
@@ -72,51 +77,69 @@
   <body onload="onload()">
 
   <div class="container">
-    <div class="span-24">
-      <h1>Test Karen language text conversion with several fonts</h1>
+
+    <div class="span-18">
+      <h1>Test Karen language text conversion</h1>
+  
+      <p>Paste text into the "Test" field. The characters will be shown
+      in the fonts, along with hex codes.
+      <p>Reference: <a href="http://www.kwekalu.net/" target="_blank">sample Karen in KNU encoding.</a>
+      <p>Text in Zwekabin font (Zawgyi-like): <a href="http://karenstudentcentre.org/">karenstudentcentre.org/</a>
     </div>
 
-    <p>Paste Myanmar text into the "Test" field. The characters will be shown
-    in the fonts, along with hex codes.
-    <p>Reference: <a href="http://www.kwekalu.net/" target="_blank">sample Karen in KNU encoding.</a>
-    <div>
-		<div class="span-16">
-		The first column
-		 <p><strong>Test:</strong>
-		  <p>
-		  <input type="text" id="TestEntry" class='notosans' size="40"
-			onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
-			 <p>(shown in NotoSans font)
-		  <div id="detectedZU"></div>
-		</div>
-		<div class="span-4 last">
-			<a href="/">Burmese & Zawgyi</a> <br />
+
+
+	<div class="span-3 last">
+			<a href="/burmese/">Burmese & Zawgyi</a> <br />
 			<a href="/shan/">Shan</a> <br />
 			<a href="/mon/">Mon</a> <br />
 			<a href="/karen/">Karen</a>
-        </div>
-    </div> 
-    <hr>
 
-    <div>
+	    	<br /><br />
+            <input type='button' value='Toggle zawgyi'
+                onClick="showhide('zawgyi'); return false;" />
+     </div>
+  </div>  <!-- end of container -->
+    <hr>
+  </div> 
+  <div class="container">
+    <div class="span-20 last">
+
+  	  <input type="text" id="TestEntry" class='notosans' size="40"
+		onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
+	  <br />(shown in NotoSans font)
+      <div id="detectedZU"></div>
+      
+    <div id='zawgyi' style="display: none;">
       <textarea id="z1"  class='zawgyi_one'
         rows="1" cols="40">{{default_zawgyi}}</textarea>
               Zawgyi One
+      <br />
       <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
       <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z')" />
     </div>
 
     <div>
-      <textarea id="knu"  class='knu'
+      <textarea id='knu'  class='knu'
         rows="1" cols="30">{{default_unimon}}</textarea>
               KNU
-      <input type="button" value="-> hex" onclick="textToHexField('knu', 'hexText')" />
+      <br />
       <input type="button" value="-> Unicode" onclick="convertRequest('knu', 'KNU')" />
+      <input type="checkbox" id="strip_blanks" value="StripSpaces" checked> Strip spaces<br>
     </div>
 
+    <div>
+      <textarea id='zwekabin'  class='zwekabin'
+        rows="1" cols="30">{{default_unimon}}</textarea>
+              Zwekabin
+      <br />
+      <input type="button" value="Zwe -> Unicode" onclick="convertRequest('zwekabin', 'ZWE')" />
+    </div>
+    
     <hr>
     <div>
-    Converted output:     <div id="msgArea" class='notosans14'> </div> 
+    Converted output:
+    <div id="msgArea" class='notosans14'> </div> 
       <textarea id="convertedText"  class='notosans'
         rows="1" cols="40">{{default_unicode}}</textarea>
       <textarea id="convertedHex"  class='notosans14'
@@ -127,21 +150,23 @@
       <textarea id="notoSans"  class='notosans'
         rows="1" cols="40">{{default_unicode}}</textarea>
       NotoSans Myanmar
-      <input type="button" value="Compare with converted"
+      <br />
+            <input type="button" value="Compare with converted"
        onclick="compareConvert('notoSans','convertedText')" />
     </div>
     <div id="msgArea" class='notosans14'> 
     </div> 
     <hr>
     
-    <div>
-    <p>Hex:</p>
+    <div id='controls'>
+    <p>Hex:
       <input type="text" id="hexText" onchange="enterHex()" size="100"/>
-      
+      <br />      
       <input type="submit" value="Convert hex to text" onSubmit="enterHex()" />
       <input type="button" value="-> scratch" onclick="copyText('hexText', 'scratchText')" />
       <input type="button" value="-> Unicode" onclick="hexToOutput('hexText', 'notoSans')" />
       <input type="button" value="-> KNU" onclick="hexToOutput('hexText', 'knu')" />
+      <input type="button" value="-> Zewkabin" onclick="hexToOutput('hexText', 'zwekabin')" />
 
     </div>
     
@@ -149,11 +174,16 @@
     <p>Scratch pad:</P>
     <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
        <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans')" />
-   
+     
+    </div>
     <hr>
     <br />
     <form action="/feedback" method="get">
       <input type="submit" value="Send feedback" />
-    </form>  
+    </form> 
+  </div>
+
+
+        
   </body>
 </html>

@@ -54,6 +54,10 @@
   }
 
   @font-face {
+    font-family: Mon2012;
+    src: url(/fonts/Mon 2012 00.ttf);
+  }
+  @font-face {
     font-family: KNU;
     src: url(/fonts/knu.TTF);
   }
@@ -139,7 +143,12 @@
     font-family: MonAnonta;
     font-size:30px;
   }
-  
+
+.mon2012  {
+    font-family: Mon2012;
+    font-size:30px;
+  }
+    
 .knu  {
     font-family: KNU;
     font-size:40px;
@@ -163,4 +172,15 @@
 .ZawgyiTai {
     font-family: ZawgyiTai;
     font-size:27px;
-  }  
+  }
+ 
+  @font-face {
+    font-family: Zwekabin;
+    src: url(/fonts/Zwekabin_karen_2036710441.ttf);
+  } 
+
+.zwekabin {
+    font-family: Zwekabin;
+    font-size:27px;
+  }
+ 

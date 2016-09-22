@@ -37,9 +37,15 @@ $zmedialra = [\u107E-\u107f\u1083];
 \u200b > ;
 
 # Mon specific conversions
-\u1022 > \u102f ;
-\u105a > \u1039 \u101b ;
-\u105b > \u105b \u103e ;  # ??
+\u1022 > \u105d ;
+\u1035 > \u1034 ;
+\u103e > \u105e ;
+\u103f > \u105f ;
+\u105b > \u1039 \u101b ;
+\u105c > \u1060 ;
+\u105d > \u1039 \u101e ;
+\u105e > \u1039 \u105c ;
+\u105f > \u1039 \u1021;
 
 \u1070 > \u100f \u1039 \u100f ;
 
@@ -49,13 +55,13 @@ $zmedialra = [\u107E-\u107f\u1083];
 \u1082 > \u103c ;
 \u1084 > \u1030 ;
 \u1085 > \u1039 \u1000 ;
-\u1098 > \u1039 \u101e ;
-\u1099 > \u1032 \u102d ;
-\u109a > \u1033 \u1085 ;
-\u109b > \u1039 \u1009 ;
-\u109c > \u1039 \u1009 ;
-\u109d > \u102b \u1032 ;
-\u109e > \u1039 \u100e ;
+\u1098 > \u1033 ;
+\u1099 > \u102d \u1032 ;
+($consonant) \u109a > $ukinzi $1 \u1033 ;
+\u109b > \u1039 \u100a ;
+\u109c > \u1039 \u100d ;
+\u109d > \u1035 ;
+\u109e > \u1039 \u100E ;
 \u109f > \u1039 \u105c ;
 
 $zmedialra > \u103c;
@@ -120,6 +126,7 @@ $zmedialra > \u103c;
 \u1092 > \u100B\u1039\u100C ;
 \u1097 > \u100B\u1039\u100B ;
 \u104E > \u104E\u1004\u103A\u1038 ;
+
 ##### STAGE (2): POST REORDERING RULES FOR UNICODE RENDERING
 ::Null;
 \u1044 \u103a > | \u104E \u103A ;
@@ -162,6 +169,10 @@ $zmedialra > \u103c;
 \u1038 ([\u1036\u1037\u103A]) > $1 \u1038;
 # NEW 5-May-2016
 \u1036 \u102f > \u102f \u1036;
+
+# Mon-specific
+\u102f \u1035 > \u1035 \u102f ;
+\u102f \u1034 > \u1034 \u102f ;
 #### Stage 6
 ::Null;
 ($consonant) \u103B \u103A > $1 \u103A \u103B;

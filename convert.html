@@ -1,8 +1,15 @@
+<!DOCTYPE HTML>
 <html>
   <head>
     <title>Convert Myanmar Text with Fonts
    </title>
 
+  <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
+  <![endif]-->
+  
   <link rel="stylesheet" type="text/css" href="/css/fonts.css">
   
    <script type="text/javascript" src="/js/shake-n-break.js">
@@ -34,7 +41,11 @@
     xmlhttp.onreadystatechange=function()
 	{
 	  if(xmlhttp.readyState==4) {
-	      var returned_json = xmlhttp.responseText
+	  	  if (xmlhttp.status != 200) {
+	  	    alert('Bad status =' + xmlhttp.status);
+	  	    return;
+	  	  }
+	      var returned_json = xmlhttp.responseText;
 		  var output_area = document.getElementById('convertedText');
 		  var json_obj = JSON.parse(returned_json);
 		  // alert(json_obj.converted);
@@ -43,21 +54,39 @@
 		  var hex_area = document.getElementById('convertedHex');
           hex_area.value = textToHex(json_obj.converted);
           
+          var inOutSizes = json_obj.inputSize + " " + json_obj.resultSize;
+          var testArea = document.getElementById('testOutput');
+          testArea.innerHTML = inOutSizes;
+          testArea.value = inOutSizes;
+
 		  var msg_area = document.getElementById('msgArea');
           msg_area.innerHTML = json_obj.msg;         
      }
 	}
 	
 	// Set up the call.
+    var encodedText = encodeURIComponent(text_in);
+	var encodedTarget = "/convert/?text=" + encodedText + "&type=" + type +
+	  "&noreturn=1";  // UNUSED
+
 	var target = "/convert/?text=" + text_in + "&type=" + type +
 	  "&noreturn=1";
-	//xmlhttp.open("POST", target, true);
 	xmlhttp.open("GET", target, true);
 	var size = target.length;
-	// xmlhttp.setRequestHeader("Content-length", target.length);
 	xmlhttp.send(null);	  
   }
 
+  // TODO: report data problem.
+  function reportProblem(type) {
+	  var converted_area = document.getElementById('convertedText');
+	  var input_area = document.getElementById('TestEntry');
+	var target = "/entererror/?input=" + input_area.value +
+	  "&converted=" + converted_area.value +
+	  "&type=" + type + 
+	  "&noreturn=1";	  
+	  // TODO: Send to back end to post in submitError.html.
+      window.location.href = target;
+  }
   </script>
 
 
@@ -65,12 +94,43 @@
   
   <body onload="onload()">
 
-    <h1>Test Myanmar text conversion with several Myanmar fonts</h1>
+  <div class="container">
+
+    <div class="span-18">
+
+    <h1>Test Myanmar text conversion</h1>
     <p>Just paste your Myanmar text into the "Test" field. The characters will be shown
     in the fonts, and hex codes will be shown.
     
+      <div>
+        Known Zawgyi source: <a href="http://burmese.voanews.com/"  target="_blank">
+        burmese.voanews.com</a>
+        <p>
+        Unicode source: <a href="http://www.bbc.com/burmese"  target="_blank">
+        bbc.com/burmese</a>
+        <p>Unicode <a href="http://unicode.org/charts/PDF/U1000.pdf">Myanmar block</a>,
+        <a href="http://unicode.org/charts/PDF/UAA60.pdf">Extended A</a>,
+        <a href="http://www.unicode.org/charts/PDF/UA9E0.pdf">Extended B</a>
+      </div>
+    </div>
+    <div class="span-4 last">
+			<a href="/burmese/">Burmese & Zawgyi</a> <br />
+			<a href="/shan/">Shan</a> <br />
+			<a href="/mon/">Mon</a> <br />
+			<a href="/karen/">Karen</a>
+
+	    	<br /><br />
+            <input type='button' value='Toggle fonts'
+                onClick="showhide('other_fonts'); return false;" />
+    </div>
+    </div>  <!-- container -->
+    
+  <div class="container">
+    <div class="span-1">
+    </div>
+    
+    <div class='span-19 last'>
     <div>
-      <p><strong>Test:</strong>
       <p>
       <input type="text" id="TestEntry" class='notosans' size="40"
         onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
@@ -80,7 +140,9 @@
 
     <hr>
 
-    <div>
+    <div id='other_fonts'>
+    <!-- <div id='other_fonts' style="display: none;"> -->
+      <div>
       <textarea id="z1"  class='zawgyi_one'
         rows="1" cols="40">{{default_zawgyi}}</textarea>
               Zawgyi One
@@ -90,11 +152,13 @@
     </div>
     
     <div>
+    <div onClick="showhide('myazediSection'); return false;" />Myazedi</div>
+     <div id='myazediSection' style="display: none;">
+
       <textarea id="myazedi" class='myazedi'
         rows="1" cols="40">{{default_myazedi}}</textarea>
-      Myazedi
-      <input type="button" value="-> hex" onclick="textToHexField('myazedi', 'hexText')" />
       <input type="button" value="-> Unicode" onclick="convertRequest('myazedi', 'M')" />
+      </div>
     </div>
     
     <hr>
@@ -104,8 +168,11 @@
         rows="1" cols="40">{{default_unicode}}</textarea>
       <textarea id="convertedHex"  class='notosans14'
         rows="2" cols="40">{{default_unicode}}</textarea>
-    </div>
+      <input type="button" value="Compare with Zawgyi"
+       onclick="compareConvert('z1','convertedText')" />    </div>
     <hr>
+  </div> <!-- id='other_fonts' -->
+
     <div>
       <textarea id="notoSans"  class='notosans'
         rows="1" cols="40">{{default_unicode}}</textarea>
@@ -133,11 +200,18 @@
     <p>Scratch pad:</P>
     <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
        <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans')" />
-   
+   </div>
     <hr>
     <br />
     <form action="/feedback" method="get">
       <input type="submit" value="Send feedback" />
     </form>  
-  </body>
+    <form action="/feedback" method="get">
+      <input type="submit" value="Report conversion problem"
+      onclick="return reportProblem('zawgyi');" />
+    </form>
+    </div>
+    <input type='text' id='testOutput' input>
+  </div> <!-- container -->
+     </body>
 </html>

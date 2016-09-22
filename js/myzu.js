@@ -21,15 +21,18 @@ function showhide(id) {
 
 function compareConvert(area1,area2) {
   // Open a comparison window with the resulting text.
-  var text1 = document.getElementById(area1).value;
-  var text2 = document.getElementById(area2).value;
+  var area1Elem = document.getElementById(area1);
+  var area2Elem = document.getElementById(area2);
+  var text1 = area1Elem.value;
+  var text2 = area2Elem.value;
    
-  compareUrl = "/compare/?text1=" + text1 +  "&text2=" + text2;
-  xmlhttp.open("GET", compareUrl, true);
+  compareUrl = "/compare/?text1=" + text1 + "&font1=" + area1Elem.className +
+    "&text2=" + text2 + "&font2=" + area2Elem.className;
+  //xmlhttp.open("GET", compareUrl, true);
 
   window.location=compareUrl;   
 }
-  
+
 function enterTestText(updateHex) {
   var infield = document.getElementById("TestEntry");
   var intext = infield.value;
@@ -44,9 +47,9 @@ function enterTestText(updateHex) {
 
   if (isU) {
     detMsg += "  Unicode";
-    if (isUwithTypo) {
-      detMsg += " with typos";
-    }
+//     if (isUwithTypo) {
+//       detMsg += " with typos";
+//     }
   }
   if (isM) {
     detMsg += "  Myazedi";
@@ -56,75 +59,42 @@ function enterTestText(updateHex) {
   }
   detField.innerHTML = detMsg;
   
-  var z1 = document.getElementById("z1");
-  if (z1) {
-    z1.innerHTML = intext;
-  }
-  var outElement = document.getElementById("z2008");
-  if (outElement) {
-    outElement.innerHTML = intext;
-  }
-  outElement = document.getElementById("myazedi");
-  if (outElement) {
-    outElement.innerHTML = intext;
-  }
-  outElement = document.getElementById("notoSans");
-  if (outElement) {
-    outElement.innerHTML = intext;
-  }
-  outElement = document.getElementById("padauk");
-  if (outElement) {
-    outElement.innerHTML = intext;
-  }
-  
-  // Mon fonts
-  outElement = document.getElementById("um");
-  if (outElement) {
-    outElement.innerHTML = intext;
-  }
-  outElement = document.getElementById("unimon_small");
-  if (outElement) {
-    outElement.innerHTML = intext;
-  }
-  outElement = document.getElementById("ramanya");
-  if (outElement) {
-    outElement.innerHTML = intext;
-  }
-  outElement = document.getElementById("mon");
-  if (outElement) {
-    outElement.innerHTML = intext;
-  }
-  outElement = document.getElementById("monuni");
-  if (outElement) {
-    outElement.innerHTML = intext;
-  }
-  outElement = document.getElementById("monanonta");
-  if (outElement) {
-    outElement.innerHTML = intext;
+  // Put the text into the text areas.
+  // Burmese
+  var burmeseAreas = ["z1", "z2008", "myazedi", "padauk"];
+  for (index = 0; index < burmeseAreas.length; ++index) {
+    outElement = document.getElementById(burmeseAreas[index]);
+    if (outElement) {
+      outElement.innerHTML = intext;
+    }
   }
 
-  // Karen fonts
-  outElement = document.getElementById("knu");
-  if (outElement) {
-    outElement.innerHTML = intext;
+  // Mon
+  var monAreas = ["um", "unimon_small", "unimon", "ramanya", "mon", "mon2012", "monuni",
+    "monanonta"];
+  for (index = 0; index < monAreas.length; ++index) {
+    outElement = document.getElementById(monAreas[index]);
+    if (outElement) {
+      outElement.innerHTML = intext;
+    }
   }
 
-  // Shan fonts
-  outElement = document.getElementById("shanunicode");
-  if (outElement) {
-    outElement.innerHTML = intext;
+  // Karen
+  var karenAreas = ["zwekabin", "knu"]
+  for (index = 0; index < karenAreas.length; ++index) {
+    outElement = document.getElementById(karenAreas[index]);
+    if (outElement) {
+      outElement.innerHTML = intext;
+    }
   }
-  outElement = document.getElementById("shanunicode2");
-  if (outElement) {
-    outElement.innerHTML = intext;
-  }
-  outElement = document.getElementById("panglong");
-  if (outElement) {
-    outElement.innerHTML = intext;
-  }
-  outElement = document.getElementById("ZawgyiTai");
-  if (outElement) {
-    outElement.innerHTML = intext;
+
+  // Shan
+  var shanAreas = ["shanunicode", "shanunicode2", "panglong", "ZawgyiTai"];
+  for (index = 0; index < shanAreas.length; ++index) {
+    outElement = document.getElementById(shanAreas[index]);
+    if (outElement) {
+      outElement.innerHTML = intext;
+    }
   }
 
   if (updateHex) {

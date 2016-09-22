@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Conversion rules for Myanmar script fonts
+   </title>
+
+  <link rel="stylesheet" type="text/css" href="/css/fonts.css">
+
+  <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
+  <![endif]-->
+  </head>
+  
+  <body>
+<h2>What this page contains</h2>
+<!-- TODO: make this localizable into Burmese, Shan, Mon, Karen, etc. -->
+<p>Here you will find the rules to convert data from font-encoded hacks toUnicode for
+some languages that use the Myanmary scripts.
+
+<h2>List of converters by language</h2>  
+  {% for lang in langlist %}
+  {{lang.name}}
+  <table>
+  {% for font in lang.fontlist %}
+    <tr>
+    <tl>{{font.name}}</tl>
+    <tl>{{font.rules}}</tl>
+    <tl>{{font.detector}}</tl>
+    <tl>{{font.notes}}</tl>
+    </tr>
+  {% endfor %}  <!-- end of font loop -->
+  </table>
+  
+  {% endfor %}  <!-- end of language loop -->
+  
+  <h2>
+  <p?Download Python Code for the converter.TODO
+  
+  <p>How to use it. TODO
+  </body>
+  
+  </hml>

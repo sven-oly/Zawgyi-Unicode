@@ -3,7 +3,7 @@
 
 # Modern Burmese digits & Unicode code points.
 # Mon is mostly Zawgyi, but some differences.
-MON_MONUNI_description = u'Mon font encoding conversion'
+MON_MONUNI_description = u'Mon Uni font encoding conversion'
 MON_MONUNI_TRANSLITERATE = u"""#
 $nondigits = [^\u1040-\u1049];
 $space = '\u0020';
@@ -51,10 +51,10 @@ $zmedialra = [\u107E-\u107f\u1083];
 \u1084 > \u1030 ;
 \u1085 > \u1039 \u1000 ;
 \u1098 > \u1039 \u101e ;
-\u1099 > \u1032 \u102d ;
-\u109a > \u1033 \u1085 ;
-\u109b > \u1039 \u1009 ;
-\u109c > \u1039 \u1009 ;
+\u1099 > \u102d \u1032 ;
+($consonant) \u109a > $ukinzi $1 \u1033 ;
+\u109b > \u1039 \u100a ;
+\u109c > \u1039 \u100d ;
 \u109d > \u102b \u1032 ;
 \u109e > \u1039 \u100e ;
 \u109f > \u1039 \u105c ;
@@ -64,19 +64,13 @@ $zmedialra > \u103c;
 \u108F > \u1014 ;
 \u1090 > \u101B ;
 \u1086 > \u103F ;
-\u103A > \u103B ;  # Rule 21
-\u103B > \u103C ;  # Rule 21
 \u107D > \u103B ;
 \u103C \u108A > \u103D \u103E;
-\u103C > \u103D ;  # Rule 24
 \u108A > \u103D \u103E ;
-\u103D > \u103E ;   # Rule 26
 \u1087 > \u103E ;
 \u1088 > \u103E \u102F ;
 \u1089 > \u103E \u1030 ;
 \u1039 > \u103A ;  # Rule 30
-\u1033 > \u102F ;
-\u1034 > \u1030 ;
 \u105A > \u102B \u103A ;
 \u108E > \u102D \u1036 ;
 \u1031 \u1094 ($consonant) \u103D > $1 \u103E \u1031 \u1037 ;
@@ -120,7 +114,6 @@ $zmedialra > \u103c;
 \u1091 > \u100F\u1039\u100D ;
 \u1092 > \u100B\u1039\u100C ;
 \u1097 > \u100B\u1039\u100B ;
-\u104E > \u104E\u1004\u103A\u1038 ;
 ##### STAGE (2): POST REORDERING RULES FOR UNICODE RENDERING
 ::Null;
 \u1044 \u103a > | \u104E \u103A ;

@@ -8,7 +8,7 @@ import sys
 import types
 
 
-# Default transliteration rules
+# Default transliteration framework
 import translit_myazedi
 import translit_zawgyi
 import translit_knu
@@ -379,14 +379,17 @@ def testList(transliterator):
       print '  Expected hex = %s' % uStringToHex(eList[i])    
 
 
-def transliterateFile(trans, fileName):
+def transliterateFile(trans, encoding, fileName):
   # Open a file, read the text, and transliterate it, line by line.
-  print '** transliterateFile %s' % (fileName)
-  infile = codecs.open(fileName, "r", "utf-8")
+  print '** transliterateFile %s for file %s' % (encoding, fileName)
+  infile = codecs.open(fileName, "rb") #, "utf-8")
+  print 'infile = %s' % (infile)
   lineNum = 0
   for line in infile:
+    print lineNum
     outline = trans.transliterate(line)
     print '%s\t%s' % (lineNum, outline)
+    lineNum += 1
   return
   
 def main(argv=None):
@@ -398,15 +401,19 @@ def main(argv=None):
     print inType, inFile
 
     if inType == 'knu':
-      trans = Transliterate(translit_knu.KNU_UNICODE_TRANSLITERATE)
+      trans = Transliterate(translit_knu.TRANS_LIT_RULES)
+      encoding = 'knu'
     elif inType == 'zawgyi':
-      trans = Transliterate(translit_zawgyi.ZAWGYI_UNICODE_TRANSLITERATE)
-    elif inType == 'mon':
-      trans = Transliterate(translit_zawgyi.ZAWGYI_UNICODE_TRANSLITERATE)
+      trans = Transliterate(translit_zawgyi.TRANS_LIT_RULES)
+      encoding = 'zawgyi'
+    elif inType == 'uni_mon':
+      trans = Transliterate(translit_zawgyi.UNIMON_UNICODE_TRANSLITERATE)
+      encoding = 'uni_mon'
     elif inType == 'shanthai':
-      trans = Transliterate(translit_zawgyi.ZAWGYI_UNICODE_TRANSLITERATE)
+      trans =  None  # Transliterate(translit_zawgyi.SHANTHAI_TRANSLITERATE)
+      encoding = 'shanthai'
   
-    transliterateFile(trans, inFile)
+    transliterateFile(trans, encoding, inFile)
     return 
 
   trans = Transliterate(translit_zawgyi.ZAWGYI_UNICODE_TRANSLITERATE)

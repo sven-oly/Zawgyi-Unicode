@@ -1,11 +1,18 @@
+<!DOCTYPE HTML>
 <html>
   <head>
     <title>Shan Text with Fonts
    </title>
 
+  <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
+  <![endif]-->
+ 
   <link rel="stylesheet" type="text/css" href="/css/fonts.css">
   
-   <script type="text/javascript" src="/js/shake-n-break.js"></script>
+  <script type="text/javascript" src="/js/shake-n-break.js"></script>
 
   <script type="text/javascript" src="/js/myzu.js"></script>
   
@@ -60,52 +67,67 @@
   </head>
   
   <body onload="onload()">
+  <div class="container">
+    <div class='span-1'>
+    </div>
+    <div class="span-23 last">
 
-    <h1>Test Shan language text conversion with several fonts</h1>
+
+    <h1>Test Shan language text</h1>
     <p>Paste Myanmar text into the "Test" field. The characters will be shown
     in the fonts, along with hex codes.
     <p>Reference: <a href="http://shan.panglong.org/t/" target="_blank">Shan panglong text.</a>
      <p>Reference: <a href="http://www.shanwomen.org/tai/" target="_blank">Shan Women.</a>
-   
-    <div>
-      <p><strong>Test:</strong>
-      <p>
-      <input type="text" id="TestEntry" class='notosans' size="40"
-        onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
-         (shown in NotoSans font)
-      <div id="detectedZU"></div>
     </div>
+       
 
+
+    <div>
+		<div class="span-16">
+		  <p>
+		  <input type="text" id="TestEntry" class='notosans' size="40"
+			onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
+			 <br />(shown in NotoSans font)
+		  <div id="detectedZU"></div>
+		</div>
+		<div class="span-4 last">
+			<a href="/burmese/">Burmese & Zawgyi</a> <br />
+			<a href="/shan/">Shan</a> <br />
+			<a href="/mon/">Mon</a> <br />
+			<a href="/karen/">Karen</a>
+
+	    	<br /><br />
+            <input type='button' value='Toggle fonts'
+                onClick="showhide('other_fonts'); return false;" />
+        </div>
+    </div>
     <hr>
 
-    <div>
+  <div id='other_fonts' style="display: none;">
+    <div id='zawgyi'>
       <textarea id="z1"  class='zawgyi_one'
         rows="1" cols="40">{{default_zawgyi}}</textarea>
               Zawgyi One
-      <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
       <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z')" />
     </div>
 
     <div>
-      <textarea id="shanunicode"  class='shanunicode'
+      <textarea id="shanunicode"  class="shanunicode"
         rows="1" cols="30">{{default_unimon}}</textarea>
               ShanUnicode
-      <input type="button" value="-> hex" onclick="textToHexField('shanunicode', 'hexText')" />
       <input type="button" value="-> Unicode" onclick="convertRequest('shanunicode', 'KNU')" />
     </div>
 
     <div>
-      <textarea id="shanunicode2"  class='shanunicode2'
+      <textarea id="shanunicode2"  class="shanunicode2"
         rows="1" cols="30">{{default_unimon}}</textarea>
-              Shan Unicode
-      <input type="button" value="-> hex" onclick="textToHexField('shanunicode2', 'hexText')" />
+              Shan Unicode 2
       <input type="button" value="-> Unicode" onclick="convertRequest('shanunicode2', 'KNU')" />
     </div>
      <div>
       <textarea id="panglong"  class='panglong'
         rows="1" cols="30">{{default_unimon}}</textarea>
               Panglong
-      <input type="button" value="-> hex" onclick="textToHexField('panglong', 'hexText')" />
       <input type="button" value="-> Unicode" onclick="convertRequest('panglong', 'KNU')" />
     </div>
 
@@ -113,7 +135,6 @@
       <textarea id="ZawgyiTai"  class='ZawgyiTai'
         rows="1" cols="30">{{default_unimon}}</textarea>
               Shan Tai
-      <input type="button" value="-> hex" onclick="textToHexField('ZawgyiTai', 'hexText')" />
       <input type="button" value="-> Unicode" onclick="convertRequest('ZawgyiTai', 'KNU')" />
     </div>
 
@@ -126,6 +147,8 @@
         rows="2" cols="40">{{default_unicode}}</textarea>
     </div>
     <hr>
+  </div> <!-- id='other_fonts' -->
+
     <div>
       <textarea id="notoSans"  class='notosans'
         rows="1" cols="40">{{default_unicode}}</textarea>
@@ -155,7 +178,7 @@
    
     <hr>
     <br />
-    <form action="/feedback" method="get">
+    <form action="/feedback/" method="get">
       <input type="submit" value="Send feedback" />
     </form>  
   </body>

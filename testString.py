@@ -4,7 +4,7 @@
 from google.appengine.ext import ndb
 
 class TestString(ndb.Model):
-    """A main model for representing an individual Guestbook entry."""
+    """A main model for representing an individual user feedback entry."""
     inputString = ndb.StringProperty(indexed=False)
     convertedString = ndb.StringProperty(indexed=False)
     comment = ndb.StringProperty(indexed=False)

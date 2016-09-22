@@ -1,7 +1,12 @@
 <html>
   <head>
-    <title>Compare strings
-   </title>
+    <title>Compare strings</title>
+
+  <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
+  <![endif]-->
 
   <link rel="stylesheet" type="text/css" href="/css/fonts.css">
   
@@ -114,33 +119,31 @@ document.onreadystatechange = function(){
   
   <body onload="onload()">
 
-    <h1>Text 1</h1>
+    <h2>Text 1 ({{font1}})</h2>
     <p>
     <div>
-      <textarea id="text1"  class='notosans'
-        rows="4" cols="40">{{t1}}</textarea>
-      Text 1
+      <textarea id="text1" form="report" class='{{font1}}' 
+        rows="1" cols="40">{{t1}}</textarea>
       <div id="t1_hex">
             <textarea  id="text1_hex"  class='notosans' style="font-size:14;"
-        rows="2" cols="80" />Hex2</textarea>
+        rows="1" cols="80" />Hex2</textarea>
         </div>
      </div>
-     <input type="button" value="Convert" onclick="hexToOutput('text1', 'text1')" />
+     <input type="button" value="hex to text" onclick="hexToOutput('text1_hex', 'text1')" />
  
-   <h1>Text 2</h1>   
+   <h2>Text 2 ({{font2}})</h2>   
     <div>
-      <textarea id="text2"  class='notosans'
-        rows="4" cols="40">{{t2}}</textarea>
-      Text 2
+      <textarea id="text2" form="report" class='{{font2}}'
+        rows="1" cols="40">{{t2}}</textarea>
         <div id="t2_hex">
             <textarea id="text2_hex"  class='notosans' style="font-size:14;"
-        rows="2" cols="80">Hex1</textarea>
+        rows="1" cols="80">Hex1</textarea>
         </div>
     </div>
-         <input type="button" value="hex to text" onclick="hexToOutput('text2', 'text2')" />
+         <input type="button" value="hex to text" onclick="hexToOutput('text2_hex', 'text2')" />
 
     
-    <form action="/feedback" method="get">
+    <form action="/feedback/" method="get" id="report">
       <input type="submit" value="Send feedback" />
     </form>  
     
