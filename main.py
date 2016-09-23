@@ -447,7 +447,8 @@ class HelpHandler(webapp2.RequestHandler):
     ('/ranges/', RangeHandler),
     ('/detect/', markovDetect.DetectHandler),
     ('/detectResult/', markovDetect.DetectResultHandler),
-
+    ('/ComputeModel/', detector.ComputeModel),
+	('/ShowAllModels/ ', detector.ShowAllModels),
     ('/submiterror/', SubmitErrorHandler),
     ('/help/', HelpHandler)
     """
@@ -497,7 +498,8 @@ app = webapp2.WSGIApplication([
     ('/detect/', detector.DetectHandler),
     ('/detectResult/', detector.DetectResultHandler),
     ('/ComputeModel/', detector.ComputeModel),
-    
+	('/ShowAllModels/', detector.ShowAllModels),
+	   
     ('/ranges/', RangeHandler),
     
     ('/madlib/', madlibHandler)

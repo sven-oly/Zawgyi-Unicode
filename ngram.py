@@ -8,6 +8,7 @@ import math
 import pickle
 import sys
 
+from detectorBase import detectorBase 
 
 #   Do post processing, removing any key that has a character outside the
 #   main script range, e.g., ASCII. Do the same for ASCII encodings such
@@ -19,8 +20,9 @@ ASCII_RANGE = [(ASCII_MIN, ASCII_MAX)]
 # Burmese ranges
 MYANMAR_SCRIPT_RANGES = [(0x1000, 0x109f), (0xAA60, 0xAA7f), (0xA9E0, 0xA9FF)]
 
-class ngramModel(object):
+class ngramModel(detectorBase):
   def __init__(self, lang, font, fileName=None):
+    self.detectorType = 'NGRAM'
     self.lang = lang
     self.font = font
     self.model = {}  # Dictionary to hold
@@ -71,9 +73,6 @@ class ngramModel(object):
       self.linesAdded += 1
     file.close()
     self.figureModelTotal()
-
-    # TEMPORARY:
-    print self
 
   def figureModelTotal(self):
     total = 0

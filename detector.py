@@ -16,6 +16,37 @@ from google.appengine.ext.webapp import template
 import ngram
 from ngram import ngramModel
 
+# Storage for pickeled objects.
+# Use this property to store objects.
+class ObjectProperty(db.BlobProperty):
+	def validate(self, value):
+		try:
+			result = pickle.dumps(value)
+			return value
+		except pickle.PicklingError, e:
+			return super(ObjectProperty, self).validate(value)
+
+	def get_value_for_datastore(self, model_instance):
+		result = super(ObjectProperty, self).get_value_for_datastore(model_instance)
+		result = pickle.dumps(result)
+		return db.Blob(result)
+
+	def make_value_from_datastore(self, value):
+		try:
+			value = pickle.loads(str(value))
+		except:
+			pass
+		return super(ObjectProperty, self).make_value_from_datastore(value)
+
+# Stores models
+class MyDetector(db.Model):
+  name = db.StringProperty()
+  lang = db.StringProperty()
+  font = db.StringProperty()
+  level = db.IntegerProperty()
+  obj = ObjectProperty() # The Detector object itself
+
+
 # Globals
 allModels = None
 
@@ -76,10 +107,6 @@ def loadModels():
     
   return (filenames, models)
   
-# Storage for pickeled objects.
-class MyEntity(db.Model):
-	name = db.StringProperty()
-	#obj = db.ObjectProperty() # Kudos
 	
 # Generates a model from a given file, language, font, and ngram.
 class ComputeModel(webapp2.RequestHandler):
@@ -95,12 +122,36 @@ class ComputeModel(webapp2.RequestHandler):
     nModel.setN(int(ngramLength))
     nModel.addFileToModel()
     
-    data = pickle.dumps(nModel)
+    name = '%s_%s_%s_%s' % (trainingFile, ngramLength,
+      lang, font)
+    entity = MyDetector(name=name, obj=nModel, lang=lang,
+      font=font, level=int(ngramLength))
+    entity.put() # Saves the entity to the datastore
+
+    logging.info('$$$$$$ entity: %s' % entity)
+   
+    # data = pickle.dumps(nModel)
 
     results = nModel.getModelStats()
-    
+    results['entity'] = entity.name
     self.response.out.write(json.dumps(results))
     
-    
 
+class ShowAllModels(webapp2.RequestHandler):
 
+  def get(self):
+    logging.info('ShowAllModels @#$%^&^*')
+    entities = MyDetector.all()
+    logging.info('ShowAllModels gets %s' % entities)
+    # entities = entities.fetch(10)
+    items = []
+    for entity in entities:
+      model = entity.obj
+      items.append([entity.name, entity.lang, entity.font, entity.level])
+
+    results = {
+      'numItems': len(items),
+      'items': items,
+    }
+
+    self.response.out.write(json.dumps(results))
