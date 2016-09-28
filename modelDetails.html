@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Model display
+   </title>
+
+  <link rel="stylesheet" type="text/css" href="/css/fonts.css">
+
+  <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
+  <![endif]-->
+  
+    <script type="text/javascript" >
+  // Code to request transliteration (conversion) and handle the return. 
+  function detectionRequest(source, type) {
+    // Get the text and prepare the call to server.
+    source_element = document.getElementById(source);
+    
+    //text_in = text_in.replace('\u0027', '%27');
+    
+    text_in = encodeURIComponent(source_element.value.replace('\u0027', '%27'));
+     
+    // Prepare for the call to the backendvar xmlhttp;
+	if (window.XMLHttpRequest)
+	  {
+	  // code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {
+	  // code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+
+    // Deal with the results	  
+    xmlhttp.onreadystatechange=function()
+	{
+	  if(xmlhttp.readyState==4) {
+	      var returned_json = xmlhttp.responseText
+		  var output_area = document.getElementById('detectResult');
+		  var json_obj = JSON.parse(returned_json);
+		  // alert(json_obj.converted);
+
+          output_area.innerHTML = json_obj.detected;
+          
+          var filenames = document.getElementById('filenames');
+		  filenames.innerHTML = json_obj.filenames;
+     }
+	}
+	
+	// Set up the call.
+	var target = "/detectResult/?text=" + text_in + "&noreturn=1";
+
+	xmlhttp.open("GET", target, true);
+	var size = target.length;
+	// xmlhttp.setRequestHeader("Content-length", target.length);
+	xmlhttp.send(null);	  
+  }
+  </script>
+  </head>
+  
+  <body>
+  <div class="container">
+    <div class="span-20 last">
+	<p>Name: {{name}}'
+	<p>Lang: {{lang}}
+	<p>Font: {{font}}
+	<p>Level: {{level}}
+	<p>Total count: {{totalNGram}}
+	<p>Details {{model_details}}
+   </div>  <!--container -->
+ 
+  <div
+  </body>
+  
+</html>

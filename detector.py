@@ -15,6 +15,8 @@ from google.appengine.ext.webapp import template
 # Import the model definition.
 import ngram
 from ngram import ngramModel
+import markov
+from markov import markovModel
 
 # Storage for pickeled objects.
 # Use this property to store objects.
@@ -137,6 +139,7 @@ class ComputeModel(webapp2.RequestHandler):
     self.response.out.write(json.dumps(results))
     
 
+
 class ShowAllModels(webapp2.RequestHandler):
 
   def get(self):
@@ -155,3 +158,32 @@ class ShowAllModels(webapp2.RequestHandler):
     }
 
     self.response.out.write(json.dumps(results))
+
+
+# Show details in text form for a single model.
+class ShowModelDetail(webapp2.RequestHandler):
+
+  def get(self):
+    modelID = self.request.get('modelID', 0)
+
+    logging.info('ShowModelDetail @#$%^&^*')
+    entities = MyDetector.all()
+    logging.info('ShowAllModels gets %s' % entities)
+    entities = entities.fetch(10)
+    items = []
+    entity = entities[modelID]
+    logging.info('  entity %s' % entity)
+    model = entity.obj
+    items.append([entity.name, entity.lang, entity.font, entity.level])
+
+    results = {
+      'name': entity.name,
+      'lang': entity.lang,
+      'font': entity.font,
+      'level': entity.level,
+      'totalNGram': model.totalNGram,
+      'model_details': model.model,
+    }
+
+    path = os.path.join(os.path.dirname(__file__), 'modelDetails.html')
+    self.response.out.write(template.render(path, results))
