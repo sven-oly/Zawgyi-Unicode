@@ -61,25 +61,54 @@ class DetectResultHandler(webapp2.RequestHandler):
     text = unicode(self.request.get('text'))
     logging.info('DetectResultHandler text         = %s' % text)
     filenames = None
+    detectLevel = int(self.request.get('level', '3'))
+    
+    # ??? 
     if allModels == None:
       (filenames, models) = loadModels()
       allModels = models
     else:
       models = allModels
-  
+      
+    entities = MyDetector.all()
+    entities3 = entities.filter('level =', detectLevel)
+    
+    models = [x.obj for x in entities3]
+    logging.info('models = %s' % models)
+
     # TODO: Call the detectors.
     if not models:
       result = 'NO DETECTION READY YET'
     else:
-      result = '%d models detected.' % len(allModels)
+      result = '%d models detected.' % len(models)
     logging.info('FILENAMES: %s' % filenames)
     
+    bestRank = -10.0
+    bestModel = None
+    ranks = []
+    for model in models:
+      (rank, raw) = model.rankText(text)
+      logging.info('  model %s (%d), rank = %f, raw = %d' %
+        (model.fileName, model.ngramLength, rank, raw))
+      ranks.append(rank)
+      if rank > bestRank:
+        bestRank = rank
+        bestModel = model
+    result = bestModel.fileName
+    resultLang = bestModel.lang
+
     msg = 'MESSAGE'
     obj = { 'input_text': text,
             'msg': msg,
             'detected': result,
-            'modelCount': models,
+            'detectedLang': bestModel.lang,
+            'detectedFont': bestModel.font,
+            'modelCount': len(models),
+            'ranks': ranks,
             'filenames': filenames,
+            #'bestModel': bestModel,
+            'bestRank': bestRank,
+            'bestModelName': bestModel.fileName,
     }
     self.response.out.write(json.dumps(obj))
 
@@ -98,7 +127,7 @@ class DetectHandler(webapp2.RequestHandler):
    
     
 def loadModels():
-  filenames = glob.glob('models/*2_model*.save')
+  filenames = glob.glob('models/*3_model*.save')
   logging.info('FILENAMES: %s' % filenames)
   models = None
   try:
@@ -187,3 +216,23 @@ class ShowModelDetail(webapp2.RequestHandler):
 
     path = os.path.join(os.path.dirname(__file__), 'modelDetails.html')
     self.response.out.write(template.render(path, results))
+
+# Removes all the models from the datastore
+class DeleteAllModels(webapp2.RequestHandler):
+
+  def get(self):
+    confirm = self.request.get('confirm')
+    
+    deleteMessage = 'Nothing deleted'
+
+    entities = MyDetector.all()
+    entities = entities.fetch(10)
+    results = {
+      'numModels': len(entities),
+      'deleteMsg': deleteMessage,
+    }
+    for e in entities:
+      result = MyDetector.delete(e)
+      logging.info('Delete result = %s' % result)
+      
+    self.response.out.write(json.dumps(results))

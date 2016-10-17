@@ -77,6 +77,7 @@ class ngramModel(detectorBase):
   def figureModelTotal(self):
     total = 0
     self.logSum = 0.0
+    samples = 0
     for key in self.model:
       total += self.model[key]
       self.logSum += math.log(self.model[key])
@@ -87,21 +88,11 @@ class ngramModel(detectorBase):
     # Returns number of items and total count removed.
     return self.pruneModelByRange(ASCII_RANGE)
 
-  def pruneModelByRange(self, rangeList):
-    # Remove model entries that have a range of characters in the key.
-    # Returns number of items and total count removed.
+  def removeKeys(self, keysToRemove):
+    # Get rid of keys in the list.
+    # Returns (count of items removed, total values removed)
     itemsRemoved = 0
     countRemoved = 0
-    keysToRemove = []
-    for range in rangeList:
-      exclude_min = range[0]
-      exclude_max = range[1]
-      for key in self.model:
-        for char in key:
-          ordChar = ord(char)
-          if 0 <= exclude_min and ordChar <= exclude_max:
-            keysToRemove.append(key)
-
     for key in keysToRemove:
       try:
         countRemoved += self.model[key]
@@ -111,6 +102,30 @@ class ngramModel(detectorBase):
         continue  # Already gone
     self.figureModelTotal()
     return (itemsRemoved, countRemoved)
+  
+  def quantizeByN(self, f):
+    # Remove model entries with fractional counts less than f.
+    # Returns number of items and total count removed.
+    keysToRemove = []
+    N = f * self.totalNGram
+    for key in self.model:
+      if self.model[key] < N:
+        keysToRemove.append(key)
+    return self.removeKeys(keysToRemove)
+   
+  def pruneModelByRange(self, rangeList):
+    # Remove model entries that have a range of characters in the key.
+    # Returns number of items and total count removed.
+    keysToRemove = []
+    for range in rangeList:
+      exclude_min = range[0]
+      exclude_max = range[1]
+      for key in self.model:
+        for char in key:
+          ordChar = ord(char)
+          if 0 <= exclude_min and ordChar <= exclude_max:
+            keysToRemove.append(key)
+    return self.removeKeys(keysToRemove)
 
   def getKey2(self, item):
     return item[1]
@@ -132,7 +147,7 @@ class ngramModel(detectorBase):
     print 'Model file name = %s' % self.modelFileName
     print '  Last file processed = %s' % self.fileName
     print '  lang = %s, font = %s, ngram = %s' % (self.lang, self.font, self.ngramLength)
-    print '  %d samples, %d lines, %d states, %d nGrams, sum(log(Ai)) = %f, factor=%f' % (
+    print '  %d samples, %d lines, %d states, %d nGrams, sum(log(Ai)) = %f, factor=%8.1f' % (
       self.numSamples, self.linesAdded, len(self.model), self.totalNGram, self.logSum,
       (-self.logSum + len(self.model) * math.log(self.totalNGram)))
 
@@ -156,7 +171,9 @@ class ngramModel(detectorBase):
     for key in self.model.keys():
       print key, self.model[key]
 
-  def saveModel(self, saveFileName):
+  def saveModel(self, saveFileName=None):
+    if saveFileName == None:
+      saveFileName = self.modelFileName
     file = codecs.open(saveFileName, 'wb')
     self.modelFileName = saveFileName
     pickle.dump(self, file)
@@ -178,7 +195,7 @@ class ngramModel(detectorBase):
       #  float(matchCount) / self.totalNGram) 
       ratio = math.log(float(matchCount) / self.totalNGram)
     else:
-      ratio = 0.0
+      ratio = -100.0
     return (ratio, matchCount)
 
 
@@ -304,10 +321,19 @@ def main(argv=None):
 
   # Try removing ASCII from the models.
   for model in allModels:
-    print 'MODEL = %s' % model
-    (result1, result2) = model.pruneModelByASCII()
-    print 'Removed %d items and %d states ' % (result1, result2)
+    print '---------------\nMODEL = %s' % model
     print model.printModelStats()
+    (result1, result2) = model.pruneModelByASCII()
+    print '  ASCII: Removed %d states and %d nGramTotal' % (result1, result2)
+    print model.printModelStats()
+    
+    # Reduce if the count is small.
+    minFraction = 0.0003
+    print '  Remove all less than %8.5f.' % (minFraction)
+    (result1, result2) = model.quantizeByN(minFraction)
+    print '  FRACTION Removed %d states and %d nGramTotal' % (result1, result2)
+    # print model.printModelStats()
+    # model.saveModel()
 
 
 if __name__ == "__main__":

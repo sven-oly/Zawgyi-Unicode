@@ -45,6 +45,15 @@
 
           output_area.innerHTML = json_obj.detected;
           
+		  var output_lang = document.getElementById('resultLang');
+          output_lang.innerHTML = json_obj.detectedLang;
+
+		  var output_font = document.getElementById('resultFont');
+          output_font.innerHTML = json_obj.detectedFont;
+
+   		  var output_ranks = document.getElementById('ranks');
+          output_ranks.innerHTML = json_obj.ranks;
+
           var filenames = document.getElementById('filenames');
 		  filenames.innerHTML = json_obj.filenames;
      }
@@ -57,6 +66,9 @@
 	var size = target.length;
 	// xmlhttp.setRequestHeader("Content-length", target.length);
 	xmlhttp.send(null);	  
+  }
+  
+  function enterTestText(value) {
   }
   </script>
   </head>
@@ -72,9 +84,13 @@
       <input type="button" value="Detect" onclick="detectionRequest('detectableText')" />
       
       <p>Detection result:
-      <div id='detectResult'>
-      
+      <div id='detectResult'>  
       </div>
+      Detected language: <div id='resultLang'>Detected lang</div>
+      Detected font: <div id='resultFont'>Detected font</div>
+     <p>Ranks: 
+      <div id='ranks'>
+      </div
       <p>Filenames:
       <div id='filenames'>
       </div>

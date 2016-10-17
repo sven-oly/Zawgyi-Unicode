@@ -1,0 +1,172 @@
+10 sample texts found
+Found 28 saved models: ['models/karenUnicode_2_model.save', 'models/karenUnicode_3_model.save', 'models/karenUnicode_4_model.save', 'models/karenUnicode_5_model.save', 'models/karenZwebakin_2_model.save', 'models/karenZwebakin_3_model.save', 'models/karenZwebakin_4_model.save', 'models/karenZwebakin_5_model.save', 'models/MonKoaModel_2_model.save', 'models/MonKoaModel_3_model.save', 'models/MonKoaModel_4_model.save', 'models/MonKoaModel_5_model.save', 'models/monUnicode_2_model.save', 'models/monUnicode_3_model.save', 'models/monUnicode_4_model.save', 'models/monUnicode_5_model.save', 'models/shanUnicode_2_model.save', 'models/shanUnicode_3_model.save', 'models/shanUnicode_4_model.save', 'models/shanUnicode_5_model.save', 'models/UnicodeBurmese_Model_2_model.save', 'models/UnicodeBurmese_Model_3_model.save', 'models/UnicodeBurmese_Model_4_model.save', 'models/UnicodeBurmese_Model_5_model.save', 'models/ZawgyiModel_2_model.save', 'models/ZawgyiModel_3_model.save', 'models/ZawgyiModel_4_model.save', 'models/ZawgyiModel_5_model.save']
+
+Sample 0, lang = burmese, font=zawgyi, note=Zawgyi text from http://burmese.voanews.com/
+Model file name = 
+  Last file processed = None
+  lang = unknown lang, font = unknown encoding, ngram = 3
+  525 samples, 0 lines, 339 states, 525 nGrams, sum(log(Ai)) = 92.750448, factor=  2030.5
+  ** Error in printing text.
+
+  model testdata/Karen.txt (4), rank = -7.154811, raw = 4
+  model testdata/Zwebakin.txt (4), rank = -2.020150, raw = 773
+  model testdata/Mon_kaowao.txt (4), rank = -3.984189, raw = 120
+  model testdata/monUnicode.txt (4), rank = -4.043903, raw = 247
+  model testdata/shanUnicode.txt (4), rank = -100.000000, raw = 0
+  model testdata/burmeseUnicode.txt (4), rank = -3.555492, raw = 199
+  model testdata/zawgi_VOA_samples.txt (4), rank = -1.005439, raw = 7917
+Best match = burmese, zawgyi (4), rank = -1.005439
+  Expected lang = burmese, font=zawgyi
+
+Sample 1, lang = burmese, font=unicode, note=Burmese Unicode from http://www.bbc.com/burmese
+Model file name = 
+  Last file processed = None
+  lang = unknown lang, font = unknown encoding, ngram = 3
+  515 samples, 0 lines, 320 states, 515 nGrams, sum(log(Ai)) = 97.064610, factor=  1901.1
+  ** Error in printing text.
+
+  model testdata/Karen.txt (4), rank = -3.247800, raw = 199
+  model testdata/Zwebakin.txt (4), rank = -4.251589, raw = 83
+  model testdata/Mon_kaowao.txt (4), rank = -6.692239, raw = 8
+  model testdata/monUnicode.txt (4), rank = -0.908937, raw = 5678
+  model testdata/shanUnicode.txt (4), rank = -3.195742, raw = 530
+  model testdata/burmeseUnicode.txt (4), rank = -0.834130, raw = 3025
+  model testdata/zawgi_VOA_samples.txt (4), rank = -3.303864, raw = 795
+Best match = burmese, unicode (4), rank = -0.834130
+  Expected lang = burmese, font=unicode
+
+Sample 2, lang = mon, font=mon, note=Mon font encoded from ...
+Model file name = 
+  Last file processed = None
+  lang = unknown lang, font = unknown encoding, ngram = 3
+  689 samples, 0 lines, 390 states, 689 nGrams, sum(log(Ai)) = 131.679178, factor=  2417.1
+  ** Error in printing text.
+
+  model testdata/Karen.txt (4), rank = -100.000000, raw = 0
+  model testdata/Zwebakin.txt (4), rank = -4.496042, raw = 65
+  model testdata/Mon_kaowao.txt (4), rank = -0.579387, raw = 3613
+  model testdata/monUnicode.txt (4), rank = -100.000000, raw = 0
+  model testdata/shanUnicode.txt (4), rank = -100.000000, raw = 0
+  model testdata/burmeseUnicode.txt (4), rank = -8.155649, raw = 2
+  model testdata/zawgi_VOA_samples.txt (4), rank = -4.919611, raw = 158
+Best match = mon, monkoa (4), rank = -0.579387
+  Expected lang = mon, font=mon
+
+Sample 3, lang = mon, font=unicode, note=Mon data from burmese.monnews.org
+Model file name = 
+  Last file processed = None
+  lang = unknown lang, font = unknown encoding, ngram = 3
+  780 samples, 0 lines, 311 states, 780 nGrams, sum(log(Ai)) = 240.451110, factor=  1830.6
+  ** Error in printing text.
+
+  model testdata/Karen.txt (4), rank = -2.638472, raw = 366
+  model testdata/Zwebakin.txt (4), rank = -4.216082, raw = 86
+  model testdata/Mon_kaowao.txt (4), rank = -6.469095, raw = 10
+  model testdata/monUnicode.txt (4), rank = -0.476940, raw = 8746
+  model testdata/shanUnicode.txt (4), rank = -2.668449, raw = 898
+  model testdata/burmeseUnicode.txt (4), rank = -0.816436, raw = 3079
+  model testdata/zawgi_VOA_samples.txt (4), rank = -3.480917, raw = 666
+Best match = mon, unicode (4), rank = -0.476940
+  Expected lang = mon, font=unicode
+
+Sample 4, lang = shan, font=unicode, note=Shan data from http://shan.panglong.org/
+Model file name = 
+  Last file processed = None
+  lang = unknown lang, font = unknown encoding, ngram = 3
+  692 samples, 0 lines, 434 states, 692 nGrams, sum(log(Ai)) = 121.782329, factor=  2716.4
+  ** Error in printing text.
+
+  model testdata/Karen.txt (4), rank = -6.595195, raw = 7
+  model testdata/Zwebakin.txt (4), rank = -100.000000, raw = 0
+  model testdata/Mon_kaowao.txt (4), rank = -100.000000, raw = 0
+  model testdata/monUnicode.txt (4), rank = -5.333784, raw = 68
+  model testdata/shanUnicode.txt (4), rank = -0.672583, raw = 6608
+  model testdata/burmeseUnicode.txt (4), rank = -5.211210, raw = 38
+  model testdata/zawgi_VOA_samples.txt (4), rank = -100.000000, raw = 0
+Best match = shan, unicode (4), rank = -0.672583
+  Expected lang = shan, font=unicode
+
+Sample 5, lang = karen, font=unicode, note=Karen data converted from KNU font from http://www.kwekalu.net/
+Model file name = 
+  Last file processed = None
+  lang = unknown lang, font = unknown encoding, ngram = 3
+  674 samples, 0 lines, 399 states, 674 nGrams, sum(log(Ai)) = 124.674015, factor=  2474.1
+  ** Error in printing text.
+
+  model testdata/Karen.txt (4), rank = -1.386490, raw = 1280
+  model testdata/Zwebakin.txt (4), rank = -100.000000, raw = 0
+  model testdata/Mon_kaowao.txt (4), rank = -100.000000, raw = 0
+  model testdata/monUnicode.txt (4), rank = -100.000000, raw = 0
+  model testdata/shanUnicode.txt (4), rank = -8.775472, raw = 2
+  model testdata/burmeseUnicode.txt (4), rank = -8.848796, raw = 1
+  model testdata/zawgi_VOA_samples.txt (4), rank = -100.000000, raw = 0
+Best match = karen, unicode (4), rank = -1.386490
+  Expected lang = karen, font=unicode
+
+Sample 6, lang = karen, font=zwebakin, note=Karen data
+Model file name = 
+  Last file processed = None
+  lang = unknown lang, font = unknown encoding, ngram = 3
+  1711 samples, 0 lines, 901 states, 1711 nGrams, sum(log(Ai)) = 353.221717, factor=  6354.6
+  ** Error in printing text.
+
+  model testdata/Karen.txt (4), rank = -5.139908, raw = 30
+  model testdata/Zwebakin.txt (4), rank = -0.028897, raw = 5662
+  model testdata/Mon_kaowao.txt (4), rank = -3.415094, raw = 212
+  model testdata/monUnicode.txt (4), rank = -2.881259, raw = 790
+  model testdata/shanUnicode.txt (4), rank = -6.983713, raw = 12
+  model testdata/burmeseUnicode.txt (4), rank = -1.874318, raw = 1069
+  model testdata/zawgi_VOA_samples.txt (4), rank = -0.143204, raw = 18751
+Best match = karen, zwebakin (4), rank = -0.028897
+  Expected lang = karen, font=zwebakin
+
+Sample 7, lang = karen, font=unicode, note=Zwebakin converted to Unicode
+Model file name = 
+  Last file processed = None
+  lang = unknown lang, font = unknown encoding, ngram = 3
+  458 samples, 0 lines, 352 states, 458 nGrams, sum(log(Ai)) = 61.415968, factor=  2095.2
+  ** Error in printing text.
+
+  model testdata/Karen.txt (4), rank = -4.463568, raw = 59
+  model testdata/Zwebakin.txt (4), rank = -3.834147, raw = 126
+  model testdata/Mon_kaowao.txt (4), rank = -8.078533, raw = 2
+  model testdata/monUnicode.txt (4), rank = -1.799239, raw = 2331
+  model testdata/shanUnicode.txt (4), rank = -4.883652, raw = 98
+  model testdata/burmeseUnicode.txt (4), rank = -1.784892, raw = 1169
+  model testdata/zawgi_VOA_samples.txt (4), rank = -4.772720, raw = 183
+Best match = burmese, unicode (4), rank = -1.784892
+  Expected lang = karen, font=unicode
+
+Sample 8, lang = karen?, font=unicode, note=Zwebakin from pahteepakaw.blogspot.com/2013/12/moe-zay-nyein-facebook.html
+Model file name = 
+  Last file processed = None
+  lang = unknown lang, font = unknown encoding, ngram = 3
+  407 samples, 0 lines, 278 states, 407 nGrams, sum(log(Ai)) = 76.309660, factor=  1594.1
+  ** Error in printing text.
+
+  model testdata/Karen.txt (4), rank = -6.143210, raw = 11
+  model testdata/Zwebakin.txt (4), rank = -2.498729, raw = 479
+  model testdata/Mon_kaowao.txt (4), rank = -5.108119, raw = 39
+  model testdata/monUnicode.txt (4), rank = -5.134451, raw = 83
+  model testdata/shanUnicode.txt (4), rank = -100.000000, raw = 0
+  model testdata/burmeseUnicode.txt (4), rank = -4.674409, raw = 65
+  model testdata/zawgi_VOA_samples.txt (4), rank = -2.304343, raw = 2160
+Best match = burmese, zawgyi (4), rank = -2.304343
+  Expected lang = karen?, font=unicode
+
+Sample 9, lang = karen, font=unicode, note=Converted from KNU
+Model file name = 
+  Last file processed = None
+  lang = unknown lang, font = unknown encoding, ngram = 3
+  206 samples, 0 lines, 149 states, 206 nGrams, sum(log(Ai)) = 29.336454, factor=   764.5
+  ** Error in printing text.
+
+  model testdata/Karen.txt (4), rank = -2.547144, raw = 401
+  model testdata/Zwebakin.txt (4), rank = -100.000000, raw = 0
+  model testdata/Mon_kaowao.txt (4), rank = -100.000000, raw = 0
+  model testdata/monUnicode.txt (4), rank = -100.000000, raw = 0
+  model testdata/shanUnicode.txt (4), rank = -100.000000, raw = 0
+  model testdata/burmeseUnicode.txt (4), rank = -100.000000, raw = 0
+  model testdata/zawgi_VOA_samples.txt (4), rank = -100.000000, raw = 0
+Best match = karen, unicode (4), rank = -2.547144
+  Expected lang = karen, font=unicode

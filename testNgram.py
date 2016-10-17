@@ -151,7 +151,15 @@ Zwekabain font ကိုသံုးၿပီး ကရင္စာေတြ ႐
    ဆက္လက္ေထာက္လွမ္း စံုစမ္းလ်က္ ရွိပါသည္။
   """)
   )
-  
+
+  sampleTexts.append(
+    Sample('karen', 'unicode', note='Converted from KNU',  
+      string = u"""ပဒိၣ်တဖုအံၤကပတုာဃ်ာ၀ဲဃိၣ်လိာကျိထံတမၢၣ်လၢ
+      ဃိၣ်လိာကျိအပူၤမ့ၢ်လၢအူသ့စ့ၣ်ပဒိၣ်အတၢ်ရဲၣ်တၢ်ကျဲၤလၢတၢ်ကဆဲးမၤသကိး၀ဲထံတမၢၣ်တၢ်တိာကျဲၤအံၤတၢ်ဒုးသ့ၣ်ညါ
+      လီၢ်က၀ီၤထံဖိကီၢ်ဖိတအိၣ်၀ဲဂ့ၤဂ့ၤဘၣ်ဘၣ်ဘၣ်အဃိန့ၣ်လီၤ
+      """
+      )
+  )
 
 def computeTextModel(text):
   textModel = ngramModel('unknown lang', 'unknown encoding')
@@ -186,6 +194,13 @@ def main(argv=None):
 
   # TODO: Consider pruning each model for ASCII.
   
+  testSize = 5
+  models3 = []
+  for m in allModels:
+    if m.ngramLength == testSize:
+      models3.append(m)
+  
+  testModels = models3    
   index = 0
   for sample in sampleTexts:
     intext = sample.text
@@ -199,13 +214,14 @@ def main(argv=None):
     except UnicodeEncodeError:
       print '  ** Error in printing text.'
     print 
-    (bestModel, bestRank) = ngram.tryMatch(allModels, intext, note)
+    (bestModel, bestRank) = ngram.tryMatch(testModels, intext, note)
     print 'Best match = %s, %s (%d), rank = %f' % (
       bestModel.lang, bestModel.font, bestModel.ngramLength, bestRank)
+    print '  Expected lang = %s, font=%s' % (sample.lang, sample.font)
     index += 1  
   
   # Testing histogram for Zawgyi
-  showHistogram(allModels, 0)
+  # showHistogram(allModels, 0)
   
 if __name__ == "__main__":
     sys.exit(main(sys.argv))

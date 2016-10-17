@@ -499,6 +499,7 @@ app = webapp2.WSGIApplication([
     ('/detectResult/', detector.DetectResultHandler),
     ('/ComputeModel/', detector.ComputeModel),
 	('/ShowAllModels/', detector.ShowAllModels),
+	('/DeleteAllModels/', detector.DeleteAllModels),
 	('/ShowModelDetail/', detector.ShowModelDetail), 
     ('/ranges/', RangeHandler),
     

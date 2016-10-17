@@ -196,6 +196,7 @@ class markovModel(detectorBase):
     #   match as fraction of model size
     #   raw match count
     matchCount = 0
+    probTotal = 0.0
     for keyTuple in self.getKeyTuple(intext):
       A = keyTuple[0]
       B = keyTuple[1]
@@ -203,13 +204,15 @@ class markovModel(detectorBase):
         if B in self.probBGivenA[A]:
           count = self.probBGivenA[A][B]
           matchCount += count
+          probBGivenA = float(count) / self.probA[A]
+          probTotal += -math.log(probBGivenA) 
     if matchCount > 0:
       #print 'MATCH = %d, totalNGram = %d, ratio = %f'  % (matchCount, self.totalNGram,
       #  float(matchCount) / self.totalNGram) 
       ratio = math.log(float(matchCount) / self.totalNGram)
     else:
       ratio = 0.0
-    return (ratio, matchCount)
+    return (ratio, matchCount, probTotal)
 
 
 # Boolean indicating if a code point is in the list of ranges.
@@ -252,13 +255,19 @@ def allModelStats(models):
 def tryMatch(modelList, testText, note): 
   bestRank = -10.0
   bestModel = None
+  bestProb = -1000
+  bestProbModel = None
   for model in modelList:
-    (rank, raw) = model.rankText(testText)
-    print '  model %s (%d), rank = %f, raw = %d' % (model.fileName, model.ngramLength, rank, raw)
+    (rank, raw, probResult) = model.rankText(testText)
+    print '  model %s (%d), rank = %f, raw = %d, prob = %f' % (
+      model.fileName, model.ngramLength, rank, raw, probResult)
+    if probResult > bestProb:
+      bestProb = probResult
+      bestProbModel = model
     if rank > bestRank:
       bestRank = rank
       bestModel = model
-  return (bestModel, bestRank)
+  return (bestProbModel, bestProb) # bestModel, bestRank, 
 
 
 def generateZawgyiModels():  

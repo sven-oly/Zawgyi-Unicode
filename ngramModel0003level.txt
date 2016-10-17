@@ -1,0 +1,419 @@
+MODEL = <__main__.ngramModel object at 0x1032b0b10>
+Model file name = models/karenUnicode_2_model.save
+  Last file processed = testdata/Karen.txt
+  lang = karen, font = unicode, ngram = 2
+  5597 samples, 1 lines, 859 states, 5597 nGrams, sum(log(Ai)) = 979.070126, factor=  6434.1
+None
+  ASCII: Removed 87 states and 261 nGramTotal
+Model file name = models/karenUnicode_2_model.save
+  Last file processed = testdata/Karen.txt
+  lang = karen, font = unicode, ngram = 2
+  5597 samples, 1 lines, 772 states, 5336 nGrams, sum(log(Ai)) = 919.130905, factor=  5706.4
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 243 states and 243 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0b50>
+Model file name = models/karenUnicode_3_model.save
+  Last file processed = testdata/Karen.txt
+  lang = karen, font = unicode, ngram = 3
+  11193 samples, 2 lines, 2232 states, 5596 nGrams, sum(log(Ai)) = 1127.465962, factor= 18134.3
+None
+  ASCII: Removed 218 states and 371 nGramTotal
+Model file name = models/karenUnicode_3_model.save
+  Last file processed = testdata/Karen.txt
+  lang = karen, font = unicode, ngram = 3
+  11193 samples, 2 lines, 2014 states, 5225 nGrams, sum(log(Ai)) = 1059.205648, factor= 16183.1
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 1176 states and 1176 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b03d0>
+Model file name = models/karenUnicode_4_model.save
+  Last file processed = testdata/Karen.txt
+  lang = karen, font = unicode, ngram = 4
+  16788 samples, 3 lines, 3251 states, 5595 nGrams, sum(log(Ai)) = 999.163725, factor= 27055.8
+None
+  ASCII: Removed 347 states and 474 nGramTotal
+Model file name = models/karenUnicode_4_model.save
+  Last file processed = testdata/Karen.txt
+  lang = karen, font = unicode, ngram = 4
+  16788 samples, 3 lines, 2904 states, 5121 nGrams, sum(log(Ai)) = 938.164516, factor= 23865.2
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 2041 states and 2041 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0410>
+Model file name = models/karenUnicode_5_model.save
+  Last file processed = testdata/Karen.txt
+  lang = karen, font = unicode, ngram = 5
+  22382 samples, 4 lines, 3906 states, 5594 nGrams, sum(log(Ai)) = 795.922827, factor= 32910.7
+None
+  ASCII: Removed 458 states and 576 nGramTotal
+Model file name = models/karenUnicode_5_model.save
+  Last file processed = testdata/Karen.txt
+  lang = karen, font = unicode, ngram = 5
+  22382 samples, 4 lines, 3448 states, 5018 nGrams, sum(log(Ai)) = 739.788071, factor= 28639.9
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 2707 states and 2707 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0390>
+Model file name = models/karenZwebakin_2_model.save
+  Last file processed = testdata/Zwebakin.txt
+  lang = karen, font = zwebakin, ngram = 2
+  8903 samples, 99 lines, 1056 states, 8903 nGrams, sum(log(Ai)) = 1260.404294, factor=  8343.0
+None
+  ASCII: Removed 270 states and 1683 nGramTotal
+Model file name = models/karenZwebakin_2_model.save
+  Last file processed = testdata/Zwebakin.txt
+  lang = karen, font = zwebakin, ngram = 2
+  8903 samples, 99 lines, 786 states, 7220 nGrams, sum(log(Ai)) = 1039.952865, factor=  5943.4
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 357 states and 473 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0950>
+Model file name = models/karenZwebakin_3_model.save
+  Last file processed = testdata/Zwebakin.txt
+  lang = karen, font = zwebakin, ngram = 3
+  17743 samples, 198 lines, 2829 states, 8840 nGrams, sum(log(Ai)) = 1800.975574, factor= 23906.3
+None
+  ASCII: Removed 869 states and 2318 nGramTotal
+Model file name = models/karenZwebakin_3_model.save
+  Last file processed = testdata/Zwebakin.txt
+  lang = karen, font = zwebakin, ngram = 3
+  17743 samples, 198 lines, 1960 states, 6522 nGrams, sum(log(Ai)) = 1332.301287, factor= 15882.3
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 1021 states and 1021 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b09d0>
+Model file name = models/karenZwebakin_4_model.save
+  Last file processed = testdata/Zwebakin.txt
+  lang = karen, font = zwebakin, ngram = 4
+  26520 samples, 297 lines, 4637 states, 8777 nGrams, sum(log(Ai)) = 1653.665201, factor= 40449.8
+None
+  ASCII: Removed 1721 states and 2949 nGramTotal
+Model file name = models/karenZwebakin_4_model.save
+  Last file processed = testdata/Zwebakin.txt
+  lang = karen, font = zwebakin, ngram = 4
+  26520 samples, 297 lines, 2916 states, 5828 nGrams, sum(log(Ai)) = 1152.569127, factor= 24130.4
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 1915 states and 1915 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0a50>
+Model file name = models/karenZwebakin_5_model.save
+  Last file processed = testdata/Zwebakin.txt
+  lang = karen, font = zwebakin, ngram = 5
+  35234 samples, 396 lines, 5882 states, 8714 nGrams, sum(log(Ai)) = 1298.502254, factor= 52067.0
+None
+  ASCII: Removed 2556 states and 3560 nGramTotal
+Model file name = models/karenZwebakin_5_model.save
+  Last file processed = testdata/Zwebakin.txt
+  lang = karen, font = zwebakin, ngram = 5
+  35234 samples, 396 lines, 3326 states, 5154 nGrams, sum(log(Ai)) = 826.209246, factor= 27602.9
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 2528 states and 2528 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0ad0>
+Model file name = models/MonKoaModel_2_model.save
+  Last file processed = testdata/Mon_kaowao.txt
+  lang = mon, font = monkoa, ngram = 2
+  9637 samples, 181 lines, 1267 states, 9637 nGrams, sum(log(Ai)) = 1388.505662, factor= 10234.1
+None
+  ASCII: Removed 267 states and 1747 nGramTotal
+Model file name = models/MonKoaModel_2_model.save
+  Last file processed = testdata/Mon_kaowao.txt
+  lang = mon, font = monkoa, ngram = 2
+  9637 samples, 181 lines, 1000 states, 7890 nGrams, sum(log(Ai)) = 1165.312734, factor=  7808.0
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 488 states and 634 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0c10>
+Model file name = models/MonKoaModel_3_model.save
+  Last file processed = testdata/Mon_kaowao.txt
+  lang = mon, font = monkoa, ngram = 3
+  19100 samples, 362 lines, 3147 states, 9463 nGrams, sum(log(Ai)) = 1841.736800, factor= 26969.5
+None
+  ASCII: Removed 857 states and 2311 nGramTotal
+Model file name = models/MonKoaModel_3_model.save
+  Last file processed = testdata/Mon_kaowao.txt
+  lang = mon, font = monkoa, ngram = 3
+  19100 samples, 362 lines, 2290 states, 7152 nGrams, sum(log(Ai)) = 1409.040866, factor= 18915.0
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 1656 states and 2083 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0c90>
+Model file name = models/MonKoaModel_4_model.save
+  Last file processed = testdata/Mon_kaowao.txt
+  lang = mon, font = monkoa, ngram = 4
+  28391 samples, 543 lines, 4848 states, 9291 nGrams, sum(log(Ai)) = 1681.737499, factor= 42613.5
+None
+  ASCII: Removed 1619 states and 2842 nGramTotal
+Model file name = models/MonKoaModel_4_model.save
+  Last file processed = testdata/Mon_kaowao.txt
+  lang = mon, font = monkoa, ngram = 4
+  28391 samples, 543 lines, 3229 states, 6449 nGrams, sum(log(Ai)) = 1205.216000, factor= 27118.5
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 2163 states and 2163 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0d10>
+Model file name = models/MonKoaModel_5_model.save
+  Last file processed = testdata/Mon_kaowao.txt
+  lang = mon, font = monkoa, ngram = 5
+  37510 samples, 724 lines, 5934 states, 9119 nGrams, sum(log(Ai)) = 1362.443344, factor= 52744.5
+None
+  ASCII: Removed 2337 states and 3345 nGramTotal
+Model file name = models/MonKoaModel_5_model.save
+  Last file processed = testdata/Mon_kaowao.txt
+  lang = mon, font = monkoa, ngram = 5
+  37510 samples, 724 lines, 3597 states, 5774 nGrams, sum(log(Ai)) = 913.602838, factor= 30240.4
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 2728 states and 2728 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0d90>
+Model file name = models/monUnicode_2_model.save
+  Last file processed = testdata/monUnicode.txt
+  lang = mon, font = unicode, ngram = 2
+  23451 samples, 136 lines, 1133 states, 23451 nGrams, sum(log(Ai)) = 1905.597900, factor=  9495.4
+None
+  ASCII: Removed 307 states and 3585 nGramTotal
+Model file name = models/monUnicode_2_model.save
+  Last file processed = testdata/monUnicode.txt
+  lang = mon, font = unicode, ngram = 2
+  23451 samples, 136 lines, 826 states, 19866 nGrams, sum(log(Ai)) = 1577.823243, factor=  6596.9
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 415 states and 929 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0e10>
+Model file name = models/monUnicode_3_model.save
+  Last file processed = testdata/monUnicode.txt
+  lang = mon, font = unicode, ngram = 3
+  46825 samples, 272 lines, 3840 states, 23374 nGrams, sum(log(Ai)) = 3727.013770, factor= 34901.0
+None
+  ASCII: Removed 1172 states and 5101 nGramTotal
+Model file name = models/monUnicode_3_model.save
+  Last file processed = testdata/monUnicode.txt
+  lang = mon, font = unicode, ngram = 3
+  46825 samples, 272 lines, 2668 states, 18273 nGrams, sum(log(Ai)) = 2801.030443, factor= 23380.5
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 1987 states and 3865 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0e90>
+Model file name = models/monUnicode_4_model.save
+  Last file processed = testdata/monUnicode.txt
+  lang = mon, font = unicode, ngram = 4
+  70122 samples, 408 lines, 7665 states, 23297 nGrams, sum(log(Ai)) = 4404.527180, factor= 72675.3
+None
+  ASCII: Removed 2785 states and 6556 nGramTotal
+Model file name = models/monUnicode_4_model.save
+  Last file processed = testdata/monUnicode.txt
+  lang = mon, font = unicode, ngram = 4
+  70122 samples, 408 lines, 4880 states, 16741 nGrams, sum(log(Ai)) = 3122.012830, factor= 44339.0
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 4245 states and 7151 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0f10>
+Model file name = models/monUnicode_5_model.save
+  Last file processed = testdata/monUnicode.txt
+  lang = mon, font = unicode, ngram = 5
+  93342 samples, 544 lines, 10962 states, 23220 nGrams, sum(log(Ai)) = 4151.651006, factor=106046.8
+None
+  ASCII: Removed 4605 states and 7972 nGramTotal
+Model file name = models/monUnicode_5_model.save
+  Last file processed = testdata/monUnicode.txt
+  lang = mon, font = unicode, ngram = 5
+  93342 samples, 544 lines, 6357 states, 15248 nGrams, sum(log(Ai)) = 2813.000980, factor= 58418.9
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 5737 states and 8213 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0f90>
+Model file name = models/shanUnicode_2_model.save
+  Last file processed = testdata/shanUnicode.txt
+  lang = shan, font = unicode, ngram = 2
+  19411 samples, 112 lines, 797 states, 19411 nGrams, sum(log(Ai)) = 1472.739158, factor=  6396.5
+None
+  ASCII: Removed 259 states and 2750 nGramTotal
+Model file name = models/shanUnicode_2_model.save
+  Last file processed = testdata/shanUnicode.txt
+  lang = shan, font = unicode, ngram = 2
+  19411 samples, 112 lines, 538 states, 16661 nGrams, sum(log(Ai)) = 1193.982464, factor=  4035.8
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 192 states and 365 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1032b0fd0>
+Model file name = models/shanUnicode_3_model.save
+  Last file processed = testdata/shanUnicode.txt
+  lang = shan, font = unicode, ngram = 3
+  38756 samples, 224 lines, 2681 states, 19345 nGrams, sum(log(Ai)) = 2950.717639, factor= 23511.3
+None
+  ASCII: Removed 829 states and 3673 nGramTotal
+Model file name = models/shanUnicode_3_model.save
+  Last file processed = testdata/shanUnicode.txt
+  lang = shan, font = unicode, ngram = 3
+  38756 samples, 224 lines, 1852 states, 15672 nGrams, sum(log(Ai)) = 2261.165103, factor= 15628.5
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 1197 states and 2219 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1053430d0>
+Model file name = models/shanUnicode_4_model.save
+  Last file processed = testdata/shanUnicode.txt
+  lang = shan, font = unicode, ngram = 4
+  58035 samples, 336 lines, 5630 states, 19279 nGrams, sum(log(Ai)) = 3858.730002, factor= 51691.2
+None
+  ASCII: Removed 1839 states and 4595 nGramTotal
+Model file name = models/shanUnicode_4_model.save
+  Last file processed = testdata/shanUnicode.txt
+  lang = shan, font = unicode, ngram = 4
+  58035 samples, 336 lines, 3791 states, 14684 nGrams, sum(log(Ai)) = 2929.296838, factor= 33443.5
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 3031 states and 5132 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x105343150>
+Model file name = models/shanUnicode_5_model.save
+  Last file processed = testdata/shanUnicode.txt
+  lang = shan, font = unicode, ngram = 5
+  77248 samples, 448 lines, 8657 states, 19213 nGrams, sum(log(Ai)) = 3734.933625, factor= 81652.0
+None
+  ASCII: Removed 3044 states and 5501 nGramTotal
+Model file name = models/shanUnicode_5_model.save
+  Last file processed = testdata/shanUnicode.txt
+  lang = shan, font = unicode, ngram = 5
+  77248 samples, 448 lines, 5613 states, 13712 nGrams, sum(log(Ai)) = 2750.284968, factor= 50719.3
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 5010 states and 7513 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1053431d0>
+Model file name = models/UnicodeBurmese_Model_2_model.save
+  Last file processed = testdata/burmeseUnicode.txt
+  lang = burmese, font = unicode, ngram = 2
+  11193 samples, 81 lines, 747 states, 11193 nGrams, sum(log(Ai)) = 1235.013013, factor=  5729.3
+None
+  ASCII: Removed 103 states and 2145 nGramTotal
+Model file name = models/UnicodeBurmese_Model_2_model.save
+  Last file processed = testdata/burmeseUnicode.txt
+  lang = burmese, font = unicode, ngram = 2
+  11193 samples, 81 lines, 644 states, 9048 nGrams, sum(log(Ai)) = 1070.948586, factor=  4796.1
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 233 states and 312 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x105343210>
+Model file name = models/UnicodeBurmese_Model_3_model.save
+  Last file processed = testdata/burmeseUnicode.txt
+  lang = burmese, font = unicode, ngram = 3
+  22314 samples, 162 lines, 2396 states, 11121 nGrams, sum(log(Ai)) = 2146.118185, factor= 20176.4
+None
+  ASCII: Removed 623 states and 3130 nGramTotal
+Model file name = models/UnicodeBurmese_Model_3_model.save
+  Last file processed = testdata/burmeseUnicode.txt
+  lang = burmese, font = unicode, ngram = 3
+  22314 samples, 162 lines, 1773 states, 7991 nGrams, sum(log(Ai)) = 1533.828566, factor= 14398.5
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 1071 states and 1380 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x105343290>
+Model file name = models/UnicodeBurmese_Model_4_model.save
+  Last file processed = testdata/burmeseUnicode.txt
+  lang = burmese, font = unicode, ngram = 4
+  33363 samples, 243 lines, 4405 states, 11049 nGrams, sum(log(Ai)) = 2286.061813, factor= 38724.9
+None
+  ASCII: Removed 1726 states and 4083 nGramTotal
+Model file name = models/UnicodeBurmese_Model_4_model.save
+  Last file processed = testdata/burmeseUnicode.txt
+  lang = burmese, font = unicode, ngram = 4
+  33363 samples, 243 lines, 2679 states, 6966 nGrams, sum(log(Ai)) = 1451.571391, factor= 22254.4
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 2001 states and 2485 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x105343310>
+Model file name = models/UnicodeBurmese_Model_5_model.save
+  Last file processed = testdata/burmeseUnicode.txt
+  lang = burmese, font = unicode, ngram = 5
+  44340 samples, 324 lines, 5927 states, 10977 nGrams, sum(log(Ai)) = 2060.057555, factor= 53082.1
+None
+  ASCII: Removed 2906 states and 4986 nGramTotal
+Model file name = models/UnicodeBurmese_Model_5_model.save
+  Last file processed = testdata/burmeseUnicode.txt
+  lang = burmese, font = unicode, ngram = 5
+  44340 samples, 324 lines, 3021 states, 5991 nGrams, sum(log(Ai)) = 1181.849019, factor= 25094.9
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 1976 states and 1976 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x105343390>
+Model file name = models/ZawgyiModel_2_model.save
+  Last file processed = testdata/zawgi_VOA_samples.txt
+  lang = burmese, font = zawgyi, ngram = 2
+  39796 samples, 231 lines, 1619 states, 39796 nGrams, sum(log(Ai)) = 2886.383022, factor= 14261.3
+None
+  ASCII: Removed 424 states and 6551 nGramTotal
+Model file name = models/ZawgyiModel_2_model.save
+  Last file processed = testdata/zawgi_VOA_samples.txt
+  lang = burmese, font = zawgyi, ngram = 2
+  39796 samples, 231 lines, 1195 states, 33245 nGrams, sum(log(Ai)) = 2390.730323, factor= 10051.2
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 712 states and 2352 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x1053433d0>
+Model file name = models/ZawgyiModel_3_model.save
+  Last file processed = testdata/zawgi_VOA_samples.txt
+  lang = burmese, font = zawgyi, ngram = 3
+  79466 samples, 462 lines, 5601 states, 39670 nGrams, sum(log(Ai)) = 6057.420482, factor= 53247.9
+None
+  ASCII: Removed 1635 states and 9184 nGramTotal
+Model file name = models/ZawgyiModel_3_model.save
+  Last file processed = testdata/zawgi_VOA_samples.txt
+  lang = burmese, font = zawgyi, ngram = 3
+  79466 samples, 462 lines, 3966 states, 30486 nGrams, sum(log(Ai)) = 4593.865826, factor= 36355.2
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 3267 states and 9086 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x105343410>
+Model file name = models/ZawgyiModel_4_model.save
+  Last file processed = testdata/zawgi_VOA_samples.txt
+  lang = burmese, font = zawgyi, ngram = 4
+  119011 samples, 693 lines, 11176 states, 39545 nGrams, sum(log(Ai)) = 7857.069964, factor=110443.1
+None
+  ASCII: Removed 4029 states and 11773 nGramTotal
+Model file name = models/ZawgyiModel_4_model.save
+  Last file processed = testdata/zawgi_VOA_samples.txt
+  lang = burmese, font = zawgyi, ngram = 4
+  119011 samples, 693 lines, 7147 states, 27772 nGrams, sum(log(Ai)) = 5530.567030, factor= 67596.0
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 6501 states and 14608 nGramTotal
+---------------
+MODEL = <__main__.ngramModel object at 0x105343450>
+Model file name = models/ZawgyiModel_5_model.save
+  Last file processed = testdata/zawgi_VOA_samples.txt
+  lang = burmese, font = zawgyi, ngram = 5
+  158431 samples, 924 lines, 16163 states, 39420 nGrams, sum(log(Ai)) = 8110.496841, factor=162926.8
+None
+  ASCII: Removed 6762 states and 14291 nGramTotal
+Model file name = models/ZawgyiModel_5_model.save
+  Last file processed = testdata/zawgi_VOA_samples.txt
+  lang = burmese, font = zawgyi, ngram = 5
+  158431 samples, 924 lines, 9401 states, 25129 nGrams, sum(log(Ai)) = 5303.593469, factor= 89945.2
+None
+  Remove all less than  0.00030.
+  FRACTION Removed 8863 states and 16714 nGramTotal
