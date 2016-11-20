@@ -106,7 +106,7 @@ TRANS_LIT_RULES = KNU_UNICODE_TRANSLITERATE = u"""
  \u006a > \u103c ; # j
  \u006b > \u102f ; # k
  \u006c > \u1030 ; # l
- \u006d > \u102c \u103a ; # m
+ \u006d > \u1065 \u103a ; # m  ?? Is this the right character?
  \u006e > \u100a ; # n
  \u006f > \u101e ; # o
  \u0070 > \u1005 ; # p

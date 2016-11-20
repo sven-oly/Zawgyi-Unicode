@@ -198,6 +198,9 @@ class ngramModel(detectorBase):
       ratio = -100.0
     return (ratio, matchCount)
 
+  def mergeModel(self, otherModel):
+    # TODO: Merge a new model with this one, normalizing the totals.
+    return None
 
 # Gets a saved model.
 def loadModel(fileName):
