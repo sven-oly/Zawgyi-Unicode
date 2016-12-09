@@ -45,11 +45,13 @@
 		  // alert(json_obj.converted);
 
           output_area.innerHTML = json_obj.converted;
+          output_area.value = json_obj.converted;
 		  var hex_area = document.getElementById('convertedHex');
           hex_area.value = textToHex(json_obj.converted);
           
 		  var msg_area = document.getElementById('msgArea');
           msg_area.innerHTML = json_obj.msg;         
+          msg_area.value = json_obj.msg;         
      }
 	}
 	
@@ -167,7 +169,6 @@
       <input type="submit" value="Convert hex to text" onSubmit="enterHex()" />
       <input type="button" value="-> scratch" onclick="copyText('hexText', 'scratchText')" />
       <input type="button" value="-> Unicode" onclick="hexToOutput('hexText', 'notoSans')" />
-      <input type="button" value="-> KNU" onclick="hexToOutput('hexText', 'knu')" />
 
     </div>
     

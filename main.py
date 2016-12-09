@@ -70,7 +70,7 @@ def SetDefaultTemplate(text):
     }
   return template_values
 
-class MainHandler(webapp2.RequestHandler):
+class FontsHandler(webapp2.RequestHandler):
   def get(self):
   
     text = self.request.get("text", "")
@@ -426,7 +426,8 @@ class HelpHandler(webapp2.RequestHandler):
     text = self.request.get("text", "")
   
     helpText = """
-    ('/', MainHandler),
+    ('/', Convert2UIHandler),
+    ('/fonts/', FontsHandler),
     ('/t2', MainHandler2),
     ('/feedback', FeedbackHandler),
     ('/detect/', DetectionHandler),
@@ -468,15 +469,15 @@ def intWithCommas(x):
         x, r = divmod(x, 1000)
         result = ",%03d%s" % (r, result)
     return "%d%s" % (x, result)
-    
-  
+ 
 # Main handler setup.
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),
+    ('/', ConvertUIHandler),
     ('/t2/', MainHandler2),
     ('/convertui/', ConvertUIHandler),
     ('/convert2/', Convert2UIHandler),
     ('/convert/', convertHandler.ConvertHandler),  # Handles backend conversions.
+    ('/fonts/', FontsHandler),
     ('/getrules/', GetRulesHandler),
     ('/compare/', CompareTextHandler),
     ('/testtransliteration/', TestTranslitHandler),
@@ -503,6 +504,7 @@ app = webapp2.WSGIApplication([
 	('/ShowModelDetail/', detector.ShowModelDetail), 
     ('/ranges/', RangeHandler),
     
-    ('/madlib/', madlibHandler)
+    ('/madlib/', madlibHandler),
+   
 
   ], debug=True)

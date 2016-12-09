@@ -44,18 +44,23 @@
 		  // alert(json_obj.converted);
 
           output_area.innerHTML = json_obj.detected;
-          
+          output_area.value = json_obj.detected;
+              
 		  var output_lang = document.getElementById('resultLang');
           output_lang.innerHTML = json_obj.detectedLang;
+          output_lang.value = json_obj.detectedLang;
 
 		  var output_font = document.getElementById('resultFont');
           output_font.innerHTML = json_obj.detectedFont;
+          output_font.value = json_obj.detectedFont;
 
    		  var output_ranks = document.getElementById('ranks');
           output_ranks.innerHTML = json_obj.ranks;
+          output_ranks.value = json_obj.ranks;
 
           var filenames = document.getElementById('filenames');
-		  filenames.innerHTML = json_obj.filenames;
+          output_ranks.innerHTML = json_obj.ranks;
+          output_ranks.value = json_obj.ranks;
      }
 	}
 	
