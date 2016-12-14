@@ -8,11 +8,18 @@ import sys
 import types
 
 
-# Default transliteration framework
+# Default transliteration framework.
+# Uses ICU-like syntax of transliteration rules.
+
 import translit_myazedi
 import translit_zawgyi
 import translit_knu
 import translit_uni_mon
+
+# TODO: 13-Dec-2016
+# 1. Remove testing from this file.
+# 2. Complete conversion into classes.
+# 3. Determine how to use any transliteration rules from upload.
 
 # Take a transliteration rule with phases.
 # Extract shortcuts such as "$nondigits = [^\u1040-\u1049];
@@ -295,6 +302,8 @@ class Transliterate():
     return outstring
     
 
+# ----------------- TESTING ------------------
+# TODO: Factor out the tests.
 def biggerTest(trans):
   # A little more text. Title of the ThanLWinSoft test.
   zString = u'က်န္းမာေရး နည္းလမ္း မ်ား'
