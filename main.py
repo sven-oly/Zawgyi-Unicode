@@ -28,6 +28,7 @@ import translit_uni_mon  # For UniMon text -> UniCode
 import translit_monuni  # For Mon "Unicode" text -> UniCode
 import translit_mon  # For Mon text -> UniCode
 import translit_knu  # For Karen KNU encoded text -> UniCode
+import translit_sawcfcr000  # Karen Saw font encoded -> UniCode
 import translit_zawgyi  # import ZAWGYI_UNICODE_TRANSLITERATE, description
 import translittests
 
@@ -41,11 +42,13 @@ default_unicode = 'u လောက်က'
 default_myazedi = 'm ဆီၾဒင္'
 default_unimon = 'ကၝကၞကၟ'
 default_knu = 'w> *h> vdm bSD vdm td. xD. vX bD u x. xH w rX. w> wdm usJR'
+default_saw = 'e>Iog\'D; wIwDwIvd: vUtwI\'d;e>I tcGJ;t<PwzOe>O'
 default_converter = None
 myazedi_converter = None
 unimon_converter = None
 mon_converter = None
 knu_converter = None
+saw_converter = None
 
 def SetDefaultTemplate(text):
   if text:
@@ -66,7 +69,7 @@ def SetDefaultTemplate(text):
       'default_myazedi': 'm ဆီၾဒင္',
       'default_unimon': default_unimon,
       'default_knu': default_knu,
-      
+      'default_saw': default_saw,   
     }
   return template_values
 
@@ -146,6 +149,7 @@ class ConvertHandler(webapp2.RequestHandler):
     global unimon_converter
     global mon_converter
     global knu_converter
+    global saw_converter
 
     if not default_converter:
       default_converter = transliterate.Transliterate(
@@ -165,6 +169,7 @@ class ConvertHandler(webapp2.RequestHandler):
     msg = ''
     
     logging.info('CONVERT %d characters' % len(input))
+    logging.info('Input type = >%s<' % input_type)
 
     if input_type == 'M':
       if not myazedi_converter:
@@ -215,9 +220,27 @@ class ConvertHandler(webapp2.RequestHandler):
        
       result = knu_converter.transliterate(input, debug)
       # logging.info('***knu result = %s' % result);
-      msg = 'Karen conversion'    
+      msg = 'Karen KNU conversion'    
+    elif input_type == 'SAW':
+      if not saw_converter:
+        saw_converter = transliterate.Transliterate(
+          translit_sawcfcr000.UNICODE_TRANSLITERATE,
+          translit_sawcfcr000.description)
+      # Preprocess with string substitution
+      logging.info('***SAW input = %s' % input);
+      for rep in translit_sawcfcr000.substitutions:
+        text = input.replace(rep[0], rep[1])
+        input = text
+        
+      logging.info('***saw strip_spaces = %s' % strip_spaces);
+      if strip_spaces:
+         input = input.replace(' ', '')
+       
+      result = saw_converter.transliterate(input, debug)
+      logging.info('***saw result = %s' % result);
+      msg = 'Karen SAW conversion'
     else:
-      msg = 'Unknown encoding = %s!' % input_type
+      msg = 'Unknown encoding = >%s<!' % input_type
       result = 'No conversion attempted.'
     
     self.response.headers['Content-Type'] = 'application/json'   

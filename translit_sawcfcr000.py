@@ -5,22 +5,23 @@ import sys
 
 # KNU is a font used to write Karen languages.
 # KNU uses an ASCII range
-Description = KNU_description = u'KNU font encoding conversion'
+Description = description = u'SAW font encoding conversion'
 
-Substitutions = KNU_substitutions = [ [u'+', u'\u103e\u102f'],
+Substitutions = substitutions = [
+    [u'+', u'\u2019'],
     [ u'*', u'\u1002' ],
     [ u'#', u'\u1042' ],
     [ u'$', u'\u1043' ],
-    [ u'.', u'\u1063\u103a' ],
-	[ u',', u'\u101a'],
-	[ u'<', u','],
-    [ u'>', u'\u1062\u103a'] , 
+    [ u'.', u'\u1037' ],
+	[ u',', u','],
+	[ u'<', u'\u101a'],
+    [ u'>', u'\u1037'] , 
     [ u'\\', u'\u103c\u102f' ],
     [ u'~', u'\u1039\u1002'],
     [ u'{', u'\u1027'],
-    [ u'}', u'\u103c'],
+    [ u'}', u'\u2019'],
     [ u'[', u'\u101f'],
-	[ u']', u'\u003d'],
+	[ u']', u'\u2018'],
 	[ u';', u'\u1038'],
 	[ u'?', u'\u201c'],
 	[ u'!', u'\u100a'],
@@ -28,7 +29,7 @@ Substitutions = KNU_substitutions = [ [u'+', u'\u103e\u102f'],
 
 # ; (3b) --> u1038
 
-TRANS_LIT_RULES = KNU_UNICODE_TRANSLITERATE = u"""
+TRANS_LIT_RULES = UNICODE_TRANSLITERATE = u"""
 $nondigits = [^\u1040-\u1049];
 $space = '\u0020';
 $consonant = [\u1000-\u1021];
@@ -66,13 +67,14 @@ $zmedialra = [\u103B\u107E-\u1084];
  \u0037 > \u1047 ; # 7
  \u0038 > \u1048 ; # 8
  \u0039 > \u1049 ; # 9
- # \u003a > \u2605 ; # colon
+ \u003a > \u1064 ; # colon
  # \u003b > \u1038 ; # semicolon
  #  \u003c > \u002c ; # <
- \u003d > \u002d ; # =
+ \u003d > \u2018 ; # =
  #  \u003e > \u1062 \u103a ; # >
  #  \u003f > \u201c ; # ?
- \u0040 > \u102c ; # @
+ # \u0040 > \u100f\u1039\u100d ; # @
+ \u0040 > \u103b\u103d ; # @  HACK - NOT ACTUALLY SAW
  \u0041 > \u0020 ; # A
  \u0042 > \u1039 \u1018 ; # B
  \u0043 > \u1003 ; # C
@@ -81,19 +83,19 @@ $zmedialra = [\u103B\u107E-\u1084];
  \u0046 > \u1060 ; # F
  \u0047 > \u103d ; # G
  \u0048 > \u1036 ; # H
- \u0049 > \u002e ; # I
+ \u0049 > \u1062\u103a ; # I !
  \u004a > \u1032 ; # J
  \u004b > \u102f ; # K
  \u004c > \u1030 ; # L
- \u004d > \u1014 \u1037 ; # M
+ \u004d > \u103c ; # M
  \u004e > \u1039 \u1012 ; #N
- \u004f > \u103e \u1037 ; # O
- \u0050 > \u1039 \u1005 ; #P
+ \u004f > \u1063 \u103a ; # O
+ \u0050 > \u1041 \u103a ; #P
  \u0051 > \u1039 \u1001 ; #Q
  \u0052 > \u1064 ; # R
  \u0053 > \u103e ; # S
  \u0054 > \u103a \u102f ; #T
- \u0055 > \u103d \u1037 ; # U
+ \u0055 > \u1062 ; # U
  \u0056 > \u103b \u1037 ; # V
  \u0057 > \u1039 \u1010; #W
  \u0058 > \u1062 ; # X
@@ -103,6 +105,7 @@ $zmedialra = [\u103B\u107E-\u1084];
  #  \u005d > \u003d ; # ]
  \u005f > \u103c ; # _
  \u0061 > \u1031 ; #a
+ \u0062 > \u1018 ; # b
  \u0062 > \u1018 ; # b
  \u0063 > \u1001 ; # c
  \u0064 > \u102d ; # d
@@ -124,7 +127,7 @@ $zmedialra = [\u103B\u107E-\u1084];
  \u0074 > \u1021 ; # t
  \u0075 > \u1000 ; # u
  \u0076 > \u101c ; # v
- \u0077 > \u1010 ; # w
+ \u0077 > \u1010 ; # w !
  \u0078 > \u1011 ; # x
  \u0079 > \u1015 ; # y
  \u007a > \u1016 ; # z
@@ -140,6 +143,10 @@ $zmedialra = [\u103B\u107E-\u1084];
 ([\u102B\u102C\u102F\u1030]) ([\u102D\u102E\u1032]) > $2 $1;
 \u103C ($consonant) > $1 \u103C;
 \u102f \u103c ($consonant) > $1 \u103c \u102f ;
+
+\u2018 \u2018 > \u201c;
+\u2019 \u2019 > \u201d;
+
 ##### Stage 3
 ::Null;
 ([\u1031]+) $ukinzi ($consonant) > $ukinzi $2 \u1031;
@@ -221,8 +228,8 @@ $zmedialra = [\u103B\u107E-\u1084];
 ($space)([\u102e\u1037\u103a]) > $2 \u00A0;
 """
 
-date_entered = '18-June-2016'
-description = 'First try for transliteration rules for Karen to Unicode'
+date_entered = '8-May-2017'
+description = 'First try for transliteration rules for Karen Saw encoding to Unicode'
 
 def testStrings():
   return True

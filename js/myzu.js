@@ -80,7 +80,7 @@ function enterTestText(updateHex) {
   }
 
   // Karen
-  var karenAreas = ["zwekabin", "knu"]
+  var karenAreas = ["zwekabin", "knu", "saw", "khlan", "knewn"]
   for (index = 0; index < karenAreas.length; ++index) {
     outElement = document.getElementById(karenAreas[index]);
     if (outElement) {

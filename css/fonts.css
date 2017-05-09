@@ -61,6 +61,18 @@
     font-family: KNU;
     src: url(/fonts/knu.TTF);
   }
+  @font-face {
+    font-family: SAW;
+    src: url('/fonts/Saw cfcr000.TTF');
+  }
+  @font-face {
+    font-family: KHLAN;
+    src: url('/fonts/Khlan.ttf');
+  }
+  @font-face {
+    font-family: KNEWN;
+    src: url('/fonts/Knewn.ttf');
+  }
 
   @font-face {
     font-family: ShanUnicode;
@@ -149,9 +161,24 @@
     font-size:30px;
   }
     
-.knu  {
+.knu {
     font-family: KNU;
     font-size:40px;
+  }
+
+.saw {
+    font-family: SAW;
+    font-size:40px;
+  }
+
+.khlan {
+    font-family: KHLAN;
+    font-size:32px;
+  }
+
+.knewn {
+    font-family: KNEWN;
+    font-size:32px;
   }
 
 .shanUnicode  {

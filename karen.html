@@ -127,11 +127,40 @@
 
     <div>
       <textarea id='knu'  class='knu'
-        rows="1" cols="30">{{default_unimon}}</textarea>
+        rows="1" cols="30">{{default_knu}}</textarea>
               KNU
       <br />
       <input type="button" value="-> Unicode" onclick="convertRequest('knu', 'KNU')" />
       <input type="checkbox" id="strip_blanks" value="StripSpaces" checked> Strip spaces<br>
+    </div>
+
+    <div>
+      <textarea id='saw'  class='saw'
+        rows="1" cols="30">{{default_saw}}</textarea>
+              Saw (approximately)
+      <br />
+      <input type="button" value="-> Unicode" onclick="convertRequest('saw', 'SAW')" />
+    </div>
+
+    <div>
+      <textarea id='khlan'  class='khlan'
+        rows="1" cols="30">{{default_khlan}}</textarea>
+              Khlan
+      <br />
+      <!--
+      <input type="button" value="-> Unicode" onclick="convertRequest('khlan', 'KHLAN')" />
+      <input type="checkbox" id="strip_blanks" value="StripSpaces" checked> Strip spaces<br>
+       -->
+    </div>
+    <div>
+      <textarea id='knewn'  class='knewn'
+        rows="1" cols="30">{{default_unimon}}</textarea>
+              Knewn
+      <br />
+      <!--
+      <input type="button" value="-> Unicode" onclick="convertRequest('knewn', 'KNEWN')" />
+      <input type="checkbox" id="strip_blanks" value="StripSpaces" checked> Strip spaces<br>
+       -->
     </div>
 
     <div>
@@ -172,6 +201,9 @@
       <input type="button" value="-> scratch" onclick="copyText('hexText', 'scratchText')" />
       <input type="button" value="-> Unicode" onclick="hexToOutput('hexText', 'notoSans')" />
       <input type="button" value="-> KNU" onclick="hexToOutput('hexText', 'knu')" />
+      <input type="button" value="-> SAW" onclick="hexToOutput('hexText', 'saw')" />
+      <input type="button" value="-> KHLAN" onclick="hexToOutput('hexText', 'khlan')" />
+      <input type="button" value="-> KNWEN" onclick="hexToOutput('hexText', 'knewn')" />
       <input type="button" value="-> Zewkabin" onclick="hexToOutput('hexText', 'zwekabin')" />
 
     </div>

@@ -25,6 +25,7 @@ import translit_uni_mon  # For UniMon text -> UniCode
 import translit_monuni  # For Mon "Unicode" text -> UniCode
 import translit_mon  # For Mon text -> UniCode
 import translit_knu  # For Karen KNU encoded text -> UniCode
+import translit_sawcfcr000  # Karen Saw font encoded -> UniCode
 import translit_zwekabin  # For Karen Zwekabin encoded text -> UniCode
 
 import translit_zawgyi  # import ZAWGYI_UNICODE_TRANSLITERATE, description
@@ -40,12 +41,14 @@ default_unicode = 'u လောက်က'
 default_myazedi = 'm ဆီၾဒင္'
 default_unimon = 'ကၝကၞကၟ'
 default_knu = 'w> *h> vdm bSD vdm td. xD. vX bD u x. xH w rX. w> wdm usJR'
+default_saw = 'e>Iog\'D; wIwDwIvd: vUtwI\'d;e>I tcGJ;t<PwzOe>O'
 zawgyi_converter = None
 myazedi_converter = None
 unimon_converter = None
 mon_converter = None
 mon_uni_converter = None
 knu_converter = None
+saw_converter = None
 zwekabin_converter = None
 
 # Convert text in URL, with JSON return
@@ -57,12 +60,13 @@ class ConvertHandler(webapp2.RequestHandler):
     self.response.out.write('ConvertHandler post received.\n')
 
   def get(self):
-    global zawgyi_converter
-    global myazedi_converter
-    global unimon_converter
-    global mon_converter
     global knu_converter
+    global mon_converter
     global mon_uni_converter
+    global myazedi_converter
+    global saw_converter
+    global unimon_converter
+    global zawgyi_converter
     global zwekabin_converter
 
     if not zawgyi_converter:
@@ -142,6 +146,25 @@ class ConvertHandler(webapp2.RequestHandler):
       result = knu_converter.transliterate(input, debug)
       # logging.info('***knu result = %s' % result);
       msg = translit_knu.KNU_description
+    elif input_type == 'SAW':
+      if not saw_converter:
+        saw_converter = transliterate.Transliterate(
+          translit_sawcfcr000.UNICODE_TRANSLITERATE,
+          translit_sawcfcr000.description)
+      # Preprocess with string substitution
+      logging.info('***SAW input = %s' % input);
+      for rep in translit_sawcfcr000.substitutions:
+        text = input.replace(rep[0], rep[1])
+        input = text
+        
+      logging.info('***saw strip_spaces = %s' % strip_spaces);
+      if strip_spaces:
+         input = input.replace(' ', '')
+       
+      result = saw_converter.transliterate(input, debug)
+      logging.info('***saw result = %s' % result);
+      msg = 'Karen SAW conversion'
+
     elif input_type == 'ZWE':
       # Zwekabin 
       if not zwekabin_converter:
