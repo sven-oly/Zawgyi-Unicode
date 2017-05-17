@@ -3,8 +3,8 @@
 
 import sys
 
-# KNU is a font used to write Karen languages.
-# KNU uses an ASCII range
+# SAW is a font used to write Karen languages.
+# It uses an ASCII range
 Description = description = u'SAW font encoding conversion'
 
 Substitutions = substitutions = [
@@ -90,7 +90,7 @@ $zmedialra = [\u103B\u107E-\u1084];
  \u004d > \u103c ; # M
  \u004e > \u1039 \u1012 ; #N
  \u004f > \u1063 \u103a ; # O
- \u0050 > \u1041 \u103a ; #P
+ \u0050 > \u1065 \u103a ; #P
  \u0051 > \u1039 \u1001 ; #Q
  \u0052 > \u1064 ; # R
  \u0053 > \u103e ; # S

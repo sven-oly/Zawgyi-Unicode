@@ -109,9 +109,9 @@
     <hr>
   </div> 
   <div class="container">
-    <div class="span-20 last">
+    <div class="span-12">
 
-  	  <input type="text" id="TestEntry" class='notosans' size="40"
+  	  <input type="text" id="TestEntry" class='notosans' size="30"
 		onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
 	  <br />(shown in NotoSans font)
       <div id="detectedZU"></div>
@@ -128,8 +128,8 @@
     <div>
       <textarea id='knu'  class='knu'
         rows="1" cols="30">{{default_knu}}</textarea>
+        <br />
               KNU
-      <br />
       <input type="button" value="-> Unicode" onclick="convertRequest('knu', 'KNU')" />
       <input type="checkbox" id="strip_blanks" value="StripSpaces" checked> Strip spaces<br>
     </div>
@@ -137,16 +137,16 @@
     <div>
       <textarea id='saw'  class='saw'
         rows="1" cols="30">{{default_saw}}</textarea>
-              Saw (approximately)
-      <br />
+        <br />
+              Saw (mostly)
       <input type="button" value="-> Unicode" onclick="convertRequest('saw', 'SAW')" />
     </div>
 
     <div>
       <textarea id='khlan'  class='khlan'
         rows="1" cols="30">{{default_khlan}}</textarea>
+        <br />
               Khlan
-      <br />
       <!--
       <input type="button" value="-> Unicode" onclick="convertRequest('khlan', 'KHLAN')" />
       <input type="checkbox" id="strip_blanks" value="StripSpaces" checked> Strip spaces<br>
@@ -173,13 +173,7 @@
     
     <hr>
     <div>
-    Converted output:
-    <div id="msgArea" class='notosans14'> </div> 
-      <textarea id="convertedText"  class='notosans'
-        rows="1" cols="40">{{default_unicode}}</textarea>
-      <textarea id="convertedHex"  class='notosans14'
-        rows="2" cols="40">{{default_unicode}}</textarea>
-    </div>
+</div>
     <hr>
     <div>
       <textarea id="notoSans"  class='notosans'
@@ -189,8 +183,7 @@
             <input type="button" value="Compare with converted"
        onclick="compareConvert('notoSans','convertedText')" />
     </div>
-    <div id="msgArea" class='notosans14'> 
-    </div> 
+
     <hr>
     
     <div id='controls'>
@@ -218,9 +211,20 @@
     <br />
     <form action="/feedback" method="get">
       <input type="submit" value="Send feedback" />
-    </form> 
+    </form>
+    
+    <div class="span-10 last">
+    </div>
   </div>
-
+    <div class="span-10 last">
+    <h3>Converted output:</h3>
+    <div id="msgArea" class='notosans14'> </div> 
+      <textarea id="convertedText"  class="notosans"
+        rows="5" cols="40">{{default_unicode}}</textarea>
+      <textarea id="convertedHex"  class='notosans14'
+        rows="2" cols="40">{{default_unicode}}</textarea>
+    </div>    </div>
+</div>
 
         
   </body>
