@@ -109,7 +109,9 @@ function textToHex(intext) {
   for (var i = 0; i < intext.length; i++) {
     var firstHex = fixedCharCodeAt(intext, i);
     var hexString = firstHex.toString(16);
-    outHex += hexString + " ";
+    if (hexString != "false") {
+      outHex += hexString + " ";
+    }
   }
   return outHex;
 }
