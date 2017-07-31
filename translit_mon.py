@@ -49,11 +49,14 @@ $zmedialra = [\u107E-\u107f\u1083];
 
 \u1070 > \u100f \u1039 \u100f ;
 
-\u1080 > \u1039 \u105c ;
-\u1081 > \u1007 \u103c ;
-\u1082 > \u102B \u103A ;
+\u107d > \u103c ;
+\u107e > \u103c ;
+\u1080 > \u103c ;
+\u1081 > \u103c ;
 \u1082 > \u103c ;
-\u1084 > \u1030 ;
+\u1082 > \u103c ;
+\u1083 > \u103c ;
+\u1084 > \u103c ;
 \u1085 > \u1039 \u1000 ;
 \u1098 > \u1033 ;
 \u1099 > \u102d \u1032 ;
@@ -64,7 +67,7 @@ $zmedialra = [\u107E-\u107f\u1083];
 \u109e > \u1039 \u100E ;
 \u109f > \u1039 \u105c ;
 
-$zmedialra > \u103c;
+($zmedialra) > \u103c;
 
 \u108F > \u1014 ;
 \u1090 > \u101B ;
@@ -136,13 +139,13 @@ $zmedialra > \u103c;
 \u1025 \u102E > \u1026;
 \u1037\u103A > \u103A\u1037;
 \u1036 ($umedial*) ($vowelsign+) > $1 $2 \u1036 ;
-([\u102B\u102C\u102F\u1030]) ([\u102D\u102E\u1032]) > $2 $1;
+([\u102B\u102C\u102F\u1030]) ([\u102D\u102E\u1032\u1035\u105e-\u1060]) > $2 $1;
 \u103C ($consonant) > $1 \u103C;
 ##### Stage 3
 ::Null;
 ([\u1031]+) $ukinzi ($consonant) > $ukinzi $2 \u1031;
-\u1031 ($consonant) ($umedial+) > $1 $2 \u1031;
-# MAYTBE FIX THIS FOR CURSOR POSITION
+\u1031 ($consonant) ($umedial+|[\u105e-\u1060]) > $1 $2 \u1031;
+# MAYBE FIX THIS FOR CURSOR POSITION
 \u1031 ($consonant) ([^\u103B-\u103E]) > $1 \u1031 $2;
 \u103C \u103A \u1039 ($consonant) > \u103A \u1039 $1 \u103C;
 \u1036 ($umedial+) > $1 \u1036;
@@ -160,7 +163,7 @@ $zmedialra > \u103c;
 ($consonant) ([\u102B-\u1032\u1036\u103B-\u103E]) \u103A ($consonant)> $1 \u103A $2 $3;
 ##### Stage 5.  More reorderings
 ::Null;
-([\u1031]+) ($umedial+) > $2 $1;
+([\u1031]+) ($umedial+|\u103a) > $2 $1;
 ($vowelsign) ($umedial) > $2 $1;
 ([\u103C\u103D\u103E]) \u103B > \u103B $1;
 ([\u103D\u103E]) \u103C > \u103C $1;
@@ -168,11 +171,10 @@ $zmedialra > \u103c;
 \u1038 ([$vowelmedial]) > $1 \u1038;
 \u1038 ([\u1036\u1037\u103A]) > $1 \u1038;
 # NEW 5-May-2016
-\u1036 \u102f > \u102f \u1036;
+\u1036 \u102f > \u102f \u1036 ;
 
-# Mon-specific
-\u102f \u1035 > \u1035 \u102f ;
-\u102f \u1034 > \u1034 \u102f ;
+\u1032 \u102f > \u102f \u1032;
+
 #### Stage 6
 ::Null;
 ($consonant) \u103B \u103A > $1 \u103A \u103B;
@@ -208,3 +210,28 @@ $zmedialra > \u103c;
 
 date_entered = '18-June-2016'
 description = 'First try for transliteration rules for Mon to Unicode'
+
+
+# TESTING
+
+def test102f():
+  mon_input = """
+ျဇဟတ္ကေရာင္ပှာန္သဿတ္ပၜဒပ္ အၾကာ၅၀၀ကုႝ၇၀၀ဂွ္ သြက္ဂြံထၞးအာျဇဟတ္ပႜဲတၛဲပၜန္ဂတးမန္ေပင္(၇၀)ဝါႏြံတုဲ ျဇဟတ္သဿတ္ပၜဒပ္ဂွ္ ဟိုတ္ႏူဘဲဒဏ္ဂဥဳဲၐူမာဲ၊ ဘဲဒဏ္တိတ္ဍဳင္သၟာင္ဂၜဳိင္တုဲ သဿတ္ညးႀတဳံတအ္ပါလုပ္ခ်႘ဒရာင္ေအာန္။
+"""
+
+  expected_unicode = """
+ဇြဟတ်ကရောင်ပၞာန်သၟတ်ပၠဒပ် အကြာ၅၀၀ကုဵ၇၀၀ဂှ် သွက်ဂွံထ္ၜးအာဇြဟတ်ပ္ဍဲတ္ရဲပၠန်ဂတးမန်ပေင်(၇၀)ဝါနွံတုဲ ဇြဟတ်သၟတ်ပၠဒပ်ဂှ် ဟိုတ်နူဘဲဒဏ်ဂဥုဲၐူမဲာ၊ ဘဲဒဏ်တိတ်ဍုင်သ္အာင်ဂၠိုင်တုဲ သၟတ်ညးတြုံတအ်ပါလုပ်ချဳဒရာင်အောန်။
+"""
+
+  # TODO: call conversion and test for equality.
+
+# Needs More testing from site:
+# http://www.men3tv.com/tvstory.php
+
+def main(argv=None):
+  printRules()
+
+
+if __name__ == "__main__":
+    print 'ARGS = %s' % sys.argv
+    sys.exit(main(sys.argv))
