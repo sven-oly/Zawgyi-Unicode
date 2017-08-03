@@ -100,88 +100,99 @@
 			<a href="/shan/">Shan</a> <br />
 			<a href="/mon/">Mon</a> <br />
 			<a href="/karen/">Karen</a>
-
-	    	<br /><br />
-            <input type='button' value='Toggle zawgyi'
-                onClick="showhide('zawgyi'); return false;" />
+                        <hr>
+                        <a href="http://www.unicode.org/charts/PDF/U1000.pdf">Myanmar Unicode</a>
+	    	        <br />
+                        <a href="http://www.unicode.org/charts/PDF/UAA60.pdf"> Extended-A</a>
+	    	        <br />
+                        <a href="http://www.unicode.org/charts/PDF/UA9E0.pdf"> Extended-B</a>
      </div>
   </div>  <!-- end of container -->
     <hr>
   </div> 
   <div class="container">
     <div class="span-12">
+      <h3>Test input (shown in Noto Sans font)</h3>
 
-  	  <input type="text" id="TestEntry" class='notosans' size="30"
+  	  <input type="text" id="TestEntry" class='notosans' size="25"
 		onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
-	  <br />(shown in NotoSans font)
+	  <br />
+          <hr>
+      <!-- When we have a reliable detector.
       <div id="detectedZU"></div>
+       -->
       
-    <div id='zawgyi' style="display: none;">
-      <textarea id="z1"  class='zawgyi_one'
-        rows="1" cols="40">{{default_zawgyi}}</textarea>
-              Zawgyi One
-      <br />
-      <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
-      <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z')" />
-    </div>
-
     <div>
+      <h4 style='margin:0;padding:0;'>KNU font (ASCII)</h4>       <input type="button" value="-> Unicode" onclick="convertRequest('knu', 'KNU')" />
+      <input type="checkbox" id="strip_blanks" value="StripSpaces" checked> Strip spaces<br>
+
       <textarea id='knu'  class='knu'
         rows="1" cols="30">{{default_knu}}</textarea>
         <br />
-              KNU
-      <input type="button" value="-> Unicode" onclick="convertRequest('knu', 'KNU')" />
-      <input type="checkbox" id="strip_blanks" value="StripSpaces" checked> Strip spaces<br>
+      <hr>
     </div>
 
     <div>
+      <h4 style='margin:0;padding:0;'>Saw font (ASCII)</h4>
+      <input type="button" value="-> Unicode" onclick="convertRequest('saw', 'SAW')" />
       <textarea id='saw'  class='saw'
         rows="1" cols="30">{{default_saw}}</textarea>
         <br />
-              Saw (mostly)
-      <input type="button" value="-> Unicode" onclick="convertRequest('saw', 'SAW')" />
+      <hr>
     </div>
 
     <div>
+      <h4 style='margin:0;padding:0;'>Khlan font (ASCII)</h4>
       <textarea id='khlan'  class='khlan'
         rows="1" cols="30">{{default_khlan}}</textarea>
         <br />
-              Khlan
       <!--
       <input type="button" value="-> Unicode" onclick="convertRequest('khlan', 'KHLAN')" />
       <input type="checkbox" id="strip_blanks" value="StripSpaces" checked> Strip spaces<br>
        -->
+      <hr>
     </div>
+
     <div>
+      <h4 style='margin:0;padding:0;'>Knewn font (ASCII)</h4>
       <textarea id='knewn'  class='knewn'
         rows="1" cols="30">{{default_unimon}}</textarea>
        <br />
-             Knewn
       <!--
       <input type="button" value="-> Unicode" onclick="convertRequest('knewn', 'KNEWN')" />
       <input type="checkbox" id="strip_blanks" value="StripSpaces" checked> Strip spaces<br>
        -->
+      <hr>
     </div>
 
     <div>
+      <h4 style='margin:0;padding:0;'>Zwekabin (Myanmar hack)</h4>
+      <input type="button" value="Zwe -> Unicode" onclick="convertRequest('zwekabin', 'ZWE')" />
       <textarea id='zwekabin'  class='zwekabin'
         rows="1" cols="30">{{default_unimon}}</textarea>
       <br />
-              Zwekabin
-      <input type="button" value="Zwe -> Unicode" onclick="convertRequest('zwekabin', 'ZWE')" />
+      <hr>
     </div>
-    
-    <hr>
+    <div id='zawgyi'>
+      <h4 style='margin:0;padding:0;'>Zawgyi One (Myanmar hack)</h4>
+      <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
+      <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z')" />
+
+      <textarea id="z1"  class='zawgyi_one'
+        rows="1" cols="40">{{default_zawgyi}}</textarea>
+      <br />
+      <hr>
+    </div>
+
     <div>
 </div>
-    <hr>
+
     <div>
+      <h4 style='margin:0;padding:0;'>Noto Sans Myanmar (Unicode)</h4>
       <textarea id="notoSans"  class='notosans'
         rows="1" cols="40">{{default_unicode}}</textarea>
       <br />
       NotoSans Myanmar
-            <input type="button" value="Compare with converted"
-       onclick="compareConvert('notoSans','convertedText')" />
     </div>
 
     <hr>
@@ -213,7 +224,7 @@
       <input type="submit" value="Send feedback" />
     </form>
     
-    <div class="span-10 last">
+    <div class="span-12 last">
     </div>
   </div>
     <div class="span-10 last">
@@ -221,6 +232,8 @@
     <div id="msgArea" class='notosans14'> </div> 
       <textarea id="convertedText"  class="notosans"
         rows="5" cols="40">{{default_unicode}}</textarea>
+    <h3>Hex output:</h3>
+      
       <textarea id="convertedHex"  class='notosans14'
         rows="2" cols="40">{{default_unicode}}</textarea>
     </div>    </div>
