@@ -514,6 +514,7 @@ app = webapp2.WSGIApplication([
     ('/fontrules/', fontrules.FontRulesHandler),
     ('/help/', HelpHandler),
 
+    ('/fontsshow/', fontrules.ShowFonts),
     ('/feedback/', feedback.FeedbackHandler),
     ('/entererror/', feedback.SubmitErrorHandler),
     ('/store_error_sample/', feedback.StoreErrorHandler),

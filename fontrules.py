@@ -58,7 +58,57 @@ class FontRulesHandler(webapp2.RequestHandler):
     langlist = [burmeseLang]
     template_values = {
       'langlist': langlist,
-    
+
     }
     path = os.path.join(os.path.dirname(__file__), 'fontrules.html')
+    self.response.out.write(template.render(path, template_values))
+
+
+encoding_font_list = [
+    {
+        'font_path':'/fonts/ZawgyiOne.ttf',
+        'font_name':'Zawgyi One',
+        'display_name': 'Zawgyi One',
+    },
+#    {
+#        'font_path':'/fonts/ZawgyiOne2008.ttf',
+#        'font_name':'Zawgyi One 2008',
+#        'display_name': 'Zawgyi One 2008',
+#    },
+#    {
+#        'font_path':'/fonts/MyaZedi06.ttf',
+#        'font_name':'Myazedi',
+#        'display_name': 'MyaZedi06',
+#    },
+]
+
+unicode_font_list = [
+  { 'family': 'NotoSansMyanmar',
+    'longName': 'Noto Sans Myanmar',
+    'source': '/fonts/NotoSansMyanmar-Regular.ttf',
+  },
+  { 'family': 'Padauk',
+    'longName': 'Padauk',
+    'source': '/fonts/Padauk.ttf',
+  },
+  { 'family': 'MM3',
+    'longName': 'Myanyar3',
+    'source': '/fonts/mm3.ttf',
+  },
+]
+
+# Show characters in Unicode and font encodings
+class ShowFonts(webapp2.RequestHandler):
+
+  def get(self):
+    logging.info('/fonts/show')
+    template_values = {
+        'encoding_list': encoding_font_list,
+        'unicode_list': unicode_font_list,
+        'min_code': int('1000', 16),
+        'max_code': int('109F', 16),
+        'language': 'Myanmar (Burmese)',
+    }
+
+    path = os.path.join(os.path.dirname(__file__), 'fontsView.html')
     self.response.out.write(template.render(path, template_values))
