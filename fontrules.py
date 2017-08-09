@@ -102,6 +102,10 @@ class ShowFonts(webapp2.RequestHandler):
 
   def get(self):
     # Hex codes for characters astride the spaces
+    min_code = self.request.get('min', '1000')
+    max_code = self.request.get('max', '109f')
+
+    code_before = self.request.get('before', '1000')
     code_before = self.request.get('before', '1000')
     code_after = self.request.get('after', '1002')
     second_space_code = self.request.get('second_space', '200b')
@@ -109,8 +113,8 @@ class ShowFonts(webapp2.RequestHandler):
     template_values = {
         'encoding_list': encoding_font_list,
         'unicode_list': unicode_font_list,
-        'min_code': int('1000', 16),
-        'max_code': int('109F', 16),
+        'min_code': int(min_code, 16),
+        'max_code': int(max_code, 16),
         'code_before': code_before,
         'code_after': code_after,
         'second_space_code': second_space_code,
