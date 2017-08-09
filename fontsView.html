@@ -1,4 +1,4 @@
-l<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -99,7 +99,7 @@ function buildEncodingTable(table) {
   outIndex += 1;
   row.insertCell(outIndex).innerHTML = "With SP (0x20)";
   outIndex += 1;
-  row.insertCell(outIndex).innerHTML = "With ZWSP (0x200b)";
+  row.insertCell(outIndex).innerHTML = "Other spacing (0x{{second_space_code}})";
   outIndex += 1;
 
   // One row for each character
@@ -111,10 +111,12 @@ function buildEncodingTable(table) {
     var cell1 = row.insertCell(0);
     cell1.style.fontFamily = "NotoSansMyanmar";
     cell1.innerHTML = "0x" + index.toString(16);
+    cell1.title = charsToHexString(cell1.innerHTML)
 
     var cell2 = row.insertCell(1);
     cell2.style.fontFamily = "NotoSansMyanmar";
     cell2.innerHTML = code;
+    cell2.title = charsToHexString(cell2.innerHTML)
 
     rowNum += 1;
 
@@ -126,28 +128,33 @@ function buildEncodingTable(table) {
       cell.innerHTML = code
       var fontString = encoding_font_list[colNum];
       cell.style.fontFamily = fontString;
-
-     // TODO: add character plus various spaces
-
+      cell.title = charsToHexString(cell.innerHTML)
     }
 
+    // add character plus various spaces
     var fontString = encoding_font_list[zawgyi_index];
     var cell = row.insertCell(outIndex + colNum);
-    cell.innerHTML = '\u1000' + code + '\u1002';
+    cell.innerHTML = '\u{{code_before}}' + code + '\u{{code_after}}';
     // Zawgyi plus spaces
     cell.style.fontFamily = fontString;
+    cell.title = charsToHexString(cell.innerHTML)
 
     colNum ++;
     cell = row.insertCell(outIndex + colNum);
-    cell.innerHTML = '\u1000 ' + code + ' \u1002';
+    cell.innerHTML = '\u{{code_before}}' + ' ' + code + ' ' +
+                      '\u{{code_after}}';
     // Zawgyi plus spaces
     cell.style.fontFamily = fontString;
+    cell.title = charsToHexString(cell.innerHTML)
 
     colNum ++;
     cell = row.insertCell(outIndex + colNum);
-    cell.innerHTML = '\u1000\u200b' + code + '\u200b\u1002';
-    // Zawgyi plus \u200b space
+    cell.innerHTML = '\u{{code_before}}' + '\u{{second_space_code}}' +
+                     code + '\u{{second_space_code}}' +
+                      '\u{{code_after}}';
+    // Zawgyi plus another kind of space, e.g., \u200b
     cell.style.fontFamily = fontString;
+    cell.title = charsToHexString(cell.innerHTML)
 
 
   }
