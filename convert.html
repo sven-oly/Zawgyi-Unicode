@@ -105,24 +105,27 @@
     in the fonts, and hex codes will be shown.
     
       <div>
-        Known Zawgyi sources: <a href="http://burmese.voanews.com/"  target="_blank">
+        Known Zawgyi content: <a href="http://burmese.voanews.com/"  target="_blank">
         burmese.voanews.com</a> and 
         <a href="http://frontiermyanmar.net/mm" target="_blank">FrontierMyanmar.net/mm</a>
         <p>
-        Unicode source: <a href="http://www.bbc.com/burmese"  target="_blank">
+        Known Unicode content: <a href="http://www.bbc.com/burmese"  target="_blank">
         bbc.com/burmese</a>
-        <p>Unicode <a href="http://unicode.org/charts/PDF/U1000.pdf">Myanmar block</a>,
-        <a href="http://unicode.org/charts/PDF/UAA60.pdf">Extended A</a>,
-        <a href="http://www.unicode.org/charts/PDF/UA9E0.pdf">Extended B</a>
       </div>
     </div>
     <div class="span-4 last">
 			<a href="/burmese/">Burmese & Zawgyi</a> <br />
 			<a href="/shan/">Shan</a> <br />
 			<a href="/mon/">Mon</a> <br />
-			<a href="/karen/">Karen</a>
+			<a href="/karen/">Karen</a> <br />
+                        <hr>
+                        <a href="http://www.unicode.org/charts/PDF/U1000.pdf">Myanmar Unicode</a>
+	    	        <br />
+                        <a href="http://www.unicode.org/charts/PDF/UAA60.pdf"> Extended-A</a>
+	    	        <br />
+                        <a href="http://www.unicode.org/charts/PDF/UA9E0.pdf"> Extended-B</a>
 
-	    	<br /><br />
+	    	        <br />
             <input type='button' value='Toggle fonts'
                 onClick="showhide('other_fonts'); return false;" />
     </div>
@@ -134,10 +137,10 @@
     
     <div class='span-19 last'>
     <div>
+      <h4 style='margin:0;padding:0;'>Text Entry:</h4>
       <p>
       <input type="text" id="TestEntry" class='notosans' size="40"
         onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
-         (shown in NotoSans font)
       <div id="detectedZU"></div>
     </div>
 
@@ -146,29 +149,31 @@
     <div id='other_fonts'>
     <!-- <div id='other_fonts' style="display: none;"> -->
       <div>
+        <h4 style='margin:0;padding:0;'>Zawgyi One</hr>
+        <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
+        <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z')" />
+        <br />
       <textarea id="z1"  class='zawgyi_one'
         rows="1" cols="40">{{default_zawgyi}}</textarea>
-              Zawgyi One
-      <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
-      <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z')" />
-
     </div>
     
     <div>
     <div onClick="showhide('myazediSection'); return false;" />Myazedi</div>
-     <div id='myazediSection' style="display: none;">
-
-      <textarea id="myazedi" class='myazedi'
-        rows="1" cols="40">{{default_myazedi}}</textarea>
+    <div id='myazediSection' style="display: none;">
       <input type="button" value="-> Unicode" onclick="convertRequest('myazedi', 'M')" />
+      <br />
+
+      <textarea id="myazedi" class='myazedi' rows="1" cols="40">{{default_myazedi}}</textarea>
       </div>
     </div>
     
     <hr>
     <div>
-    Converted output:     <div id="msgArea" class='notosans14'> </div> 
+      <h4 style='margin:0;padding:0;'>Converted output:</h4>
+      <div id="msgArea" class='notosans14'> </div> 
       <textarea id="convertedText"  class='notosans'
         rows="1" cols="40">{{default_unicode}}</textarea>
+      <h4 style='margin:0;padding:0;'>Output hex:</h4>
       <textarea id="convertedHex"  class='notosans14'
         rows="2" cols="40">{{default_unicode}}</textarea>
       <input type="button" value="Compare with Zawgyi"
@@ -177,9 +182,9 @@
   </div> <!-- id='other_fonts' -->
 
     <div>
-      <textarea id="notoSans"  class='notosans'
-        rows="1" cols="40">{{default_unicode}}</textarea>
-      NotoSans Myanmar
+      <h4 style='margin:0;padding:0;'>Noto Sans Myanmar</h4>
+<textarea id="notoSans"  class='notosans'
+          rows="1" cols="40">{{default_unicode}}</textarea>
       <input type="button" value="Compare with converted"
        onclick="compareConvert('notoSans','convertedText')" />
     </div>

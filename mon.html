@@ -96,11 +96,9 @@
     </div>
         
   <div>
-		<div class="span-16">    <p>Try: <a href="http://burmese.monnews.org/" target="_blank">Sample Unicode text</a>
-		or 
-    <a href="http://www.kaowao.org/mon/" target="_blank">Sample Mon / Mon 2012 font data</a>
-    or <a href="http://zawgyi-unicode-test.appspot.com/mon/?text=%E1%80%82%E1%80%B1%20%E1%80%82%E1%80%BC%E1%80%82%E1%80%A2%20%E1%80%82%E1%80%A6%20%E1%80%82%E1%80%A8%20%E1%80%82%E1%80%AA%20%E1%80%82%E1%80%B3%20%E1%80%82%E1%80%B4%20%E1%80%82%E1%80%B5%20%E1%80%82%E1%80%B9%20%E1%80%82%E1%80%BA%20%E1%80%82%E1%80%BB%20%E1%80%82%E1%80%BC%20%E1%80%82%E1%80%BD%20%E1%80%82%E1%80%BE%20%E1%80%82%E1%80%BF%20%E1%80%82%E1%81%8E%20%E1%80%82%E1%81%90%20%E1%80%82%E1%81%91%20%E1%80%82%E1%81%92%20%E1%80%82%E1%81%93%20%E1%80%82%E1%81%94%20%E1%80%82%E1%81%95%20%E1%80%82%E1%81%96%20%E1%80%82%E1%81%97%20%E1%80%82%E1%81%98%20%E1%80%82%E1%81%99%20%E1%80%82%E1%81%9A%20%E1%80%82%E1%81%9B%20%E1%80%82%E1%81%9C%20%E1%80%82%E1%81%9D%20%E1%80%82%E1%81%9E%20%E1%80%82%E1%81%9F%20%E1%80%82%E1%82%98%20%E1%80%82%E1%82%99%20%E1%80%82%E1%82%9A%20%E1%80%82%E1%82%9B%20%E1%80%82%E1%82%9C%20%E1%80%82%E1%82%9D%20%E1%80%82%E1%82%9E%20%E1%80%82%E1%82%9F"
-    target="_blank">Test non-standard characters</a>
+		<div class="span-16">    <p>Mon in Unicode: <a href="http://mon.monnews.org/" target="_blank">mon.monnew.org</a>
+                      <p><a href="http://zawgyi-unicode-test.appspot.com/mon/?text=%E1%80%82%E1%80%B1%20%E1%80%82%E1%80%BC%E1%80%82%E1%80%A2%20%E1%80%82%E1%80%A6%20%E1%80%82%E1%80%A8%20%E1%80%82%E1%80%AA%20%E1%80%82%E1%80%B3%20%E1%80%82%E1%80%B4%20%E1%80%82%E1%80%B5%20%E1%80%82%E1%80%B9%20%E1%80%82%E1%80%BA%20%E1%80%82%E1%80%BB%20%E1%80%82%E1%80%BC%20%E1%80%82%E1%80%BD%20%E1%80%82%E1%80%BE%20%E1%80%82%E1%80%BF%20%E1%80%82%E1%81%8E%20%E1%80%82%E1%81%90%20%E1%80%82%E1%81%91%20%E1%80%82%E1%81%92%20%E1%80%82%E1%81%93%20%E1%80%82%E1%81%94%20%E1%80%82%E1%81%95%20%E1%80%82%E1%81%96%20%E1%80%82%E1%81%97%20%E1%80%82%E1%81%98%20%E1%80%82%E1%81%99%20%E1%80%82%E1%81%9A%20%E1%80%82%E1%81%9B%20%E1%80%82%E1%81%9C%20%E1%80%82%E1%81%9D%20%E1%80%82%E1%81%9E%20%E1%80%82%E1%81%9F%20%E1%80%82%E1%82%98%20%E1%80%82%E1%82%99%20%E1%80%82%E1%82%9A%20%E1%80%82%E1%82%9B%20%E1%80%82%E1%82%9C%20%E1%80%82%E1%82%9D%20%E1%80%82%E1%82%9E%20%E1%80%82%E1%82%9F"
+    target="_blank">Show test characters</a>
     <div>
       <p><strong>Input the test data:</strong>
       <input type="text" id="TestEntry" class='notosans' size="40"
@@ -114,8 +112,13 @@
 			<a href="/shan/">Shan</a> <br />
 			<a href="/mon/">Mon</a> <br />
 			<a href="/karen/">Karen</a>
-
-	    	<br /><br />
+                        <hr>
+                        <a href="http://www.unicode.org/charts/PDF/U1000.pdf">Myanmar Unicode</a>
+	    	        <br />
+                        <a href="http://www.unicode.org/charts/PDF/UAA60.pdf"> Extended-A</a>
+	    	        <br />
+                        <a href="http://www.unicode.org/charts/PDF/UA9E0.pdf"> Extended-B</a>
+	    	        <br />
             <input type='button' value='Toggle fonts'
                 onClick="showhide('other_fonts'); return false;" />
         </div>
@@ -211,7 +214,13 @@
            <textarea id="monanonta"  class='monanonta'
         rows="1" cols="40">{{default_unimon}}</textarea>
       </div>
-    </div>    
+    </div>
+
+     <div onClick="showhide('mon3Section'); return false;" />Mon3</em></div>
+     <div id="mon3Section"  style="display: none;">
+           <textarea id="mon3"  class='mon3'
+        rows="1" cols="40">{{default_unimon}}</textarea>
+      </div>
   </div> <!-- id='other_fonts' -->
 
     <hr>

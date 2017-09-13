@@ -5,7 +5,7 @@ import sys
 
 # Zawgyi font encoding conversion to Unicode form
 
-Description = ZAWGYI_description = u'UniMon font encoding conversion'
+Description = ZAWGYI_description = u'Zawgyi font encoding conversion'
 
 TRANS_LIT_RULES = ZAWGYI_UNICODE_TRANSLITERATE = u"""# Modern Burmese digits & Unicode code points.
 $nondigits = [^\u1040-\u1049];

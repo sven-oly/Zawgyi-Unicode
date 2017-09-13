@@ -57,8 +57,9 @@ function enterTestText(updateHex) {
   if (isZ) {
     detMsg += " Zawgyi";
   }
-  detField.innerHTML = detMsg;
-  
+  if (detField) {
+    detField.innerHTML = detMsg;
+  }
   // Put the text into the text areas.
   // Burmese
   var burmeseAreas = ["z1", "z2008", "myazedi", "padauk"];
@@ -70,8 +71,9 @@ function enterTestText(updateHex) {
   }
 
   // Mon
-  var monAreas = ["um", "unimon_small", "unimon", "ramanya", "mon", "mon2012", "monuni",
-    "monanonta"];
+  var monAreas = ["um", "unimon_small", "unimon", "ramanya", "mon",
+		  "mon2012", "monuni", "monanonta",
+		 "notoSans"];
   for (index = 0; index < monAreas.length; ++index) {
     outElement = document.getElementById(monAreas[index]);
     if (outElement) {
@@ -80,7 +82,7 @@ function enterTestText(updateHex) {
   }
 
   // Karen
-  var karenAreas = ["zwekabin", "knu", "saw", "khlan", "knewn"]
+  var karenAreas = ["zwekabin", "knu", "saw", "khlan", "knewn", "notoSans"]
   for (index = 0; index < karenAreas.length; ++index) {
     outElement = document.getElementById(karenAreas[index]);
     if (outElement) {
@@ -89,7 +91,8 @@ function enterTestText(updateHex) {
   }
 
   // Shan
-  var shanAreas = ["shanunicode", "shanunicode2", "panglong", "ZawgyiTai"];
+  var shanAreas = ["shanunicode", "shanunicode2", "panglong", "ZawgyiTai",
+		  "notoSans"];
   for (index = 0; index < shanAreas.length; ++index) {
     outElement = document.getElementById(shanAreas[index]);
     if (outElement) {

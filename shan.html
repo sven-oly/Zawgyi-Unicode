@@ -78,83 +78,105 @@
     <h1>Test Shan language text</h1>
     <p>Paste Myanmar text into the "Test" field. The characters will be shown
     in the fonts, along with hex codes.
-    <p>Reference: <a href="http://shan.panglong.org/t/" target="_blank">Shan panglong text.</a>
-     <p>Reference: <a href="http://www.shanwomen.org/tai/" target="_blank">Shan Women.</a>
+    <p>Shan language sites in Unicode:
+      <a href="http://shan.panglong.org/t/" target="_blank">Shan Panglong</a>,
+     <a href="http://www.shanwomen.org/tai/" target="_blank">Shan Women</a>,
+     <a href="http://panglong.org/" target="_blank">Shan Herald Agency for News</a>
     </div>
        
-
-
     <div>
-		<div class="span-16">
-		  <p>
-		  <input type="text" id="TestEntry" class='notosans' size="40"
-			onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
-			 <br />(shown in NotoSans font)
-		  <div id="detectedZU"></div>
-		</div>
-		<div class="span-4 last">
-			<a href="/burmese/">Burmese & Zawgyi</a> <br />
-			<a href="/shan/">Shan</a> <br />
-			<a href="/mon/">Mon</a> <br />
-			<a href="/karen/">Karen</a>
-
-	    	<br /><br />
-            <input type='button' value='Toggle fonts'
-                onClick="showhide('other_fonts'); return false;" />
-        </div>
+      <div class="span-20">
+        <h4 style='margin:0;padding:0;'>Text Entry (Noto Sans Myanmar):</h4>
+        
+	<input type="text" id="TestEntry" class='notosans' size="40"
+	       onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
+	<br />
+	<div id="detectedZU"></div>
+      </div>
+      <div class="span-4 last">
+	<a href="/burmese/">Burmese & Zawgyi</a> <br />
+	<a href="/shan/">Shan</a> <br />
+	<a href="/mon/">Mon</a> <br />
+	<a href="/karen/">Karen</a>
+        <hr>
+        <a href="http://www.unicode.org/charts/PDF/U1000.pdf">Myanmar Unicode</a>
+	<br />
+        <a href="http://www.unicode.org/charts/PDF/UAA60.pdf"> Extended-A</a>
+	<br />
+        <a href="http://www.unicode.org/charts/PDF/UA9E0.pdf"> Extended-B</a>
+	<br />
+        <input type='button' value='Toggle fonts'
+               onClick="showhide('other_fonts'); return false;" />
+      </div>
     </div>
     <hr>
 
-  <div id='other_fonts' style="display: none;">
+    <div id='other_fonts' style="display: none;">
     <div id='zawgyi'>
-      <textarea id="z1"  class='zawgyi_one'
-        rows="1" cols="40">{{default_zawgyi}}</textarea>
-              Zawgyi One
+      <h4 style='margin:0;padding:0;'>Zawgyi One:</h4>
       <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z')" />
+      <br />
+      <textarea id="z1"  class='zawgyi_one'
+                rows="1" cols="40">{{default_zawgyi}}</textarea>
     </div>
+      <hr>
 
     <div>
+      <h4 style='margin:0;padding:0;'>ShanUnicode</h4>
+      <!--
+      <input type="button" value="-> Unicode" onclick="convertRequest('shanunicode', 'shanunicode')" />
+      -->
+      <br />
       <textarea id="shanunicode"  class="shanunicode"
         rows="1" cols="30">{{default_unimon}}</textarea>
-              ShanUnicode
-      <input type="button" value="-> Unicode" onclick="convertRequest('shanunicode', 'shanunicode')" />
+      <hr>
     </div>
 
     <div>
+      <h4 style='margin:0;padding:0;'>Shan Unicode 2</h4>
+      <!-- 
+      <input type="button" value="-> Unicode" onclick="convertRequest('shanunicode2', 'shanunicode2')" />
+      -->
+      <br />
       <textarea id="shanunicode2"  class="shanunicode2"
         rows="1" cols="30">{{default_unimon}}</textarea>
-              Shan Unicode 2
-      <input type="button" value="-> Unicode" onclick="convertRequest('shanunicode2', 'shanunicode2')" />
-    </div>
-     <div>
-      <textarea id="panglong"  class='panglong'
-        rows="1" cols="30">{{default_unimon}}</textarea>
-              Panglong
-      <input type="button" value="-> Unicode" onclick="convertRequest('panglong', 'panglong')" />
+      <hr>
     </div>
 
     <div>
+      <h4 style='margin:0;padding:0;'>Panglong</h4>
+      <!--
+      <input type="button" value="-> Unicode" onclick="convertRequest('panglong'
+, 'panglong')" />
+      -->
+      <br />
+      <textarea id="panglong"  class='panglong'
+        rows="1" cols="30">{{default_unimon}}</textarea>
+      <hr>
+    </div>
+
+    <div>
+      <h4 style='margin:0;padding:0;'>Shan Tai</h4>
+      <!--
+        <input type="button" value="-> Unicode" onclick="convertRequest('ZawgyiTai', 'ZawgyiTai')" />
+        -->
+        <br />
       <textarea id="ZawgyiTai"  class='ZawgyiTai'
         rows="1" cols="30">{{default_unimon}}</textarea>
-              Shan Tai
-      <input type="button" value="-> Unicode" onclick="convertRequest('ZawgyiTai', 'ZawgyiTai')" />
     </div>
 
     <hr>
     <div>
-    Converted output:     <div id="msgArea" class='notosans14'> </div> 
+      <h4 style='margin:0;padding:0;'>Converted output</h4>
+      <div id="msgArea" class='notosans14'> </div> 
       <textarea id="convertedText"  class='notosans'
         rows="1" cols="40">{{default_unicode}}</textarea>
       <textarea id="convertedHex"  class='notosans14'
         rows="2" cols="40">{{default_unicode}}</textarea>
     </div>
-    <hr>
   </div> <!-- id='other_fonts' -->
 
     <div>
-      <textarea id="notoSans"  class='notosans'
-        rows="1" cols="40">{{default_unicode}}</textarea>
-      NotoSans Myanmar
       <input type="button" value="Compare with converted"
        onclick="compareConvert('notoSans','convertedText')" />
     </div>
@@ -164,16 +186,17 @@
     
     <div>
     <p>Hex:</p>
-      <input type="text" id="hexText" onchange="enterHex()" size="100"/>
-      
       <input type="submit" value="Convert hex to text" onSubmit="enterHex()" />
       <input type="button" value="-> scratch" onclick="copyText('hexText', 'scratchText')" />
       <input type="button" value="-> Unicode" onclick="hexToOutput('hexText', 'notoSans')" />
+      <br />
+      <input type="text" id="hexText" onchange="enterHex()" size="100"/>
+      
 
     </div>
     
     <div>
-    <p>Scratch pad:</P>
+      <h4 style='margin:0;padding:0;'>Scratch pad:</h4>
     <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
        <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans')" />
    

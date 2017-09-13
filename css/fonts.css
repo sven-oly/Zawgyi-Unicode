@@ -57,6 +57,12 @@
     font-family: Mon2012;
     src: url(/fonts/Mon 2012 00.ttf);
   }
+
+  @font-face {
+    font-family: Mon3;
+    src: url(/fonts/mon3.ttf);
+  }
+
   @font-face {
     font-family: KNU;
     src: url(/fonts/knu.TTF);
@@ -153,6 +159,11 @@
   
 .monanonta  {
     font-family: MonAnonta;
+    font-size:30px;
+  }
+
+.mon3  {
+    font-family: Mon3;
     font-size:30px;
   }
 

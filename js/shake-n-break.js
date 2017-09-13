@@ -13,7 +13,8 @@ function mm_break(){
 var IS_MYANMAR_RANGE = "[က-အ]+|[\u1025-\u1027]";
 var IS_UNICODE_MY = "[ဃငစဆဇဈဉညတဋဌဍဎဏဒဓနဘရဝဟဠအ]်|ျ[က-အ]ါ|ျ[ါ-း]|\u103e|\u103f|\u1031[^\u1000-\u1021\u103b\u106a\u106b\u107e-\u1084\u108f\u1090]|\u1031$|\u100b\u1039|\u1031[က-အ]\u1032|\u1025\u102f|\u103c\u103d";
 var IS_ZAWGYI = "[\u1050-\u109f]|\u0020[\u103b\u107e-\u1084]|\u0020\u1031|^\u1031|^\u103b|\u1038\u103b|\u1038\u1031|\u1033|\u1034|" + // [\u102d\u102e\u1032]\u103b|
-	"\u1039[^\u1000-\u1021]|\u1039$|\u108c";
+    "\u103a\u102c|" +
+    "\u1039[^\u1000-\u1021]|\u1039$|\u108c";
 var reMyanmar = [new RegExp(IS_MYANMAR_RANGE)];
 var reUnicode_my = [new RegExp(IS_UNICODE_MY)];
 var reZawgyi = [new RegExp(IS_ZAWGYI)];
@@ -175,4 +176,3 @@ var unicodeFixes = [
    ["\u102d\u103a", "\u102d"],  // ??? Remove the asat because the vowel sign overwrites it?
    [/\)\u1031/, /\u1031\)/],
    ];
-
