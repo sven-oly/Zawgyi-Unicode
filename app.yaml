@@ -9,6 +9,8 @@ handlers:
 
 - url: /fonts
   static_dir: fonts
+  http_headers:
+    Access-Control-Allow-Origin: "*"
 
 - url: /css
   static_dir: css
