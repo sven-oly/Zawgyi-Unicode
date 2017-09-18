@@ -1,25 +1,68 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <script type="text/javascript" src="https://www.google.com/jsapi=AIzaSyAsHfvyodyQAXjMsIuzLBkO1kH47sPIw6E"></script>
-    <script type="text/javascript">
 
-      // Load the Google Onscreen Keyboard API
-      google.load("elements", "1", {
-          packages: "keyboard"
-      });
+    <script src="/js/vk-debug.js"></script>
 
-      function onLoad() {
-        var kbd = new google.elements.keyboard.Keyboard(
-          [google.elements.keyboard.LayoutCode.RUSSIAN],
-          ['t1']);
-      }
 
-      google.setOnLoadCallback(onLoad);
+    <link rel="stylesheet" type="text/css" href="/css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="/css/keyboard.css">
+
+    <script type="text/css">
+      .vk-button {font-family: Pawhuska, Osage, Arial;}
+      .input {font-size:18px;}
+      .textarea {font-size:24px;}
+      .textarea {font-family: Pawhuska, Osage, Arial;}
+    </script>
+
+
+    <script>
+
+    // Myanmar keyboards
+
+    var controller, visible = true;
+
+    function onPageLoaded() {
+      var outputArea = 't1';
+      var input = document.getElementById(outputArea);
+      controller = new i18n.input.keyboard.Keyboard();
+      controller.loadLayout('my');
+      //controller.loadLayout('shn');
+      //controller.loadLayout('mnw');
+      controller.reposition(input, 2, 0, [1, 0, 0, 0]);
+      controller.register(input);
+      controller.addEventListener('kc', function() { visible = false; });
+      input.focus();
+      var selector = document.getElementById('selectKeyboard');
+      onLayoutSelected(selector, controller, outputArea);
+      // onFontSelected(document.getElementById('selectFont'), 't1');
+    }
+
+  function onLayoutSelected(selector, this_controller, outputId) {
+    var layoutCode = selector.value;
+    if (this_controller) {
+      this_controller.activateLayout(layoutCode);
+    } else {  // The global.
+      controller.activateLayout(layoutCode);
+    }
+    document.getElementById(outputId).focus();
+  }
+
+
     </script>
   </head>
-  <body>
-  Type in Russian<br/>
+
+  <body onload="onPageLoaded()">
+  Keyboards for Myanmar languages<br/>
   <textarea id="t1" style="width: 600px; height: 200px;"></textarea>
+  Select keyboard: <select onchange="onLayoutSelected(this, null, 't1');"
+       id="selectKeyboard">
+
+      <option value="shn">Shan</option>
+      <option value="mnw">Mon</option>
+      <option value="my">Burmese</option>
+
+    </select>
+
   </body>
 </html>
