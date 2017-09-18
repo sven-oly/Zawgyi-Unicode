@@ -27,9 +27,9 @@
       var input = document.getElementById(outputArea);
       controller = new i18n.input.keyboard.Keyboard();
       controller.loadLayout('my');
-      //controller.loadLayout('shn');
-      //controller.loadLayout('mnw');
-      //controller.loadLayout('ksw');
+      controller.loadLayout('shn');
+      controller.loadLayout('mnw');
+      controller.loadLayout('ksw');
       controller.reposition(input, 2, 0, [1, 0, 0, 0]);
       controller.register(input);
       controller.addEventListener('kc', function() { visible = false; });
