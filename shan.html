@@ -5,69 +5,69 @@
    </title>
 
   <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
-  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
+  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print">
   <!--[if lt IE 8]>
     <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
   <![endif]-->
- 
+
   <link rel="stylesheet" type="text/css" href="/css/fonts.css">
-  
+
   <script type="text/javascript" src="/js/shake-n-break.js"></script>
 
   <script type="text/javascript" src="/js/myzu.js"></script>
-  
+
   <script type="text/javascript" >
-  // Code to request transliteration (conversion) and handle the return. 
+  // Code to request transliteration (conversion) and handle the return.
   function convertRequest(source, type) {
     // Get the text and prepare the call to server.
     source_element = document.getElementById(source);
     text_in = encodeURIComponent(source_element.value);
-     
-    // Prepare for the call to the backendvar xmlhttp;
-	if (window.XMLHttpRequest)
-	  {
-	  // code for IE7+, Firefox, Chrome, Opera, Safari
-	  xmlhttp=new XMLHttpRequest();
-	  }
-	else
-	  {
-	  // code for IE6, IE5
-	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	  }
 
-    // Deal with the results	  
+    // Prepare for the call to the backendvar xmlhttp;
+        if (window.XMLHttpRequest)
+          {
+          // code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp=new XMLHttpRequest();
+          }
+        else
+          {
+          // code for IE6, IE5
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+          }
+
+    // Deal with the results
     xmlhttp.onreadystatechange=function()
-	{
-	  if(xmlhttp.readyState==4) {
-	      var returned_json = xmlhttp.responseText
-		  var output_area = document.getElementById('convertedText');
-		  var json_obj = JSON.parse(returned_json);
-		  // alert(json_obj.converted);
+        {
+          if(xmlhttp.readyState==4) {
+              var returned_json = xmlhttp.responseText
+                  var output_area = document.getElementById('convertedText');
+                  var json_obj = JSON.parse(returned_json);
+                  // alert(json_obj.converted);
 
           output_area.innerHTML = json_obj.converted;
           output_area.value = json_obj.converted;
-		  var hex_area = document.getElementById('convertedHex');
+                  var hex_area = document.getElementById('convertedHex');
           hex_area.value = textToHex(json_obj.converted);
-          
-		  var msg_area = document.getElementById('msgArea');
-          msg_area.innerHTML = json_obj.msg;         
-          msg_area.value = json_obj.msg;         
+
+                  var msg_area = document.getElementById('msgArea');
+          msg_area.innerHTML = json_obj.msg;
+          msg_area.value = json_obj.msg;
      }
-	}
-	
-	// Set up the call.
-	var target = "/convert/?text=" + text_in + "&type=" + type +
-	  "&noreturn=1";
-	//xmlhttp.open("POST", target, true);
-	xmlhttp.open("GET", target, true);
-	var size = target.length;
-	// xmlhttp.setRequestHeader("Content-length", target.length);
-	xmlhttp.send(null);	  
+        }
+
+        // Set up the call.
+        var target = "/convert/?text=" + text_in + "&type=" + type +
+          "&noreturn=1";
+        //xmlhttp.open("POST", target, true);
+        xmlhttp.open("GET", target, true);
+        var size = target.length;
+        // xmlhttp.setRequestHeader("Content-length", target.length);
+        xmlhttp.send(null);
   }
   </script>
 
   </head>
-  
+
   <body onload="onload()">
   <div class="container">
     <div class='span-1'>
@@ -79,32 +79,32 @@
     <p>Paste Myanmar text into the "Test" field. The characters will be shown
     in the fonts, along with hex codes.
     <p>Shan language sites in Unicode:
-      <a href="http://http://panglong.org/" target="_blank">Shan Panglong</a>,
+      <a href="http://www.panglong.org/" target="_blank">Shan Panglong</a>,
      <a href="http://www.shanwomen.org/tai/" target="_blank">Shan Women</a>,
      <a href="http://panglong.org/" target="_blank">Shan Herald Agency for News</a>
     </div>
-       
+
     <div>
       <div class="span-20">
         <h4 style='margin:0;padding:0;'>Text Entry (Noto Sans Myanmar):</h4>
-        
-	<input type="text" id="TestEntry" class='notosans' size="40"
-	       onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
-	<br />
-	<div id="detectedZU"></div>
+
+        <input type="text" id="TestEntry" class='notosans' size="40"
+               onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
+        <br />
+        <div id="detectedZU"></div>
       </div>
       <div class="span-4 last">
-	<a href="/burmese/">Burmese & Zawgyi</a> <br />
-	<a href="/shan/">Shan</a> <br />
-	<a href="/mon/">Mon</a> <br />
-	<a href="/karen/">Karen</a>
+        <a href="/burmese/">Burmese & Zawgyi</a> <br />
+        <a href="/shan/">Shan</a> <br />
+        <a href="/mon/">Mon</a> <br />
+        <a href="/karen/">Karen</a>
         <hr>
         <a href="http://www.unicode.org/charts/PDF/U1000.pdf">Myanmar Unicode</a>
-	<br />
+        <br />
         <a href="http://www.unicode.org/charts/PDF/UAA60.pdf"> Extended-A</a>
-	<br />
+        <br />
         <a href="http://www.unicode.org/charts/PDF/UA9E0.pdf"> Extended-B</a>
-	<br />
+        <br />
         <input type='button' value='Toggle fonts'
                onClick="showhide('other_fonts'); return false;" />
       </div>
@@ -134,7 +134,7 @@
 
     <div>
       <h4 style='margin:0;padding:0;'>Shan Unicode 2</h4>
-      <!-- 
+      <!--
       <input type="button" value="-> Unicode" onclick="convertRequest('shanunicode2', 'shanunicode2')" />
       -->
       <br />
@@ -168,7 +168,7 @@
     <hr>
     <div>
       <h4 style='margin:0;padding:0;'>Converted output</h4>
-      <div id="msgArea" class='notosans14'> </div> 
+      <div id="msgArea" class='notosans14'> </div>
       <textarea id="convertedText"  class='notosans'
         rows="1" cols="40">{{default_unicode}}</textarea>
       <textarea id="convertedHex"  class='notosans14'
@@ -180,10 +180,10 @@
       <input type="button" value="Compare with converted"
        onclick="compareConvert('notoSans','convertedText')" />
     </div>
-    <div id="msgArea" class='notosans14'> 
-    </div> 
+    <div id="msgArea" class='notosans14'>
+    </div>
     <hr>
-    
+
     <div>
     <p>Hex:</p>
       <input type="submit" value="Convert hex to text" onSubmit="enterHex()" />
@@ -191,19 +191,19 @@
       <input type="button" value="-> Unicode" onclick="hexToOutput('hexText', 'notoSans')" />
       <br />
       <input type="text" id="hexText" onchange="enterHex()" size="100"/>
-      
+
 
     </div>
-    
+
     <div>
       <h4 style='margin:0;padding:0;'>Scratch pad:</h4>
     <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
        <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans')" />
-   
+
     <hr>
     <br />
     <form action="/feedback/" method="get">
       <input type="submit" value="Send feedback" />
-    </form>  
+    </form>
   </body>
 </html>
