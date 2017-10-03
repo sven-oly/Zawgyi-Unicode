@@ -426,21 +426,12 @@ class RangeHandler(webapp2.RequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'ranges.html')
     self.response.out.write(template.render(path, template_values))
 
-
-# test for madlib handling
-class madlibHandler(webapp2.RequestHandler):
+class KeyboardHandler(webapp2.RequestHandler):
   def get(self):
-    template_values = {}
-    path = os.path.join(os.path.dirname(__file__), 'madlib.html')
+    template_values = {
+    }
+    path = os.path.join(os.path.dirname(__file__), 'keyboard.html')
     self.response.out.write(template.render(path, template_values))
-
-  def post(self):
-    template_values = {arg: self.request.get_all(arg)[0] for arg in self.request.arguments()}
-    logging.info("template_values: %s\n" % (template_values))
-
-    path = os.path.join(os.path.dirname(__file__), 'madlibresults.html')
-    self.response.out.write(template.render(path, template_values))
-
 
 # Return help for commands
 class HelpHandler(webapp2.RequestHandler):
@@ -523,12 +514,11 @@ app = webapp2.WSGIApplication([
     ('/detect/', detector.DetectHandler),
     ('/detectResult/', detector.DetectResultHandler),
     ('/ComputeModel/', detector.ComputeModel),
-	('/ShowAllModels/', detector.ShowAllModels),
-	('/DeleteAllModels/', detector.DeleteAllModels),
-	('/ShowModelDetail/', detector.ShowModelDetail), 
+	  ('/ShowAllModels/', detector.ShowAllModels),
+	  ('/DeleteAllModels/', detector.DeleteAllModels),
+	  ('/ShowModelDetail/', detector.ShowModelDetail),
     ('/ranges/', RangeHandler),
     
-    ('/madlib/', madlibHandler),
-   
+  ('/keyboard/', KeyboardHandler)
 
   ], debug=True)

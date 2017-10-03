@@ -10,25 +10,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO: Reference
+// Myanmar3 layout: http://www.myanmarlanguage.org/unicode/myanmar3-keyboard-layout
 
-var MNW_LAYOUT = {
-  'id': 'mnw',
-  'title': 'Mon (in progress)',
+var KSW_LAYOUT = {
+  'id': 'ksw',
+  'title': 'S\'gaw Karen',
   'mappings': {
     ',c': {
-      '': '?\u1041\u1042\u1043\u1044\u1045\u1046\u1047\u1048\u1049\u1040{{}}-',
-      'q': '\u101b\u1010\u1014\u1019\u1021\u1015\u1000\u1004\u1010\u1005'+
-      'a': '\u1028\u103e\u102e\u1033\u103d\u1037\u1034\u105e' +
-            '\u1027\u105d\u104f',
-      'z': '{{\u1007\u103b\u103e}}\u1012\u1002\u101c\u1017\u100a\u102c\u101a\u1038\u101d'
-    },
+      '': '`1234567890-=' +
+          '\u1006\u1001\u1014\u1019\u1021\u101a\u1000\u101c\u101E\u1005' +
+            '\u101F:\\' +
+          '\u1037\u1036\u1062\u102e\u102d\u1015{{\u103C\u1063}}\u1064' +
+            '\u106d\u1038\u0012' +
+          '\u1004\u1011\u1001\u1018\u1003\u1016{{\u103C\u102c}},.-'
     's,sc': {
-      '': '\u104E\u103f\u100c\u100B\u1026\u104c\u104d{{}}()_+' +
-      'q': '\u1025\u1011\u1023\u1008\u1035\u1016\u1001{{\u1004\u1082}}\u1051\u1006' +
-          '\u1027\u105d\u1028' +
-          '\u1017\u103E\u102E\u1039\u103D\u1036\u1032\u1012\u1013\u1002\u0022' +
-      'z': '\u1007\u1012\u1003\u1020\u1018\u1009\u102f\u1050\u1038\u104a'
+      '': '~!@#$%^&*()_+' +
+          '\u1030\u00a3\u20a0\u0e3f{}\u101b\u1002\u101d' +
+          '\u1061\u1027/|' +
+          '\u103c\u103E\u103b\u1060\u103D\u103a\u1032\u102f\u1030\u102b\"' +
+          '\u1007\<>[]\u101a_\'\u2022?' +
+          ''\u202b'
     },
     'l,cl': {
       '': '`1234567890-=' +
@@ -79,5 +80,5 @@ var MNW_LAYOUT = {
 };
 
 // Load the layout and inform the keyboard to switch layout if necessary.
-google.elements.keyboard.loadme(MNW_LAYOUT);
+google.elements.keyboard.loadme(KSW_LAYOUT);
                                                                                 

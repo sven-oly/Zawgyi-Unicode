@@ -1,4 +1,4 @@
-/ Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -14,26 +14,36 @@
 
 var SHN_LAYOUT = {
   'id': 'Shan',
-  'title': 'Shan (in progress)',
+  'title': 'Shan',
   'mappings': {
     '': {
       '': '\u1050\u1041\u1042\u1043\u1044\u1045\u1046\u1047\u1048\u1049' +
             '\u1040-=' +
-          '\u1006\u1010\u1014\u1019\u1021\u1015\u1000\u1004\u101E\u1005' +
-            '\u101F\u1029\u104F' +
-          '{{\u200C\u1031}}\u103B\u102D\u103A\u102B\u1037\u103C\u102F' +
-            '\u1030\u1038\u0027' +
-          '\u1016\u1011\u1001\u101C\u1018\u100A\u102C,./'
+          '\u1078\u1010\u107c\u1019\u1022\u1015\u1075\u1004\u101d\u1081' +
+            '[]\\' +
+          '\u1031\u1084\u102d\u103a\u103d\u1089\u1087\u102f\u1030' +
+            '\u1088\'' +
+          '\u107d\u1011\u1076\u101C\u101a\u107a\u1062,./'
+    },
+    'c': {
+      '': '~\u1050\u1041\u1042\u1043\u1044\u1045\u1046\u1047\u1048\u1049-=',
+      'q': '\u1078\uaa66',
+      'o': '\ua9e1',
+      's': '\ua9e6',
+      'z': '\ua938\uaa67'
+    },
+    's': {
+      '': '!@#$%^&*()_+' +
+          '\\uaa61\u107b\ua9e3\u10ae\u1053\u103c\u107f\u1077\u1004\u101d' +
+              '[]\\' +
+          '\u1035\u1085\u102e\u1082\u1082\u103f\u1086\u201d\u108a\u1038\u201c' +
+          '{{}}\uaaba\ua9e0\uaabe\u103b\u109f\u1083\u104A\u104B?'
     },
     'c': { // One key for Kinzi.
-      '': '{{\u1004\u103a\u1039}}'
-    },
-    's,sc': {
-      '': '\u100E\u100D\u1052\u100B\u1053\u1054\u1055\u101B*()_+' +
-          '\u1008\u101D\u1023\u104E\u1024\u104C\u1025\u104D\u103F\u100F' +
-          '\u1027\u102A\u1051' +
-          '\u1017\u103E\u102E\u1039\u103D\u1036\u1032\u1012\u1013\u1002\u0022' +
-          '\u1007\u100C\u1003\u1020\u101A\u1009\u1026\u104A\u104B?'
+      '1': '\u1091\u1092\u1093\u1094\u1095\u1096\u1097\u1098\u1099',
+      'w': '\uaa68',
+      'o': '\ua9e2',
+      'x': '\uaa69'
     },
     'l,cl': {
       '': '`1234567890-=' +

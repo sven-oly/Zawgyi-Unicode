@@ -17,7 +17,10 @@ handlers:
 
 - url: /data
   static_dir: data
-  
+
+- url: /layouts
+  static_dir: layouts
+
 - url: /js
   static_dir: js
   
