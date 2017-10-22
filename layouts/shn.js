@@ -13,7 +13,7 @@
 // TODO: Reference
 
 var SHN_LAYOUT = {
-  'id': 'Shan',
+  'id': 'shn',
   'title': 'Shan',
   'mappings': {
     '': {
@@ -27,10 +27,10 @@ var SHN_LAYOUT = {
     },
     'c': {
       '': '~\u1050\u1041\u1042\u1043\u1044\u1045\u1046\u1047\u1048\u1049-=',
-      'q': '\u1078\uaa66',
+      'qw': '\u1078\uaa66',
       'o': '\ua9e1',
       's': '\ua9e6',
-      'z': '\ua938\uaa67'
+      'zx': '\ua938\uaa67'
     },
     's': {
       '': '!@#$%^&*()_+' +
@@ -40,7 +40,7 @@ var SHN_LAYOUT = {
           '{{}}\uaaba\ua9e0\uaabe\u103b\u109f\u1083\u104A\u104B?'
     },
     'c': { // One key for Kinzi.
-      '1': '\u1091\u1092\u1093\u1094\u1095\u1096\u1097\u1098\u1099',
+      '1234567890': '\u1091\u1092\u1093\u1094\u1095\u1096\u1097\u1098\u1099',
       'w': '\uaa68',
       'o': '\ua9e2',
       'x': '\uaa69'

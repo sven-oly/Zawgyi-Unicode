@@ -9,10 +9,8 @@
     <link rel="stylesheet" type="text/css" href="/css/keyboard.css">
 
     <script type="text/css">
-      .vk-button {font-family: Pawhuska, Osage, Arial;}
       .input {font-size:18px;}
-      .textarea {font-size:24px;}
-      .textarea {font-family: Pawhuska, Osage, Arial;}
+      textarea {font-size:36px;}
     </script>
 
 
@@ -36,8 +34,10 @@
       input.focus();
       var selector = document.getElementById('selectKeyboard');
       onLayoutSelected(selector, controller, outputArea);
-      // onFontSelected(document.getElementById('selectFont'), 't1');
+      //onFontSelected(document.getElementById('selectFont'), 't1');
     }
+
+  // TODO: Add font size.
 
   function onLayoutSelected(selector, this_controller, outputId) {
     var layoutCode = selector.value;
@@ -48,6 +48,16 @@
     }
     document.getElementById(outputId).focus();
   }
+
+  function onLayoutRadioSelected(selector, this_controller, outputId) {
+    var layoutCode = selector.value;
+    if (this_controller) {
+      this_controller.activateLayout(layoutCode);
+    } else {  // The global.
+      controller.activateLayout(layoutCode);
+    }
+    document.getElementById(outputId).focus();
+}
 
   function toggle() {
     if (controller) {
@@ -60,16 +70,25 @@
 
   <body onload="onPageLoaded()">
   Keyboards for Myanmar languages<br/>
-  <textarea id="t1" style="width: 600px; height: 200px;"></textarea>
+  <textarea id="t1" style="width:600px; height:200px; font-size:30px; font-family:Padauk;"></textarea>
+  <br />
   Select keyboard: <select onchange="onLayoutSelected(this, null, 't1');"
        id="selectKeyboard">
 
-      <option value="shn">Shan</option>
+      <option value="shn" selected>Shan</option>
       <option value="mnw">Mon</option>
       <option value="ksw">S'gaw Karen</option>
       <option value="my">Burmese</option>
 
     </select>
 
+  <br />
+  <!--
+        <input type="radio" name="keyboardLang" value="shn" checked> Shan
+        <input type="radio" name="keyboardLang" value="mnw" checked> Mon
+        <input type="radio" name="keyboardLang" value="ksw" checked> Karen
+        <input type="radio" name="keyboardLang" value="my" checked> Burmese
+
+ -->
   </body>
 </html>

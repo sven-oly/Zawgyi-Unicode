@@ -16,6 +16,7 @@ $umedial = [\u103B-\u103E];
 $vowelmedial = [\u102B-\u1030\u1032\u103B-\u103F];
 $ukinzi = \u1004\u103A\u1039;
 $zmedialra = [\u103B\u107E-\u1084];
+$spaces = [\u0020\u00a0\u2000-\u200a];
 # #### STAGE (1): CODEPOINT MAPPING FROM ZAWGYI TO UNICODE
 ($consonant) \u103A \u1064 > $ukinzi $1 \u103B;
 ($consonant) \u1064 > $ukinzi $1;
@@ -103,6 +104,14 @@ $zmedialra > \u103c;
 \u1092 > \u100B\u1039\u100C ;
 \u1097 > \u100B\u1039\u100B ;
 \u104E > \u104E\u1004\u103A\u1038 ;
+
+##### STAGE (1.1): Remove spaces before diacritics.
+::Null;
+($spaces)+ ([\u102b-\u1030\u1032-\u1034\u1035-\u103d\u1060-\u1069\u106c\u106d\u1070-\u1085\u1087-\u108f\u1093\u1096]) >
+  $2 ;
+(\u0020)+ ([\u102b-\u1030\u1032-\u1034\u1035-\u103d\u1060-\u1069\u106c\u106d\u1070-\u1085\u1087-\u108f\u1093\u1096]) >
+  $2 ;
+  
 ##### STAGE (2): POST REORDERING RULES FOR UNICODE RENDERING
 ::Null;
 \u1044 \u103a > | \u104E \u103A ;
