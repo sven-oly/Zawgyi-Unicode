@@ -6,8 +6,8 @@
     function setupKeyboard(outputAreaId, langList, selectKeyboardId) {
       var input = document.getElementById(outputAreaId);
       controller = new i18n.input.keyboard.Keyboard();
-      for (langId in langList) {
-        controller.loadLayout(langId);
+      for (index in langList) {
+        controller.loadLayout(langList[index]);
       }
 
       controller.reposition(input, 2, 0, [1, 0, 0, 0]);
