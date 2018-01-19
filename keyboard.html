@@ -3,6 +3,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <script src="/js/vk-debug.js"></script>
+    <script src="/js/keyboard.js"></script>
 
 
     <link rel="stylesheet" type="text/css" href="/css/fonts.css">
@@ -17,53 +18,13 @@
     <script>
 
     // Myanmar keyboards
-
-    var controller, visible = true;
-
     function onPageLoaded() {
-      var outputArea = 't1';
-      var input = document.getElementById(outputArea);
-      controller = new i18n.input.keyboard.Keyboard();
-      controller.loadLayout('my');
-      controller.loadLayout('shn');
-      controller.loadLayout('mnw');
-      controller.loadLayout('ksw');
-      controller.reposition(input, 2, 0, [1, 0, 0, 0]);
-      controller.register(input);
-      controller.addEventListener('kc', function() { visible = false; });
-      input.focus();
-      var selector = document.getElementById('selectKeyboard');
-      onLayoutSelected(selector, controller, outputArea);
-      //onFontSelected(document.getElementById('selectFont'), 't1');
+      var langIds = ['shn', 'mnw', 'ksw', 'my'];
+      var controller = setupKeyboard('t1', langIds, 'selectKeyboard');
     }
 
   // TODO: Add font size.
 
-  function onLayoutSelected(selector, this_controller, outputId) {
-    var layoutCode = selector.value;
-    if (this_controller) {
-      this_controller.activateLayout(layoutCode);
-    } else {  // The global.
-      controller.activateLayout(layoutCode);
-    }
-    document.getElementById(outputId).focus();
-  }
-
-  function onLayoutRadioSelected(selector, this_controller, outputId) {
-    var layoutCode = selector.value;
-    if (this_controller) {
-      this_controller.activateLayout(layoutCode);
-    } else {  // The global.
-      controller.activateLayout(layoutCode);
-    }
-    document.getElementById(outputId).focus();
-}
-
-  function toggle() {
-    if (controller) {
-      controller.setVisible(visible = !visible);
-    }
-  }
 
     </script>
   </head>
@@ -81,14 +42,9 @@
       <option value="my">Burmese</option>
 
     </select>
-
+            <input type='button' value='Toggle keyboard'
+                onClick="toggleKeyboard(); return false;" />
   <br />
-  <!--
-        <input type="radio" name="keyboardLang" value="shn" checked> Shan
-        <input type="radio" name="keyboardLang" value="mnw" checked> Mon
-        <input type="radio" name="keyboardLang" value="ksw" checked> Karen
-        <input type="radio" name="keyboardLang" value="my" checked> Burmese
 
- -->
   </body>
 </html>

@@ -59,11 +59,11 @@ var SHN_LAYOUT = {
     }
   },
   'transform' : {
-    // Reorder pre-vowel E after consonant
-    '\u200c([\u1031\u1084])([\u1000-\u102a\u103f\u104e\u1075-\u1080])': '$2$1',
+    // Reorder vowel E after consonant
+    '\u200c([\u1031\u1084])([\u1000-\u102a\u103f\u104e\u1075-\u1081])': '$2$1',
 
     // Keep E after medials
-    '([\u103c-\u103e]*([\u1031|\u1084]))\u001d\u103b': '\u103b$1$2',
+    '([\u103c-\u103e]*([\u1031\u1084]))\u001d\u103b': '\u103b$1',
     '([\u103b]*)([\u103d-\u103e]*)([\u1031\u1084])\u001d\u103c': '$1\u103c$2$3',
     '([\u103b\u103c]*)([\u103e]*)([\u1031\u1084])\u001d\u103d': '$1\u103d$2$3',
     '([\u103b-\u103d]*)([\u1031\u1084])\u001d\u103e': '$1\u103e$2',
@@ -76,7 +76,7 @@ var SHN_LAYOUT = {
     // Move E after kinzi in steps.
     '\u1004([\u1031\u1084])\u001d\u103a': '\u1004\u103a$1',
     '\u1004\u103a([\u1031\u1084])\u001d\u1039': '\u1004\u103a\u1039$1',
-    '\u1004\u103a\u1039([\u1031|1084])\u001d([\u1000-\u102a\u103f\u104e])':
+    '\u1004\u103a\u1039([\u1031\u1084])\u001d([\u1000-\u102a\u103f\u104e])':
     '\u1004\u103a\u1039$2$1',
 
     // Move E after subscripted consonant in two steps.
