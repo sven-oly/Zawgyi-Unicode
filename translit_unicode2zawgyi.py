@@ -5,9 +5,9 @@ import sys
 
 # Unicode Myanmar to Zawgyi converter (prototype)
 
-Description = ZAWGYI_description = u'Unicode to Zawgyi conversion'
+Description = UZ_description = u'Unicode to Zawgyi conversion'
 
-TRANS_LIT_RULES = UNICODE_ZAWGYI_TRANSLITERATE = u"""# Modern Burmese digits & Unicode code points.
+UNICODE_ZAWGYI_TRANSLITERATE = u"""# Modern Burmese digits & Unicode code points.
 $nondigits = [^\u1040-\u1049];
 $space = '\u0020';
 $consonant = [\u1000-\u1021];
@@ -18,48 +18,59 @@ $ukinzi = \u1004\u103A\u1039;
 $zmedialra = [\u103B\u107E-\u1084];
 $spaces = [\u0020\u00a0\u2000-\u200a];
 
-### TODO: actually implement U-->Z.
-# #### STAGE (1): CODEPOINT MAPPING FROM ZAWGYI TO UNICODE
-($consonant) \u103A \u1064 > $ukinzi $1 \u103B;
-($consonant) \u1064 > $ukinzi $1;
-\u1064 > $ukinzi;
-($consonant) \u108b > $ukinzi $1 \u102D;
-($consonant) \u108C > $ukinzi $1 \u102E;
-($consonant) \u108D > $ukinzi $1 \u1036;
-($consonant) \u103A \u1033 \u108B > $ukinzi $1 \u103B \u102D \u102F;
-($consonant) \u103A \u108b > $ukinzi $1 \u103B \u102D ;
-($consonant) \u103A \u108C \u1033 > $ukinzi $1 \u103B \u102E \u102F;
-($consonant) \u103A \u108C > $ukinzi $1 \u103B \u102E ;
-($consonant) \u103A \u108D > $ukinzi $1 \u103B \u1036 ;
-($consonant) \u103A \u108e > $1 \u103B \u102D \u1036 ;
-\u108B > $ukinzi \u102D ;
-\u108C > $ukinzi \u102E ;
-\u108D > $ukinzi \u1036 ;
-\u106A ($vowelsign) \u1038 > \u1025 $1 \u1038 ;
-\u106A > \u1009 ;
-\u106B > \u100A ;
+### TO FINISH: actually implement U-->Z.
+
+# #### STAGE (1): CODEPOINT MAPPING FROM UNICODE TO ZAWGYI
+$ukinzi ($consonant) \u103B > $1 \u103A \u1064 ;
+$ukinzi ($consonant) > $1 \u1064 ;
+$ukinzi > \u1064 ;
+$ukinzi $$consonant \u102D > $ukinzi $1 \u102D ;
+$ukinzi ($consonant) \u102E > $1 \u108C ;
+
+$ukinzi ($consonant) \u1036 > $1 \u108D ;
+$ukinzi ($consonant) \u103B \u102D \u102F > $1 \u103A \u1033 \u108B ;
+$ukinzi ($consonant) \u103B \u102D > $1 \u103A \u108b  ;
+$ukinzi ($consonant) \u103B \u102E \u102F > $1 \u103A \u108C \u1033 ;
+$ukinzi ($consonant) \u103B \u102E > $1 \u103A \u108C ;
+$ukinzi ($consonant) \u103B \u1036 > $1 \u103A \u108D ;
+
+($consonant) \u103B \u102D \u1036 > $1 \u103A \u108e  ;
+
+$ukinzi \u102D > \u108B ;
+$ukinzi \u102E  > \u108C  ;
+$ukinzi \u1036 > \u108D  ;
+
+\u1025 ($vowelsign) \u1038  > \u106A $1 \u1038 ;
+\u1009 > \u106A  ;
+\u100A > \u106B  ;
 
 # Ignore inserted invisible spaces
 \u200b > ;
 
-$zmedialra > \u103c;
+#### !!!!! $zmedialra > \u103c;  # TODO FIX THIS!
 
-\u108F > \u1014 ;
-\u1090 > \u101B ;
-\u1086 > \u103F ;
-\u103A > \u103B ;  # Rule 21
-\u103B > \u103C ;  # Rule 21
-\u107D > \u103B ;
-\u103C \u108A > \u103D \u103E;
-\u103C > \u103D ;  # Rule 24
-\u108A > \u103D \u103E ;
-\u103D > \u103E ;   # Rule 26
-\u1087 > \u103E ;
-\u1088 > \u103E \u102F ;
-\u1089 > \u103E \u1030 ;
-\u1039 > \u103A ;  # Rule 30
-\u1033 > \u102F ;
-\u1034 > \u1030 ;
+u1014 > \u108F ;
+u101B > \u1090 ;
+u103F > \u1086 ;
+\u103B > \u103A ;
+\u103C > \u103B  ;  # TODO: Needs more context with the base consonants and modifiers
+\u103B > \u107D ;
+\u103D \u103E > \u103C \u108A ;
+
+ \u103D  > \u103C ;
+ 
+ 
+\u103D \u103E > \u108A ;
+\u103E  > \u103D > \u103E ;   # Rule 26
+ \u103E > \u1087 ;
+\u103E \u102F  > \u1088 > ;
+\u103E \u1030 > \u1089 > ;
+\u103A > \u1039 ;
+
+\u102F > \u1033 ;
+\u1030 > \u1034 ;
+
+## TODO: MORE TO DO HERE
 \u105A > \u102B \u103A ;
 \u108E > \u102D \u1036 ;
 \u1031 \u1094 ($consonant) \u103D > $1 \u103E \u1031 \u1037 ;
@@ -190,11 +201,11 @@ $zmedialra > \u103c;
 """
 
 date_entered = '18-July-2015'
-description = 'First try for transliteration rules for Zawgyi to Unicode'
+description = 'First try for transliteration rules for Unicode to Zawgyi'
 
 def printRules():
   print 'Rules for %s' % Description
-  lines = TRANS_LIT_RULES.split('\n')
+  lines = UNICODE_ZAWGYI_TRANSLITERATE.split('\n')
   ruleNum = 0
   for line in lines:
     line = line.strip()

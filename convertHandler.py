@@ -29,6 +29,9 @@ import translit_sawcfcr000  # Karen Saw font encoded -> UniCode
 import translit_zwekabin  # For Karen Zwekabin encoded text -> UniCode
 
 import translit_zawgyi  # import ZAWGYI_UNICODE_TRANSLITERATE, description
+
+import translit_unicode2zawgyi
+
 import translittests
 
 # Data store
@@ -51,6 +54,9 @@ knu_converter = None
 saw_converter = None
 zwekabin_converter = None
 
+uz_converter = None
+
+
 # Convert text in URL, with JSON return
 class ConvertHandler(webapp2.RequestHandler):
   def post(self):
@@ -68,6 +74,7 @@ class ConvertHandler(webapp2.RequestHandler):
     global unimon_converter
     global zawgyi_converter
     global zwekabin_converter
+    global uz_converter
 
     if not zawgyi_converter:
       zawgyi_converter = transliterate.Transliterate(
@@ -165,15 +172,16 @@ class ConvertHandler(webapp2.RequestHandler):
       logging.info('***saw result = %s' % result);
       msg = 'Karen SAW conversion'
 
-    elif input_type == 'ZWE':
-      # Zwekabin 
-      if not zwekabin_converter:
-        zwekabin_converter = transliterate.Transliterate(
-          translit_zwekabin.ZWEKABIN_UNICODE_TRANSLITERATE,
-          translit_zwekabin.ZWEKABIN_description)
-      result = zwekabin_converter.transliterate(input)
-      msg = translit_zwekabin.ZWEKABIN_description
-    
+
+    elif input_type == 'U':
+      # Unicode to (ahem) Z
+      if not uz_converter:
+        uz_converter = transliterate.Transliterate(
+          translit_unicode2zawgyi.UNICODE_ZAWGYI_TRANSLITERATE,
+          translit_unicode2zawgyi.UZ_description)
+      result = uz_converter.transliterate(input)
+      msg = translit_unicode2zawgyi.UZ_description
+
     else:
       msg = 'Unknown encoding = %s!' % input_type
       result = 'No conversion attempted.'

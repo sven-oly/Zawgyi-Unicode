@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Test Unicode - Zawgyi Conversion
+   </title>
+
+  <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
+  <![endif]-->
+  
+  <link rel="stylesheet" type="text/css" href="/css/fonts.css">
+  
+   <script type="text/javascript" src="/js/shake-n-break.js">
+   </script>
+
+  <script type="text/javascript" src="/js/myzu.js">
+  </script>
+  
+  <script type="text/javascript" >
+  // Code to request transliteration (conversion) and handle the return. 
+  function convertRequest(source, type, outputId) {
+    // Get the text and prepare the call to server.
+    source_element = document.getElementById(source);  
+    text_in = encodeURIComponent(source_element.value);
+
+    // Prepare for the call to the backendvar xmlhttp;
+	if (window.XMLHttpRequest)
+	  {
+	  // code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {
+	  // code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+
+    // Deal with the results	  
+    xmlhttp.onreadystatechange=function()
+	{
+	  if(xmlhttp.readyState==4) {
+	  	  if (xmlhttp.status != 200) {
+	  	    alert('Bad status =' + xmlhttp.status);
+	  	    return;
+	  	  }
+	      var returned_json = xmlhttp.responseText;
+		  var output_area = document.getElementById(outputId);
+		  var json_obj = JSON.parse(returned_json);
+		  // alert(json_obj.converted);
+
+          output_area.innerHTML = json_obj.converted;
+          output_area.value = json_obj.converted;
+		  var hex_area = document.getElementById('convertedHex');
+          hex_area.value = textToHex(json_obj.converted);
+          
+          var inOutSizes = json_obj.inputSize + " " + json_obj.resultSize;
+          var testArea = document.getElementById('testOutput');
+          testArea.innerHTML = inOutSizes;
+          testArea.value = inOutSizes;
+
+		  var msg_area = document.getElementById('msgArea');
+          msg_area.innerHTML = json_obj.msg;         
+          msg_area.value = json_obj.msg;         
+     }
+	}
+	
+	// Set up the call.
+    var encodedText = encodeURIComponent(text_in);
+	var encodedTarget = "/convert/?text=" + encodedText + "&type=" + type +
+	  "&noreturn=1";  // UNUSED
+
+	var target = "/convert/?text=" + text_in + "&type=" + type +
+	  "&noreturn=1";
+	xmlhttp.open("GET", target, true);
+	var size = target.length;
+	xmlhttp.send(null);	  
+  }
+
+  // TODO: report data problem.
+  function reportProblem(type) {
+	  var converted_area = document.getElementById('convertedText');
+	  var input_area = document.getElementById('TestEntry');
+	var target = "/entererror/?input=" + input_area.value +
+	  "&converted=" + converted_area.value +
+	  "&type=" + type + 
+	  "&noreturn=1";	  
+	  // TODO: Send to back end to post in submitError.html.
+      window.location.href = target;
+  }
+  </script>
+
+
+  </head>
+  
+  <body onload="onload()">
+
+  <div class="container">
+
+    <div class="span-18">
+
+    <h1>Test Myanmar text conversion</h1>
+    <p>Just paste your Myanmar text into the "Test" field. The characters will be shown
+    in the fonts, and hex codes will be shown.
+    
+      <div>
+        Known Zawgyi content: <a href="http://burmese.voanews.com/"  target="_blank">
+        burmese.voanews.com</a> and 
+        <a href="http://frontiermyanmar.net/mm" target="_blank">FrontierMyanmar.net/mm</a>
+        <p>
+        Known Unicode content: <a href="http://www.bbc.com/burmese"  target="_blank">
+        bbc.com/burmese</a>
+      </div>
+    </div>
+    <div class="span-4 last">
+			<a href="/burmese/">Burmese & Zawgyi</a> <br />
+			<a href="/shan/">Shan</a> <br />
+			<a href="/mon/">Mon</a> <br />
+			<a href="/karen/">Karen</a> <br />
+                        <hr>
+                        <a href="http://www.unicode.org/charts/PDF/U1000.pdf">Myanmar Unicode</a>
+	    	        <br />
+                        <a href="http://www.unicode.org/charts/PDF/UAA60.pdf">Extended-A</a>
+	    	        <br />
+                        <a href="http://www.unicode.org/charts/PDF/UA9E0.pdf">Extended-B</a>
+
+	    	        <br />
+                       < href="https://www.unicode.org/notes/tn11/UTN11_3.pdf">Representing Myanmar in Unicode</a>
+	    	        <br />
+
+            <input type='button' value='Toggle fonts'
+                onClick="showhide('other_fonts'); return false;" />
+            <input type='button' value='Toggle keyboard' onClick="toggleKeyboard(); return false;" />
+    </div>
+    </div>  <!-- container -->
+    
+  <div class="container">
+    <div class="span-1">
+    </div>
+    
+    <div class='span-19 last'>
+    <div>
+      <h4 style='margin:0;padding:0;'>Text Entry:</h4>
+      <p>
+      <input type="text" id="TestEntry" class='notosans' size="40"
+        onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
+      <div id="detectedZU"></div>
+    </div>
+
+    <hr>
+
+    <div id='other_fonts'>
+    <!-- <div id='other_fonts' style="display: none;"> -->
+      <div>
+        <h4 style='margin:0;padding:0;'>Zawgyi One</hr>
+        <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
+        <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z', 'convertedText')" />
+        <br />
+      <textarea id="z1"  class='zawgyi_one'
+        rows="1" cols="40">{{default_zawgyi}}</textarea>
+    </div>
+
+    <hr>
+    <div>
+      <input type="button" value="-> Z" onclick="convertRequest('convertedText', 'U', 'zoutput')" />
+      <h4 style='margin:0;padding:0;'>Unicode output:</h4>
+      <div id="msgArea" class='notosans14'> </div> 
+      <textarea id="convertedText"  class='notosans'
+        rows="1" cols="40">{{default_unicode}}</textarea>
+    <hr>
+
+    <!-- <div id='other_fonts' style="display: none;"> -->
+      <div>
+          Conversion to Zawgyi from Unicode <strong>(UNDER CONSTRUCTION) </strong>
+      <br />
+      <textarea id="zoutput"  class='zawgyi_one'
+        rows="1" cols="40">{{default_zawgyi}}</textarea>
+    </div>
+
+  <h4 style='margin:0;padding:0;'>Output hex:</h4>
+
+    <textarea id="convertedHex"  class='notosans14'
+        rows="2" cols="40">{{default_unicode}}</textarea>
+      <input type="button" value="Compare with Zawgyi"
+       onclick="compareConvert('z1','convertedText')" />    </div>
+    <hr>
+  </div> <!-- id='other_fonts' -->
+
+  <div>
+    <p>Hex:</p>
+      <input type="text" id="hexText" onchange="enterHex()" size="100"/>
+      
+      <input type="submit" value="Convert hex to text" onSubmit="enterHex()" />
+      <input type="button" value="-> scratch" onclick="copyText('hexText', 'scratchText')" />
+      <input type="button" value="-> Unicode" onclick="hexToOutput('hexText', 'notoSans')" />
+      <input type="button" value="-> Zawgyi" onclick="hexToOutput('hexText', 'z1')" />
+      <input type="button" value="-> Myazedi" onclick="hexToOutput('hexText', 'myazedi')" />
+
+    </div>
+    
+    <div>
+    <p>Scratch pad:</P>
+    <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
+       <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans')" />
+   </div>
+    <hr>
+    <br />
+    <form action="/feedback" method="get">
+      <input type="submit" value="Send feedback" />
+    </form>  
+    <form action="/feedback" method="get">
+      <input type="submit" value="Report conversion problem"
+      onclick="return reportProblem('zawgyi');" />
+    </form>
+    </div>
+    <input type='text' id='testOutput' input>
+  </div> <!-- container -->
+     </body>
+</html>

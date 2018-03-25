@@ -281,6 +281,17 @@ class ConvertUIHandler(webapp2.RequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'convert.html')
     self.response.out.write(template.render(path, template_values))
 
+# Shows user interface for converting from Zawgyi & Myazedi
+class ConvertUZHandler(webapp2.RequestHandler):
+    # Show feedback form.
+    def get(self):
+      text = self.request.get("text", "")
+      template_values = SetDefaultTemplate(text)
+
+      path = os.path.join(os.path.dirname(__file__), 'convertUZ.html')
+      self.response.out.write(template.render(path, template_values))
+
+
 # Shows user interface for converting from Zawgyi, Myazedi, and Mon fonts. 
 class Convert2UIHandler(webapp2.RequestHandler):
   # Show feedback form.
@@ -463,9 +474,10 @@ class HelpHandler(webapp2.RequestHandler):
     ('/detect/', markovDetect.DetectHandler),
     ('/detectResult/', markovDetect.DetectResultHandler),
     ('/ComputeModel/', detector.ComputeModel),
-	('/ShowAllModels/ ', detector.ShowAllModels),
+  	('/ShowAllModels/ ', detector.ShowAllModels),
     ('/submiterror/', SubmitErrorHandler),
-    ('/help/', HelpHandler)
+    ('/help/', HelpHandler),
+    ('/convertUZ/', ConvertUZHandler),  
     """
 
     self.response.headers['Content-Type'] = 'text/plain'   
@@ -518,7 +530,8 @@ app = webapp2.WSGIApplication([
 	  ('/DeleteAllModels/', detector.DeleteAllModels),
 	  ('/ShowModelDetail/', detector.ShowModelDetail),
     ('/ranges/', RangeHandler),
-    
-  ('/keyboard/', KeyboardHandler)
+    ('/convertUZ/', ConvertUZHandler),
+
+    ('/keyboard/', KeyboardHandler)
 
   ], debug=True)
