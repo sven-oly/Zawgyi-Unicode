@@ -126,7 +126,7 @@
                         <a href="http://www.unicode.org/charts/PDF/UA9E0.pdf">Extended-B</a>
 
 	    	        <br />
-                       < href="https://www.unicode.org/notes/tn11/UTN11_3.pdf">Representing Myanmar in Unicode</a>
+                       <a href="https://www.unicode.org/notes/tn11/UTN11_3.pdf">Representing Myanmar in Unicode</a>
 	    	        <br />
 
             <input type='button' value='Toggle fonts'
@@ -138,7 +138,7 @@
   <div class="container">
     <div class="span-1">
     </div>
-    
+
     <div class='span-19 last'>
     <div>
       <h4 style='margin:0;padding:0;'>Text Entry:</h4>
@@ -160,7 +160,7 @@
       <textarea id="z1"  class='zawgyi_one'
         rows="1" cols="40">{{default_zawgyi}}</textarea>
     </div>
-    
+
     <div>
     <div onClick="showhide('myazediSection'); return false;" />Myazedi</div>
     <div id='myazediSection' style="display: none;">
@@ -170,11 +170,11 @@
       <textarea id="myazedi" class='myazedi' rows="1" cols="40">{{default_myazedi}}</textarea>
       </div>
     </div>
-    
+
     <hr>
     <div>
       <h4 style='margin:0;padding:0;'>Converted output:</h4>
-      <div id="msgArea" class='notosans14'> </div> 
+      <div id="msgArea" class='notosans14'> </div>
       <textarea id="convertedText"  class='notosans'
         rows="1" cols="40">{{default_unicode}}</textarea>
       <h4 style='margin:0;padding:0;'>Output hex:</h4>
@@ -192,14 +192,14 @@
       <input type="button" value="Compare with converted"
        onclick="compareConvert('notoSans','convertedText')" />
     </div>
-    <div id="msgArea" class='notosans14'> 
-    </div> 
+    <div id="msgArea" class='notosans14'>
+    </div>
     <hr>
-    
+
     <div>
     <p>Hex:</p>
       <input type="text" id="hexText" onchange="enterHex()" size="100"/>
-      
+
       <input type="submit" value="Convert hex to text" onSubmit="enterHex()" />
       <input type="button" value="-> scratch" onclick="copyText('hexText', 'scratchText')" />
       <input type="button" value="-> Unicode" onclick="hexToOutput('hexText', 'notoSans')" />
@@ -207,7 +207,7 @@
       <input type="button" value="-> Myazedi" onclick="hexToOutput('hexText', 'myazedi')" />
 
     </div>
-    
+
     <div>
     <p>Scratch pad:</P>
     <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
@@ -217,7 +217,7 @@
     <br />
     <form action="/feedback" method="get">
       <input type="submit" value="Send feedback" />
-    </form>  
+    </form>
     <form action="/feedback" method="get">
       <input type="submit" value="Report conversion problem"
       onclick="return reportProblem('zawgyi');" />
