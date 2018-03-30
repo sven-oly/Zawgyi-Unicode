@@ -95,8 +95,8 @@ u1037 > \u1094 ;  # Or 1095, depending on the width of the consonant.
 \u1069 > \u1039 \u1008 ;
 \u106C > \u1039 \u100B ;
 \u106D > \u1039 \u100C ;
-\u1070 > \u1039 \u100F ;
-\u1071 > \u1039 \u1010 ;
+\u1039 \u100F > \u1070 ;  # U => Z
+\u1039 \u1010 > \u1071 ;  # U => Z
 \u1072 > \u1039 \u1010 ;
 \u1096 > \u1039 \u1010 \u103D;
 \u1073 > \u1039 \u1011 ;
@@ -122,6 +122,7 @@ u1037 > \u1094 ;  # Or 1095, depending on the width of the consonant.
 ::Null;
 
 ($consonant) \u1031 > \u1031 $1 ;  # Put the E vowel back before the consonant.
+($consonant) ([\u103d\u103e]) \u1031 > \u1031 $1 $2;  # Put the E vowel back before the consonant.
 
 \u1044 \u103a > | \u104E \u103A ;
 ($nondigits) \u1040 ([\u102B-\u103F]) > $1 \u101D $2;
