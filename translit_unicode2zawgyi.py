@@ -67,7 +67,7 @@ u103F > \u1086 ;
 \u103E \u1030 > \u1089 > ;
 \u103A > \u1039 ;
 
-\u102F > \u1033 ;
+\u102f > \u102F ;  # U => Z, but may need to be contextual
 \u1030 > \u1034 ;
 
 \u102B \u103A > \u105A ;
