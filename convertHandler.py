@@ -60,7 +60,7 @@ uz_converter = None
 # Convert text in URL, with JSON return
 class ConvertHandler(webapp2.RequestHandler):
   def post(self):
-    self.response.headers['Content-Type'] = 'text/plain'   
+    self.response.headers['Content-Type'] = 'text/plain'
 
     print 'ConvertHandler get received.'
     self.response.out.write('ConvertHandler post received.\n')
@@ -80,21 +80,21 @@ class ConvertHandler(webapp2.RequestHandler):
       zawgyi_converter = transliterate.Transliterate(
         translit_zawgyi.ZAWGYI_UNICODE_TRANSLITERATE,
         translit_zawgyi.ZAWGYI_description)
-    
+
     text = unicode(self.request.get('text'))
     logging.info('text         = %s' % text)
     input_type = self.request.get('type', 'Z')
     strip_spaces = self.request.get('strip_spaces', None)
     debug = self.request.get('debug', None)
-    
+
     input = urllib.unquote(text) #   .decode('utf-8')
     logging.info('decoded text = %s' % text)
 
     noreturn = self.request.get('noreturn', None)
     msg = ''
-    
+
     logging.info('Type = %s, CONVERT %d characters' %
-    	(input_type, len(input)))
+        (input_type, len(input)))
 
     if input_type == 'M':
       if not myazedi_converter:
@@ -111,21 +111,21 @@ class ConvertHandler(webapp2.RequestHandler):
       result = zawgyi_converter.transliterate(input)
       msg = translit_zawgyi.ZAWGYI_description
 
-	# Mon language conversions
+        # Mon language conversions
     elif input_type == "UNIMON":  # Also Mon 2010 (mostly)
       if not unimon_converter:
         unimon_converter = transliterate.Transliterate(
           translit_uni_mon.UNIMON_UNICODE_TRANSLITERATE,
           translit_uni_mon.UNIMON_description)
       result = unimon_converter.transliterate(input, debug)
-      msg = translit_uni_mon.UNIMON_description   
+      msg = translit_uni_mon.UNIMON_description
     elif input_type == "MONUNI":
       if not mon_uni_converter:
         mon_uni_converter = transliterate.Transliterate(
           translit_monuni.MON_MONUNI_TRANSLITERATE,
           translit_monuni.MON_MONUNI_description)
       result = mon_uni_converter.transliterate(input, debug)
-      msg = translit_monuni.MON_MONUNI_description    
+      msg = translit_monuni.MON_MONUNI_description
     elif input_type == "MON":
       if not mon_converter:
         mon_converter = transliterate.Transliterate(
@@ -134,7 +134,7 @@ class ConvertHandler(webapp2.RequestHandler):
       result = mon_converter.transliterate(input, debug)
       msg = translit_mon.MON_description
 
-	# Karen font conversions
+        # Karen font conversions
     elif input_type == "KNU":
       if not knu_converter:
         knu_converter = transliterate.Transliterate(
@@ -145,11 +145,11 @@ class ConvertHandler(webapp2.RequestHandler):
       for rep in translit_knu.KNU_substitutions:
         text = input.replace(rep[0], rep[1])
         input = text
-        
+
       logging.info('***knu strip_spaces = %s' % strip_spaces);
       if strip_spaces:
          input = input.replace(' ', '')
-       
+
       result = knu_converter.transliterate(input, debug)
       # logging.info('***knu result = %s' % result);
       msg = translit_knu.KNU_description
@@ -163,11 +163,11 @@ class ConvertHandler(webapp2.RequestHandler):
       for rep in translit_sawcfcr000.substitutions:
         text = input.replace(rep[0], rep[1])
         input = text
-        
+
       logging.info('***saw strip_spaces = %s' % strip_spaces);
       if strip_spaces:
          input = input.replace(' ', '')
-       
+
       result = saw_converter.transliterate(input, debug)
       logging.info('***saw result = %s' % result);
       msg = 'Karen SAW conversion'
@@ -185,8 +185,8 @@ class ConvertHandler(webapp2.RequestHandler):
     else:
       msg = 'Unknown encoding = %s!' % input_type
       result = 'No conversion attempted.'
-    
-    self.response.headers['Content-Type'] = 'application/json'   
+
+    self.response.headers['Content-Type'] = 'application/json'
     if input:
       if noreturn:
         returntext = ''
@@ -194,7 +194,7 @@ class ConvertHandler(webapp2.RequestHandler):
          returntext = text
 
       logging.info('RESULT has %d characters' % len(result))
-     
+
       # Call the converter on this text data.
       obj = { 'input': returntext,
               'input_type': input_type,
@@ -212,4 +212,3 @@ class ConvertHandler(webapp2.RequestHandler):
               'noreturn': noreturn,
               'errmsg': 'Null input' }
     self.response.out.write(json.dumps(obj))
-

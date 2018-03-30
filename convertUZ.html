@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>Test Unicode - Zawgyi Conversion
+    <title>Unicode - Zawgyi Conversion
    </title>
 
   <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
@@ -19,6 +19,11 @@
   </script>
 
   <script type="text/javascript" >
+  // Test conversion with this data [zawgyi, unicode]
+  var TEST_DATA = [
+  {% for td_in, td_expected in testdata %}
+    ["{{td_in}}", "{{td_expected}}"],{% endfor %}
+  ];  
   // Code to request transliteration (conversion) and handle the return.
   function convertRequest(source, type, outputId) {
     // Get the text and prepare the call to server.
