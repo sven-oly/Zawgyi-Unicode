@@ -70,12 +70,12 @@ u103F > \u1086 ;
 \u102F > \u1033 ;
 \u1030 > \u1034 ;
 
+\u102B \u103A > \u105A ;
+\u102D \u1036 > \u108E  ;
 ## TODO: MORE TO DO HERE
-\u105A > \u102B \u103A ;
-\u108E > \u102D \u1036 ;
-\u1031 \u1094 ($consonant) \u103D > $1 \u103E \u1031 \u1037 ;
-\u1094 > \u1037 ;
-\u1095 > \u1037 ;
+\u1031 \u1094 ($consonant) \u103D > $1 \u103E \u1031 \u1037 ;  # U => Z
+u1037 > \u1094 ;  # Or 1095, depending on the width of the consonant.
+
 \u1025 \u1061 > \u1009 \u1039 \u1001;
 \u1025 \u1062 > \u1009 \u1039 \u1002;
 \u1025 \u1065 > \u1009 \u1039 \u1005;
@@ -117,16 +117,12 @@ u103F > \u1086 ;
 \u1092 > \u100B\u1039\u100C ;
 \u1097 > \u100B\u1039\u100B ;
 \u104E > \u104E\u1004\u103A\u1038 ;
-
-##### STAGE (1.1): Remove spaces before diacritics.
-::Null;
-($spaces)+ ([\u102b-\u1030\u1032-\u1034\u1035-\u103d\u1060-\u1069\u106c\u106d\u1070-\u1085\u1087-\u108f\u1093\u1096]) >
-  $2 ;
-(\u0020)+ ([\u102b-\u1030\u1032-\u1034\u1035-\u103d\u1060-\u1069\u106c\u106d\u1070-\u1085\u1087-\u108f\u1093\u1096]) >
-  $2 ;
   
 ##### STAGE (2): POST REORDERING RULES FOR UNICODE RENDERING
 ::Null;
+
+($consonant) \u1031 > \u1031 $1 ;  # Put the E vowel back before the consonant.
+
 \u1044 \u103a > | \u104E \u103A ;
 ($nondigits) \u1040 ([\u102B-\u103F]) > $1 \u101D $2;
 \u1031 \u1040 ($nondigits) > \u1031 \u101D $1;
@@ -136,12 +132,19 @@ u103F > \u1086 ;
 \u1036 ($umedial*) ($vowelsign+) > $1 $2 \u1036 ;
 ([\u102B\u102C\u102F\u1030]) ([\u102D\u102E\u1032]) > $2 $1;
 \u103C ($consonant) > $1 \u103C;
+
+# Medial ra before consonant.
+
 ##### Stage 3
 ::Null;
-([\u1031]+) $ukinzi ($consonant) > $ukinzi $2 \u1031;
-\u1031 ($consonant) ($umedial+) > $1 $2 \u1031;
-# MAYTBE FIX THIS FOR CURSOR POSITION
-\u1031 ($consonant) ([^\u103B-\u103E]) > $1 \u1031 $2;
+($consonant) \u103b > \u103b $1 ;  # Put the E vowel back before the consonant.
+
+
+$ukinzi ($consonant) \u1031 > \u1031 $ukinzi $2 ;   # U => Z
+ ($consonant) ($umedial+) \u1031  $1 $2 \u1031;  # U => Z
+ 
+($consonant) \1031 ([^\u103B-\u103E]) > \u1031 $1 $2;  # U => Z
+
 \u103C \u103A \u1039 ($consonant) > \u103A \u1039 $1 \u103C;
 \u1036 ($umedial+) > $1 \u1036;
 ##### Stage 4
@@ -149,16 +152,19 @@ u103F > \u1086 ;
 ([\u103C\u103D\u103E]+) \u103B > \u103B $1;
 ([\u103D\u103E]+) \u103C > \u103C $1;
 \u103E\u103D > \u103D\u103E ;
-([\u1031]+) ($vowelsign*) \u1039 ($consonant) > \u1039 $3 $1 $2;
+
+\u1039 ($consonant) \u1031 ($vowelsign*) > \u1031 $2 \u1039 $1 ;  # U => Z
+
 ($vowelsign+) \u1039 ($consonant) > \u1039 $2 $1;
-($umedial) ([\u1031]+) ($umedial*) > $1 $3 $2;
+
 \u1037 ([\u102D-\u1030\u1032\u1036]) > $1 \u1037;
 \u1037 ($umedial+) > $1 \u1037;
 ($vowelsign+) ($umedial+) > $2 $1;
 ($consonant) ([\u102B-\u1032\u1036\u103B-\u103E]) \u103A ($consonant)> $1 \u103A $2 $3;
+
 ##### Stage 5.  More reorderings
 ::Null;
-([\u1031]+) ($umedial+) > $2 $1;
+
 ($vowelsign) ($umedial) > $2 $1;
 ([\u103C\u103D\u103E]) \u103B > \u103B $1;
 ([\u103D\u103E]) \u103C > \u103C $1;

@@ -63,8 +63,8 @@ class Phase():
           self.rules.append(newPair)
           self.RuleList.append(Rule(pattern, subst, index))  # Rule objects
         except IndexError, e:
-          print 'Error e = %s. Phase %s, %d rule = %s' % (e, self.phase_id, index, rule1)
-          print '  Rule = >>%s<< %d' % (rule, len(rule))
+          print 'Error e = %s. Phase %s, %d rule = %s' % (e, self.phase_id, index, rule1.encode('utf-8'))
+          print '  Rule = >>%s<< %d' % (rule.encode('utf-8'), len(rule))
           break
       index += 1
 
