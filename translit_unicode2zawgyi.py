@@ -72,22 +72,16 @@ $ukinzi \u1036 > \u108D  ;
 \u103E \u1030 > \u1089 > ;
 \u103A > \u1039 ;
 
-\u102F > \u1033 ;
+\u102f > \u102F ;  # U => Z, but may need to be contextual
 \u1030 > \u1034 ;
 
 \u102B \u103A > \u105A ;
+
 \u102D \u1036 > \u108E ;
 ($consonant) \u103E \u1031 \u1037 > \u1031 \u1094 $1 \u103D ;
-\u1037 > \u1094 ;
-\u1037 > \u1095 ;
-\u1009 \u1039 \u1001> \u1025 \u1061 ;
-\u1009 \u1039 \u1002> \u1025 \u1062 ;
-\u1009 \u1039 \u1005> \u1025 \u1065 ;
-\u1009 \u1039 \u1007> \u1025 \u1068 ;
-\u1009 \u1039 \u1013> \u1025 \u1076 ;
-\u1009 \u1039 \u1015> \u1025 \u1078 ;
-\u1009 \u1039 \u1017> \u1025 \u107A ;
-\u1009 \u1039 \u1016> \u1025 \u1079 ;
+u1037 > \u1094 ;  # Or 1095, depending on the width of the consonant.
+
+\u1025 \u1079 > \u1009 \u1039 \u1016 ;
 
 \u1039 \u1000 > \u1060 ;
 \u1039 \u1001 > \u1061 ;
@@ -119,7 +113,6 @@ $ukinzi \u1036 > \u108D  ;
 \u1039 \u1019 > \u107C ;
 \u1039 \u101C > \u1085 ;
 
-## TODO: MORE TO DO HERE
 \u100D\u1039\u100D > \u106E ;
 \u100D\u1039\u100E > \u106F ;
 \u100F\u1039\u100D > \u1091 ;
@@ -127,15 +120,15 @@ $ukinzi \u1036 > \u108D  ;
 \u100B\u1039\u100B > \u1097 ;
 \u104E\u1004\u103A\u1038 > \u104E ;
 
-##### STAGE (1.1): Remove spaces before diacritics.
-::Null;
-($spaces)+ ([\u102b-\u1030\u1032-\u1034\u1035-\u103d\u1060-\u1069\u106c\u106d\u1070-\u1085\u1087-\u108f\u1093\u1096]) >
-  $2 ;
-(\u0020)+ ([\u102b-\u1030\u1032-\u1034\u1035-\u103d\u1060-\u1069\u106c\u106d\u1070-\u1085\u1087-\u108f\u1093\u1096]) >
-  $2 ;
-  
+\u102D \u1036 > \u108E  ;
+
+
 ##### STAGE (2): REORDERING RULES for Zawgyi order
 ::Null;
+
+($consonant) \u1031 > \u1031 $1 ;  # Put the E vowel back before the consonant.
+($consonant) ([\u103d\u103e]) \u1031 > \u1031 $1 $2;  # Put the E vowel back before the consonant.
+
 \u1044 \u103a > | \u104E \u103A ;
 ($nondigits) \u1040 ([\u102B-\u103F]) > $1 \u101D $2;
 \u1031 \u1040 ($nondigits) > \u1031 \u101D $1;
@@ -145,30 +138,40 @@ $ukinzi \u1036 > \u108D  ;
 \u1036 ($umedial*) ($vowelsign+) > $1 $2 \u1036 ;
 ([\u102B\u102C\u102F\u1030]) ([\u102D\u102E\u1032]) > $2 $1;
 \u103C ($consonant) > $1 \u103C;
+
+# Medial ra before consonant.
+
 ##### Stage 3
 ::Null;
-([\u1031]+) $ukinzi ($consonant) > $ukinzi $2 \u1031;
-\u1031 ($consonant) ($umedial+) > $1 $2 \u1031;
 
-# MAYBE FIX THIS FOR CURSOR POSITION
-($consonant) \u1031 ([^\u103b-\u10e3]) > \u1031 $1 $2 ;
+# Put the E vowel back before the consonant.
+($consonant) \u1031 > \u1031 $1 ;  # U => Z
+
+$ukinzi ($consonant) \u1031 > \u1031 $ukinzi $2 ;   # U => Z
+($consonant) ($umedial+) \u1031  $1 $2 \u1031;  # U => Z
+($consonant) \1031 ([^\u103B-\u103E]) > \u1031 $1 $2;  # U => Z
+
 \u103C \u103A \u1039 ($consonant) > \u103A \u1039 $1 \u103C;
 \u1036 ($umedial+) > $1 \u1036;
+
 ##### Stage 4
 ::Null;
 ([\u103C\u103D\u103E]+) \u103B > \u103B $1;
 ([\u103D\u103E]+) \u103C > \u103C $1;
 \u103E\u103D > \u103D\u103E ;
-([\u1031]+) ($vowelsign*) \u1039 ($consonant) > \u1039 $3 $1 $2;
+
+\u1039 ($consonant) \u1031 ($vowelsign*) > \u1031 $2 \u1039 $1 ;  # U => Z
+
 ($vowelsign+) \u1039 ($consonant) > \u1039 $2 $1;
-($umedial) ([\u1031]+) ($umedial*) > $1 $3 $2;
+
 \u1037 ([\u102D-\u1030\u1032\u1036]) > $1 \u1037;
 \u1037 ($umedial+) > $1 \u1037;
 ($vowelsign+) ($umedial+) > $2 $1;
 ($consonant) ([\u102B-\u1032\u1036\u103B-\u103E]) \u103A ($consonant)> $1 \u103A $2 $3;
+
 ##### Stage 5.  More reorderings
 ::Null;
-([\u1031]+) ($umedial+) > $2 $1;
+
 ($vowelsign) ($umedial) > $2 $1;
 ([\u103C\u103D\u103E]) \u103B > \u103B $1;
 ([\u103D\u103E]) \u103C > \u103C $1;

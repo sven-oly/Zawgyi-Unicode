@@ -23,9 +23,10 @@
   var TEST_DATA = [
   {% for td_in, td_expected in testdata %}
     ["{{td_in}}", "{{td_expected}}"],{% endfor %}
-  ];  
+  ];
+
   // Code to request transliteration (conversion) and handle the return.
-  function convertRequest(source, type, outputId) {
+  function convertRequest(source, type, outputId, outputHexId) {
     // Get the text and prepare the call to server.
     source_element = document.getElementById(source);
     text_in = encodeURIComponent(source_element.value);
@@ -57,7 +58,7 @@
 
           output_area.innerHTML = json_obj.converted;
           output_area.value = json_obj.converted;
-                  var hex_area = document.getElementById('convertedHex');
+                  var hex_area = document.getElementById(outputHexId);
           hex_area.value = textToHex(json_obj.converted);
 
           var inOutSizes = json_obj.inputSize + " " + json_obj.resultSize;
@@ -65,7 +66,7 @@
           testArea.innerHTML = inOutSizes;
           testArea.value = inOutSizes;
 
-                  var msg_area = document.getElementById('msgArea');
+          var msg_area = document.getElementById('msgArea');
           msg_area.innerHTML = json_obj.msg;
           msg_area.value = json_obj.msg;
      }
@@ -94,6 +95,15 @@
           // TODO: Send to back end to post in submitError.html.
       window.location.href = target;
   }
+
+  function onload() {
+  textToHexField('z1', 'zInHex');
+
+    // Call the conversions.
+    convertRequest('z1', 'Z', 'unicode_in', 'uInHex');
+    convertRequest('unicode_in', 'U', 'zoutput', 'zOutHex');
+    convertRequest('zoutput', 'Z', 'unicode_out', 'uOutHex');
+  }
   </script>
 
 
@@ -103,112 +113,134 @@
 
   <div class="container">
 
-    <div class="span-18">
+    <div class="span-20">
 
-    <h1>Test Myanmar text conversion</h1>
-    <p>Just paste your Myanmar text into the "Test" field. The characters will be shown
-    in the fonts, and hex codes will be shown.
+      <h1>Test Myanmar text conversion</h1>
+      <p>Just paste your Myanmar text into the "Test" field. The characters will be shown
+        in the fonts, and hex codes will be shown.
 
+        <div>
+          Known Zawgyi content: <a href="http://burmese.voanews.com/"  target="_blank">
+            burmese.voanews.com</a> and
+          <a href="http://frontiermyanmar.net/mm" target="_blank">FrontierMyanmar.net/mm</a>
+          <p>
+            Known Unicode content: <a href="http://www.bbc.com/burmese"  target="_blank">
+              bbc.com/burmese</a>
+        </div>
       <div>
-        Known Zawgyi content: <a href="http://burmese.voanews.com/"  target="_blank">
-        burmese.voanews.com</a> and
-        <a href="http://frontiermyanmar.net/mm" target="_blank">FrontierMyanmar.net/mm</a>
+        <h4 style='margin:0;padding:0;'>Text Entry:</h4>
         <p>
-        Known Unicode content: <a href="http://www.bbc.com/burmese"  target="_blank">
-        bbc.com/burmese</a>
+          <input type="text" id="TestEntry" class='notosans' size="40"
+                 onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
+          <div id="detectedZU"></div>
       </div>
     </div>
+
     <div class="span-4 last">
-                        <a href="/burmese/">Burmese & Zawgyi</a> <br />
-                        <a href="/shan/">Shan</a> <br />
-                        <a href="/mon/">Mon</a> <br />
-                        <a href="/karen/">Karen</a> <br />
-                        <hr>
-                        <a href="http://www.unicode.org/charts/PDF/U1000.pdf">Myanmar Unicode</a>
-                        <br />
-                        <a href="http://www.unicode.org/charts/PDF/UAA60.pdf">Extended-A</a>
-                        <br />
-                        <a href="http://www.unicode.org/charts/PDF/UA9E0.pdf">Extended-B</a>
+      <a href="/burmese/">Burmese & Zawgyi</a> <br />
+      <a href="/shan/">Shan</a> <br />
+      <a href="/mon/">Mon</a> <br />
+      <a href="/karen/">Karen</a> <br />
+      <hr>
+      <a href="http://www.unicode.org/charts/PDF/U1000.pdf">Myanmar Unicode</a>
+      <br />
+      <a href="http://www.unicode.org/charts/PDF/UAA60.pdf">Extended-A</a>
+      <br />
+      <a href="http://www.unicode.org/charts/PDF/UA9E0.pdf">Extended-B</a>
 
-                        <br />
-                       <a href="https://www.unicode.org/notes/tn11/UTN11_3.pdf">Representing Myanmar in Unicode</a>
-                        <br />
+      <br />
+      <a href="https://www.unicode.org/notes/tn11/UTN11_3.pdf">Representing Myanmar in Unicode</a>
+      <br />
 
-            <input type='button' value='Toggle fonts'
-                onClick="showhide('other_fonts'); return false;" />
-            <input type='button' value='Toggle keyboard' onClick="toggleKeyboard(); return false;" />
+      <!--
+          <input type='button' value='Toggle keyboard' onClick="toggleKeyboard(); return false;" />
+          -->
     </div>
-    </div>  <!-- container -->
+  </div>  <!-- container -->
 
   <div class="container">
-    <div class="span-1">
-    </div>
+    <div class='span-16'>
+      <hr>
 
-    <div class='span-19 last'>
-    <div>
-      <h4 style='margin:0;padding:0;'>Text Entry:</h4>
-      <p>
-      <input type="text" id="TestEntry" class='notosans' size="40"
-        onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
-      <div id="detectedZU"></div>
-    </div>
-
-    <hr>
-
-    <div id='other_fonts'>
-    <!-- <div id='other_fonts' style="display: none;"> -->
       <div>
-        <h4 style='margin:0;padding:0;'>Zawgyi One</hr>
-        <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
-        <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z', 'convertedText')" />
+        <h4 style='margin:0;padding:0;'>Zawgyi IN
+          <input type="button" value="-> hex" onclick="textToHexField('z1', 'zInHex')" />
+          <input type="button" value="-> Unicode"
+                 onclick="convertRequest('z1', 'Z', 'unicode_in', 'uInHex');"
+                 />
+        </h4>
         <br />
-      <textarea id="z1"  class='zawgyi_one'
-        rows="1" cols="40">{{default_zawgyi}}</textarea>
-    </div>
+        <textarea id="z1"  class='zawgyi_one'
+                  rows="3" cols="80">{{default_zawgyi}}</textarea>
+      </div>
 
-    <hr>
-    <div>
-      <input type="button" value="-> Z" onclick="convertRequest('convertedText', 'U', 'zoutput')" />
-      <h4 style='margin:0;padding:0;'>Unicode output:</h4>
-      <div id="msgArea" class='notosans14'> </div>
-      <textarea id="convertedText"  class='notosans'
-        rows="1" cols="40">{{default_unicode}}</textarea>
-    <hr>
-
-    <!-- <div id='other_fonts' style="display: none;"> -->
       <div>
-          Conversion to Zawgyi from Unicode <strong>(UNDER CONSTRUCTION) </strong>
+        <h4 style='margin:0;padding:0;'>Zawgyi OUT <strong>(UNDER CONSTRUCTION) </strong>
+          <input type="button" value="-> Unicode" onclick="convertRequest('zoutput', 'Z', 'unicode_out', 'uOutHex')" />
+        </h4>
+        <textarea id="zoutput"  class='zawgyi_one'
+                  rows="3" cols="80"></textarea>
+      </div>
+      <hr>
+      <div>
+        <h4 style='margin:0;padding:0;'>Unicode IN:</h4>
+        <input type="button" value="-> Z" onclick="convertRequest('unicode_in', 'U', 'zoutput', 'zOutHex')" />
+
+        <div id="msgArea" class='notosans14'> </div>
+        <textarea id="unicode_in"  class='notosans'
+                  rows="5" cols="80"></textarea>
+
+        <h4 style='margin:0;padding:0;'>Unicode OUT:</h4>
+        <div id="uOut" class='notosans14'> </div>
+        <textarea id="unicode_out"  class='notosans'
+                  rows="2" cols="80"></textarea>
+        <hr>
+      </div>
+    </div>  <!-- end of left column -->
+
+    <div class='span-8 last'>
+      <hr>
+      <h4 style='margin:0;padding:0;'>Zawgyi in hex:</h4>
       <br />
-      <textarea id="zoutput"  class='zawgyi_one'
-        rows="1" cols="40">{{default_zawgyi}}</textarea>
+      <textarea id="zInHex"  class='notosans14'
+                rows="5" cols="40"></textarea>
+      <hr>
+      <h4 style='margin:0;padding:0;'>Zawgyi out hex:</h4>
+    
+      <textarea id="zOutHex"  class='notosans14'
+                rows="5" cols="40"></textarea>
+      <hr>
+      <h4 style='margin:0;padding:0;'>Unicode in hex:</h4>
+    
+      <textarea id="uInHex"  class='notosans14'
+                rows="5" cols="40"></textarea>
+      <hr>
+      <h4 style='margin:0;padding:0;'>Unicode out hex:</h4>
+    
+      <textarea id="uOutHex"  class='notosans14'
+                rows="5" cols="40"></textarea>
+      <hr>
     </div>
-
-  <h4 style='margin:0;padding:0;'>Output hex:</h4>
-
-    <textarea id="convertedHex"  class='notosans14'
-        rows="2" cols="40">{{default_unicode}}</textarea>
-      <input type="button" value="Compare with Zawgyi"
-       onclick="compareConvert('z1','convertedText')" />    </div>
-    <hr>
-  </div> <!-- id='other_fonts' -->
-
-  <div>
-    <p>Hex:</p>
+  </div>  <!-- end container -->
+  
+  <div class='container'>
+    <div>
+      <p>Hex:</p>
       <input type="text" id="hexText" onchange="enterHex()" size="100"/>
-
+      
       <input type="submit" value="Convert hex to text" onSubmit="enterHex()" />
       <input type="button" value="-> scratch" onclick="copyText('hexText', 'scratchText')" />
       <input type="button" value="-> Unicode" onclick="hexToOutput('hexText', 'notoSans')" />
       <input type="button" value="-> Zawgyi" onclick="hexToOutput('hexText', 'z1')" />
       <input type="button" value="-> Myazedi" onclick="hexToOutput('hexText', 'myazedi')" />
-
+    
     </div>
-
+  
     <div>
-    <p>Scratch pad:</P>
-    <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
-       <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans')" />
-   </div>
+      <p>Scratch pad:</P>
+      <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
+      <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans')" />
+    </div>
     <hr>
     <br />
     <form action="/feedback" method="get">
