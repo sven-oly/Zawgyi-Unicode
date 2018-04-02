@@ -80,11 +80,11 @@ class translitRegression():
   def listTest(self):
     # Try list input with short tests.
     zList = [
-      u'\u1006\u103a\u108c\u1033\u1044\u1039\u1025\u103a\u1036\u103b\u103c\u1004',
+      u'\u1006\u103a\u108c\u1033\u1044\u1039\u1025\u103a\u1036\u103c\u103b\u1004',  # A very artifical test
       u'\u1002\u103a\u1064\u1005\u108c\u1006\u108d\u106a\u1025\u102e',
       u'\u1002\u103a\u1064\u1005\u1072']
     resultList = self.zToU.transliterate(zList)
-    eList = [u'င်္ဆျီု|၎်ဥျံြွင', u'င်္ဂျင်္စီင်္ဆံဉဦ', u'င်္ဂျစ္တ']
+    eList = [u'င်္ဆျီု၎်ဥျွံငြ', u'င်္ဂျင်္စီင်္ဆံဉဦ', u'င်္ဂျစ္တ']
 
     testResults = []
     for i in xrange(len(resultList)):

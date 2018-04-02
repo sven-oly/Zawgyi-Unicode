@@ -9,14 +9,14 @@ Description = ZAWGYI_description = u'Zawgyi font encoding conversion'
 
 TRANS_LIT_RULES = ZAWGYI_UNICODE_TRANSLITERATE = u"""# Modern Burmese digits & Unicode code points.
 $nondigits = [^\u1040-\u1049];
-$space = '\u0020';
 $consonant = [\u1000-\u1021];
 $vowelsign = [\u102B-\u1030\u1032];
 $umedial = [\u103B-\u103E];
 $vowelmedial = [\u102B-\u1030\u1032\u103B-\u103F];
 $ukinzi = \u1004\u103A\u1039;
 $zmedialra = [\u103B\u107E-\u1084];
-$spaces = [\u0020\u00a0\u2000-\u200a];
+$spacetoremove = [\u0020\u00a0\u2002\u2008\u200b-\u200d\u2060\ufeff];
+
 # #### STAGE (1): CODEPOINT MAPPING FROM ZAWGYI TO UNICODE
 ($consonant) \u103A \u1064 > $ukinzi $1 \u103B;
 ($consonant) \u1064 > $ukinzi $1;
@@ -105,21 +105,23 @@ $zmedialra > \u103c;
 \u1097 > \u100B\u1039\u100B ;
 \u104E > \u104E\u1004\u103A\u1038 ;
 
+($zmedialra)+ > \u103C ;
+
+
 ##### STAGE (1.1): Remove spaces before diacritics.
 ::Null;
-($spaces)+ ([\u102b-\u1030\u1032-\u1034\u1035-\u103d\u1060-\u1069\u106c\u106d\u1070-\u1085\u1087-\u108f\u1093\u1096]) >
-  $2 ;
-(\u0020)+ ([\u102b-\u1030\u1032-\u1034\u1035-\u103d\u1060-\u1069\u106c\u106d\u1070-\u1085\u1087-\u108f\u1093\u1096]) >
-  $2 ;
-  
+($spacetoremove)+ ([\u102b-\u1030\u1032-\u103b\u103d\u103e]) > $2;
+
+\u1037 \u1037+ > \u1037;
+
 ##### STAGE (2): POST REORDERING RULES FOR UNICODE RENDERING
 ::Null;
-\u1044 \u103a > | \u104E \u103A ;
+\u1044 \u103a > \u104E \u103A ;
 ($nondigits) \u1040 ([\u102B-\u103F]) > $1 \u101D $2;
 \u1031 \u1040 ($nondigits) > \u1031 \u101D $1;
 \u1025 \u103A > \u1009 \u103A;
 \u1025 \u102E > \u1026;
-\u1037\u103A > \u103A\u1037;
+\u1037 \u103A > \u103A \u1037;
 \u1036 ($umedial*) ($vowelsign+) > $1 $2 \u1036 ;
 ([\u102B\u102C\u102F\u1030]) ([\u102D\u102E\u1032]) > $2 $1;
 \u103C ($consonant) > $1 \u103C;
@@ -154,6 +156,7 @@ $zmedialra > \u103c;
 \u1038 ([\u1036\u1037\u103A]) > $1 \u1038;
 # NEW 5-May-2016
 \u1036 \u102f > \u102f \u1036;
+
 #### Stage 6
 ::Null;
 ($consonant) \u103B \u103A > $1 \u103A \u103B;
@@ -174,17 +177,28 @@ $zmedialra > \u103c;
 \u1030 \u1030+ > \u1030;
 \u1031 \u1031+ > \u1031;
 \u1032 \u1032+ > \u1032;
+
+\u1033 \u1033+ > \u1033;
+\u1035 \u1035+ > \u1035;
+\u1036 \u1036+ > \u1036;
+\u1037 \u1037+ > \u1037;
+\u1039 \u1039+ > \u1039;
+
 \u103A \u103A+ > \u103A;
 \u103B \u103B+ > \u103B;
 \u103C \u103C+ > \u103C;
 \u103D \u103D+ > \u103D;
 \u103E \u103E+ > \u103E;
-# NEW 5-May-2016
-\u1036 \u1036+ > \u1036;
+
+# Fix overlapping signs
+\u102F \u1030 > \u102F;
+\u102F \u103A > \u102F;
+\u102D \u102E > \u102E;
+
 #
 #Try to correctly render diacritics after a space.
 #
-($space)([\u102e\u1037\u103a]) > $2 \u00A0;
+$spacetoremove ([\u102b-\u1032\u1036-\u103e]) > $1;
 """
 
 date_entered = '18-July-2015'
