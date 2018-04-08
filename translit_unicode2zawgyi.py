@@ -51,11 +51,13 @@ $ukinzi \u1036 > \u108D  ;
 
 #### !!!!! $zmedialra > \u103c;  # TODO FIX THIS!
 
+($narrowconsonant) \u103c \u1031 > \u1031 \u103b $1 ;
+($wideconsonant) \u103c  \u1031 >  \u1031 \u107e $1;
+
 ($narrowconsonant) \u103c > \u103b $1 ;
-($wideconsonant]) u103c > \u107e $1;
+($wideconsonant) u103c > \u107e $1;
 
 \u1014 > \u1014 ;
-\u101B > \u1090 ;
 \u103F > \u1086 ;
 \u103B > \u103A ;
 \u103C > \u103B  ;  # TODO: Needs more context with the base consonants and modifiers
@@ -129,8 +131,8 @@ u1037 > \u1094 ;  # Or 1095, depending on the width of the consonant.
 ##### STAGE (2): REORDERING RULES for Zawgyi order
 ::Null;
 
-($consonant) \u1031 > \u1031 $1 ;  # Put the E vowel back before the consonant.
-($consonant) ([\u103d\u103e]) \u1031 > \u1031 $1 $2;  # Put the E vowel back before the consonant.
+# ($consonant) \u1031 > \u1031 $1 ;  # Put the E vowel back before the consonant.
+# ($consonant) ([\u103d\u103e]) \u1031 > \u1031 $1 $2;  # Put the E vowel back before the consonant.
 
 \u1044 \u103a > | \u104E \u103A ;
 ($nondigits) \u1040 ([\u102B-\u103F]) > $1 \u101D $2;
@@ -266,6 +268,10 @@ def TestData():
      "က္ဏက္တက္တက္ထက္ထက္ဒက္ဓက္နက္ပက္ဖက္ဗက္ဘက္မက္ဘက္တွ"],
     [u"ႀက္", u"က်ြ "],
     [u"ကၤ", u"င်္က"],
+    ["ေမွာင္ခုိကုန္သြယ္မႈေၾကာင့္ ျမန္မာႏုိင္ငံနစ္နာဆံုးရႈံးရပံုေတြကို",
+      "မှောင်ခိုကုန်သွယ်မှုကြောင့် မြန်မာနိုင်ငံနစ်နာဆုံးရှုံးရပုံတွေကို"
+     ],
+    ["ဆံုးရႈံးရပံုေတြကို", "ဆုံးရှုံးရပုံတွေကို"],
   ]
 
   return test_samples_U2Z
