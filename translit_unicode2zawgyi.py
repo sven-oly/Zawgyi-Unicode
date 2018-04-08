@@ -54,7 +54,7 @@ $ukinzi \u1036 > \u108D  ;
 ($narrowconsonant) \u103c > \u103b $1 ;
 ($wideconsonant]) u103c > \u107e $1;
 
-\u1014 > \u108F ;
+\u1014 > \u1014 ;
 \u101B > \u1090 ;
 \u103F > \u1086 ;
 \u103B > \u103A ;
@@ -62,9 +62,12 @@ $ukinzi \u1036 > \u108D  ;
 \u103B > \u107D ;
 \u103D \u103E > \u103C \u108A ;
 
+($consonant) \u103d > $1 \u103c;
+
  \u103D  > \u103C ;
  
- 
+ \u103e \u102f > \u1088 ;
+
 \u103D \u103E > \u108A ;
 \u103E  > \u103D > \u103E ;   # Rule 26
  \u103E > \u1087 ;
@@ -137,9 +140,8 @@ u1037 > \u1094 ;  # Or 1095, depending on the width of the consonant.
 \u1037\u103A > \u103A\u1037;
 \u1036 ($umedial*) ($vowelsign+) > $1 $2 \u1036 ;
 ([\u102B\u102C\u102F\u1030]) ([\u102D\u102E\u1032]) > $2 $1;
-\u103C ($consonant) > $1 \u103C;
 
-# Medial ra before consonant.
+\u103e \u102f -> \u1088;
 
 ##### Stage 3
 ::Null;
@@ -151,8 +153,9 @@ $ukinzi ($consonant) \u1031 > \u1031 $ukinzi $2 ;   # U => Z
 ($consonant) ($umedial+) \u1031  $1 $2 \u1031;  # U => Z
 ($consonant) \1031 ([^\u103B-\u103E]) > \u1031 $1 $2;  # U => Z
 
-\u103C \u103A \u1039 ($consonant) > \u103A \u1039 $1 \u103C;
 \u1036 ($umedial+) > $1 \u1036;
+
+\u103e \u102f -> \u1088;
 
 ##### Stage 4
 ::Null;
