@@ -38,7 +38,7 @@ class unicodeText():
     self.thanlwin_data  = [
       u'ကျန်းမာရေး နည်းလမ်း များ',
       u'ကျွန်ုပ် တို့ ၏ ပျော် ရွှင် မှု၊ သာယာဝပြော မှု နှင့် အောင်မြင် မှု တို့ သည် ကျွန်ုပ် တို့ ၏ ကျန်းမာ ခြင်း အပေါ် တွင် အများ ကြီး မှီခို နေ ပါ သည်။ ပညာတတ် ရန်၊ ကြွယ်ဝ ချမ်းသာ ရန် နှင့် ကြိုးပမ်း လုပ်ဆောင် မှု အားလုံး အောင်မြင် စေရန် အတွက် ကျန်းမာရေး သည် အထူး ပင် အရေးကြီး ပါ သည်။ ကျန်းမာရေး မ ပြည့်စုံ လျှင် ကျွန်ုပ် တို့ ၏ ပညာရေး၊ စီးပွားရေး မြှင့်တင် မှု လုပ်ငန်း များ လုပ် နိုင် လိမ့်မည် မ ဟုတ် ပါ။ သို့ဖြစ်၍ အစဉ်သဖြင့် ကျန်းမာ နေ ရန် ကျွန်ုပ် တို့ ကြိုးစား ကြ ရ ပါ မည်။',
-  
+
       u'ကျန်းမာရေး နှင့် ပြည့်စုံ ရန် အတွက် ဆောင်ရွက် ရန် နည်းလမ်း များ ကို သိရှိ လိုက်နာ ရ ပါ မည်။ အစားအသောက်၊ အအိပ်အနေ၊ လေ့ကျင့်ခန်း နှင့် သန့်ရှင်း မှု တို့ သည် ကျန်းမာရေး အတွက် လိုအပ်ချက် များ ဖြစ် ပါ သည်။ အစားအစာ သည် အသက် ရှင် မှု အတွက် အထူး လိုအပ်ချက် ဖြစ် ပါ သည်။ ကျွန်ုပ် တို့ သည် အသက် ရှင် နေနိုင် ရန် အစာ စား ရ ခြင်း ဖြစ် ပြီး စားသောက် ရန် အသက် ရှင် နေ ခြင်း မ ဟုတ် ပါ။ ကျန်းမာ မှု အတွက် သင့်တော် သည့် ပ⁠ရို⁠တိန်း၊ သတ္တု ဓာတ် များ နှင့် ဗီတာမင် များ များ စွာ ပါ ဝင် သည့် အစာ များ ကို ရယူ စား သုံး ရန်',
 
       u'လိုအပ် ပါ သည်။ ကျွန်ုပ် တို့ နှင့် လျှော် ကန် သင့်မြတ် မည့် အိပ်စက် အနားယူ မှု မှာ လည်း အရေးကြီး ပါ သည်။ ကျွန်ုပ် တို့ ၏ ခန္ဓာကိုယ် မှ ကြွက်သား များ နှင့် အသား မျှင် များ အား ထိန်းသိမ်း ပြုပြင် မှု အတွက် အိပ်စက် ခြင်း နှင့် နား နေ ခြင်း တို့ အညီအမျှ လိုအပ် ပါ သည်။ ထို့ကြောင့် လုံလောက် စွာ အိပ်စက် နား နေ ရ ပါ မည်။',
@@ -70,10 +70,10 @@ class myazediText():
 class translitRegression():
 
   def __init__(self):
-    # Create transliterators.  
+    # Create transliterators.
     self.zToU = transliterate.Transliterate(
       translit_zawgyi.ZAWGYI_UNICODE_TRANSLITERATE)
-  
+
     self.mToU = transliterate.Transliterate(
       translit_myazedi.MYAZEDI_UNICODE_TRANSLITERATE)
 
@@ -99,7 +99,7 @@ class translitRegression():
         print '    Expected hex = %s' % transliterate.uStringToHex(eList[i])
       testResults.append(result)
     return testResults
-        
+
   def testExtra(self):
     # Check that the extra short lines convert.
     zT = zawgyiText()
@@ -107,13 +107,13 @@ class translitRegression():
     uT = unicodeText()
     uFromZ = self.zToU.transliterate(zT.extraText)
     testResults = []
-    
+
     if uFromZ != uT.extraText:
       result = 'Extra from Zawgi fails'
     else:
       result = 'Pass! Extra from Zawgi'
     testResults.append(result)
- 
+
     uFromM = self.mToU.transliterate(mT.extraText)
     if uFromM != uT.extraText:
       result = 'Extra from Myazedi fails'
@@ -121,7 +121,7 @@ class translitRegression():
       result = 'Pass! Extra from Myazedi'
     testResults.append(result)
     return testResults
- 
+
   def testParagraphs(self):
     # Check that the longer paragraphs still convert.
     zT = zawgyiText()
@@ -137,7 +137,7 @@ class translitRegression():
       else:
         result = 'Z [%d] pass!' % i
       testResults.append(result)
-      
+
     # Check that the extras still convert.
     for i in xrange(len(mT.thanlwin_data)):
       uFromM = self.mToU.transliterate(mT.thanlwin_data[i])
@@ -171,10 +171,10 @@ class translitRegression():
       result = "Strings without 200b pass!"
     else:
        result = "Strings without 200b fail."
-    testResults.append(result) 
-    
-    return testResults    
-    
+    testResults.append(result)
+
+    return testResults
+
   def runAllTests(self):
     print self.testExtra()
     for r in self.testParagraphs():
@@ -188,7 +188,7 @@ def main(argv=None):
 
   test = translitRegression()
   test.runAllTests()
-  
+
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv[1:]))

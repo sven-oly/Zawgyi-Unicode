@@ -13,10 +13,13 @@ uz_converter = None
 def runTests():
   testdata = translit_unicode2zawgyi.TestData()
 
-  debug = False # True
+  debug = True
   index = 0
-  for input, expected in testdata:
-    print index, input.encode('utf-8'), expected.encode('utf-8')
+  for expected, input in testdata:
+    print
+    print '-'*60
+    print 'Test %2d: %s --> %s' % (index, input.encode('utf-8'),
+                                   expected.encode('utf-8'))
     result = uz_converter.transliterate(input, debug)
     if result == expected:
       print 'PASS %s: in=%s, result=%s, expected = %s' % (index, input.encode('utf-8'),
@@ -26,6 +29,11 @@ def runTests():
       print 'FAIL: %s: in=%s, result=%s, expected = %s' % (index, input.encode('utf-8'),
                                                                 result.encode('utf-8'),
                                                                 expected.encode('utf-8'))
+      print '  result:   %s\n  expected: %s' % (
+          transliterate.uStringToHex(result),
+          transliterate.uStringToHex(expected)
+      )
+
     index += 1
 
 
@@ -34,6 +42,10 @@ def main(args):
   uz_converter = transliterate.Transliterate(
       translit_unicode2zawgyi.UNICODE_ZAWGYI_TRANSLITERATE,
       translit_unicode2zawgyi.UZ_description)
+
+  print 'RULES FOR %s' % translit_unicode2zawgyi.UZ_description
+
+  uz_converter.summary(show_rules=True)
 
   runTests()
 
