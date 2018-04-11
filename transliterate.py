@@ -264,6 +264,9 @@ class Transliterate():
             print ' Matched rule %s. abs start = %d, rel start = %d, end = %d' % (
                 rule.id,
                 self.start, matchObj.start(0), matchObj.end(0) )
+            print '  Rule = %s' % (rule.rule_string.encode('utf-8'))
+            print '  Rule = %s' % (uStringToHex(rule.rule_string))
+
           # Size of last part of old string after the replacement
           cSize = len(currentString) - matchObj.end(0) - self.start  # Last part of old string not matched
           if debug and debug > 1:

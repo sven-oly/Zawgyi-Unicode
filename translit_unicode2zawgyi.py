@@ -12,7 +12,9 @@ $nondigits = [^\u1040-\u1049];
 $space = '\u0020';
 $consonant = [\u1000-\u1021];
 $narrowconsonant = [\u1001\u1002\u1004\u1005\u1007\u100b-\u100e\u1012\u1013\u1015-\u1017\u1019\u101d\u1020\u1025\u1026];
-$wideconsonant = [\u1000\u1003\u1006\u100f\u1010\u1011\u1018\u101c\u101e\u101f\u1021];
+$widenya = [\u100a\u106b];
+$othernya = [\u1009\u106a];
+$wideconsonant = [\u1000\u1003\u1006\u1009\u100a\u100f\u1010\u1011\u1018\u101c\u101e\u101f\u1021];
 $vowelsign = [\u102B-\u1030\u1032];
 $vowelmedial = [\u102B-\u1030\u1032\u103B-\u103F];
 $ukinzi = \u1004\u103A\u1039;
@@ -24,7 +26,7 @@ $highsignZ = [\u102d\u102e\u1032\u1036\u1039\u103d-\u103e];
 
 ### TO FINISH: actually implement U-->Z.
 
-# #### STAGE (1): CODEPOINT MAPPING FROM UNICODE TO ZAWGYI
+# #### STAGE 0: CODEPOINT MAPPING FROM UNICODE TO ZAWGYI
 $ukinzi ($consonant) \u103B > $1 \u103A \u1064 ;
 
 $ukinzi ($consonant) \u102D \u1036 > $1 \u108e ;
@@ -49,11 +51,8 @@ $ukinzi ($consonant) > $1 \u1064 ;
 $ukinzi > \u1064 ;
 
 \u1025 ($vowelsign) \u1038  > \u106A $1 \u1038 ;
-\u1009 > \u106A  ;
 
 # E Vowel
-($consonant) \u103d \u1031 > \u1031 $1 \u103c ;
-
 ($narrowconsonant) \u103c \u1031 > \u1031 \u103b $1 ;
 ($wideconsonant) \u103c \u1031 >  \u1031 \u107e $1;
 
@@ -137,7 +136,7 @@ $ukinzi > \u1064 ;
 \u102D \u1036 > \u108E  ;
 
 
-##### STAGE (2): Everything is not in Zawgyi code points. REORDERING RULES.
+##### STAGE 1: Everything is not in Zawgyi code points. REORDERING RULES.
 ::Null;
 
 # Handle Na with lower modifiers.
@@ -167,7 +166,7 @@ $ukinzi > \u1064 ;
 # Medial plus vowel sign U
 ($medialraZ) ($consonant) \u102f > $1 $2 \u1033;
 
-## Stage 3: Further adjustments
+## Stage 2: Further adjustments
 ::Null;
 
 \u103c \u1094 > \u103c \u1095 ;  ## ?? Is this correct?
@@ -182,6 +181,12 @@ $medialraZ ($wideconsonant) ($highsignZ) > \u1080 $1 $2 ;
 $medialraZ ($narrowconsonant) ($lowsignZ) > \u1081 $1 $2 ;
 $medialraZ ($wideconsonant) ($lowsignZ) > \u1082 $1 $2 ;
 
+$medialraZ ($widenya) > \u1082 $1 ;
+$medialraZ ($othernya) > \u103b \u106a ;
+
+$medialraZ ($narrowconsonant) > \u103b $1 ;
+$medialraZ ($wideconsonant) > \u107e $1 ;
+
 \u100A ($lowsignZ)> \u106B $1  ;  ## NYA and NNYA
 
 \u103d \u102d > \u102d \u103d;
@@ -191,7 +196,7 @@ $medialraZ ($wideconsonant) ($lowsignZ) > \u1082 $1 $2 ;
 
 \u103a \u102f > \u103a \u1033;
 
-##### Stage 4
+##### Stage 3
 ::Null;
 ([\u103C\u103D\u103E]+) \u103B > \u103B $1;
 ([\u103D\u103E]+) \u103C > \u103C $1;
@@ -213,7 +218,7 @@ $medialraZ ($wideconsonant) ($lowsignZ) > \u1082 $1 $2 ;
 ($medialraZ) ($consonant) ($highsignZ) \u102f > $1 $2 $3 \u1033;
 
 
-##### Stage 5.  More reorderings
+##### Stage 4.  More reorderings
 ::Null;
 
 ([\u103C\u103D\u103E]) \u103B > \u103B $1;
@@ -224,7 +229,7 @@ $medialraZ ($wideconsonant) ($lowsignZ) > \u1082 $1 $2 ;
 
 \u1036 \u102f > \u102f \u1036;
 
-#### Stage 6
+#### Stage 5
 ::Null;
 ($consonant) \u103B \u103A > $1 \u103A \u103B;
 ([\u103C\u103D\u103E]) \u103B > \u103B $1;
@@ -318,6 +323,7 @@ def TestData():
       [35, u'လႊတ္ေတာ္ကုိယ္စားလွယ္ေတြက', u'လွှတ်တော်ကိုယ်စားလှယ်တွေက'],
       [36, u'န႔မနက္', u'န့မနက်'],
       [37, u'တ္ေတာ္ကုိ', u'တ်တော်ကို'],
+      [38, u'ျၪ ႂည', u'ဉြ ညြ'],
   ]
 
   return test_samples_U2Z
