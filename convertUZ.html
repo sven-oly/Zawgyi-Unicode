@@ -18,6 +18,13 @@
   <script type="text/javascript" src="/js/myzu.js">
   </script>
 
+  <style>
+    .select-my {
+      height: 50px;
+      padding: 5px 5px;
+    }
+  </style>
+
   <script type="text/javascript" >
   // Test conversion with this data [zawgyi, unicode]
   var TEST_DATA = {
@@ -251,7 +258,7 @@
   
     <div>
       TEST DATA:
-      <select onchange="loadTest(this)">
+      <select class="select-my" onchange="loadTest(this)">
         {% for index, td_in, td_expected in testdata %}
         <option value="{{td_in}}">{{index}}: {{td_expected}}</option>
         {% endfor %}
