@@ -15,16 +15,23 @@ def runTests():
 
   debug = True
   index = 0
-  for expected, input in testdata:
+  passing = []
+  failing = []
+  for test_num, expected, input in testdata:
     print
     print '-'*60
-    print 'Test %2d: %s --> %s' % (index, input.encode('utf-8'),
-                                   expected.encode('utf-8'))
+    try:
+      print 'Test %2d: %s --> %s' % (test_num, input.encode('utf-8'),
+                                     expected.encode('utf-8'))
+    except:
+      print 'TEST CANNOT PRINT %s' % index
+
     result = uz_converter.transliterate(input, debug)
     if result == expected:
       print 'PASS %s: in=%s, result=%s, expected = %s' % (index, input.encode('utf-8'),
                                                                 result.encode('utf-8'),
                                                                 expected.encode('utf-8'))
+      passing.append(index)
     else:
       print 'FAIL: %s: in=%s, result=%s, expected = %s' % (index, input.encode('utf-8'),
                                                                 result.encode('utf-8'),
@@ -33,8 +40,12 @@ def runTests():
           transliterate.uStringToHex(result),
           transliterate.uStringToHex(expected)
       )
+      failing.append(index)
 
     index += 1
+
+  print 'FAIL = %s' % failing
+  print 'PASS = %s' % passing
 
 
 def main(args):

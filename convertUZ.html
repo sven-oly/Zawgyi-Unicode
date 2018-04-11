@@ -20,10 +20,23 @@
 
   <script type="text/javascript" >
   // Test conversion with this data [zawgyi, unicode]
-  var TEST_DATA = [
-  {% for td_in, td_expected in testdata %}
-    ["{{td_in}}", "{{td_expected}}"],{% endfor %}
-  ];
+  var TEST_DATA = {
+  {% for index, td_in, td_expected in testdata %}
+  "{{td_in}}": "{{td_expected}}",
+  {% endfor %}
+  };
+
+  function loadTest(selectObject) {
+    var zValue = selectObject.value;
+    var uValue = TEST_DATA[zValue];
+    var textEntry = document.getElementById('TestEntry');
+    textEntry.value = zValue;
+    textEntry.innerHTML = zValue;
+    var z1 = document.getElementById('z1');
+    z1.value = zValue;
+    z1.innerHTML = zValue;
+    onload();
+  }
 
   // Code to request transliteration (conversion) and handle the return.
   function convertRequest(source, type, outputId, outputHexId) {
@@ -97,7 +110,7 @@
   }
 
   function onload() {
-  textToHexField('z1', 'zInHex');
+    textToHexField('z1', 'zInHex');
 
     // Call the conversions.
     convertRequest('z1', 'Z', 'unicode_in', 'uInHex');
@@ -164,13 +177,13 @@
 
       <div>
         <h4 style='margin:0;padding:0;'>Zawgyi IN
-          <input type="button" value="-> hex" onclick="textToHexField('z1', 'zInHex')" />
+          <input type="button" value="-> hex" onclick="textToHexField('z1', 'zInHex');" />
           <input type="button" value="-> Unicode"
                  onclick="convertRequest('z1', 'Z', 'unicode_in', 'uInHex');"
                  />
         </h4>
         <br />
-        <textarea id="z1"  class='zawgyi_one'
+        <textarea id="z1"  class='zawgyi_one' onchange="textToHexField('z1', 'zInHex');"
                   rows="3" cols="80">{{default_zawgyi}}</textarea>
       </div>
 
@@ -237,6 +250,13 @@
     </div>
   
     <div>
+      TEST DATA:
+      <select onchange="loadTest(this)">
+        {% for index, td_in, td_expected in testdata %}
+        <option value="{{td_in}}">{{index}}: {{td_expected}}</option>
+        {% endfor %}
+      </select>
+      <br />
       <p>Scratch pad:</P>
       <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
       <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans')" />
