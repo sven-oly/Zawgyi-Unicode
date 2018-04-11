@@ -191,6 +191,9 @@ class Transliterate():
     self.start = 0
     self.limit = 0
 
+  def getPhaseList(self):
+    return self.phaseList
+
   def summary(self, show_rules=False):
     # Print the statistics
     print '%4d raw rules' % len(self.raw_rules)
