@@ -324,7 +324,7 @@ def TestData():
       [36, u'န႔မနက္', u'န့မနက်'],
       [37, u'တ္ေတာ္ကုိ', u'တ်တော်ကို'],
       [38, u'ျၪ ႂည', u'ဉြ ညြ'],
-      [39, u' ေသေသခ်ာခ်ာ', u' သေသချာချာ'],  # This one fails on the Z->Unicode conversion
+      [39, u'ေသေသခ်ာခ်ာ', u'သေသေချာချာ'],  # This one fails on the Z->Unicode conversion
   ]
 
   return test_samples_U2Z

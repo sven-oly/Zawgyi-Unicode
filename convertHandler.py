@@ -82,19 +82,19 @@ class ConvertHandler(webapp2.RequestHandler):
         translit_zawgyi.ZAWGYI_description)
 
     text = unicode(self.request.get('text'))
-    logging.info('text         = %s' % text)
+    # logging.info('text         = %s' % text)
     input_type = self.request.get('type', 'Z')
     strip_spaces = self.request.get('strip_spaces', None)
     debug = self.request.get('debug', None)
 
     input = urllib.unquote(text) #   .decode('utf-8')
-    logging.info('decoded text = %s' % text)
+    #logging.info('decoded text = %s' % text)
 
     noreturn = self.request.get('noreturn', None)
     msg = ''
 
-    logging.info('Type = %s, CONVERT %d characters' %
-        (input_type, len(input)))
+    #logging.info('Type = %s, CONVERT %d characters' %
+    #    (input_type, len(input)))
 
     if input_type == 'M':
       if not myazedi_converter:
@@ -192,8 +192,6 @@ class ConvertHandler(webapp2.RequestHandler):
         returntext = ''
       else:
          returntext = text
-
-      logging.info('RESULT has %d characters' % len(result))
 
       # Call the converter on this text data.
       obj = { 'input': returntext,
