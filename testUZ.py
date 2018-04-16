@@ -13,6 +13,30 @@ import sys
 uz_converter = None
 
 
+def runOneTest(debug, id):
+  # Run the one with the given id in debug mode.
+  testdata = translit_unicode2zawgyi.TestData()
+  for test_num, expected, input in testdata:
+    if test_num != id:
+      continue
+
+    result = uz_converter.transliterate(input, debug)
+    expected_normalized = z_normalizer.transliterate(expected, debug)
+
+    if result == expected_normalized:
+      print 'PASS %s: in=%s, result=%s, expected = %s' % (test_num, input.encode('utf-8'),
+                                                                result.encode('utf-8'),
+                                                                expected.encode('utf-8'))
+    else:
+      print 'FAIL: %s: in=%s, result=%s, expected = %s' % (test_num, input.encode('utf-8'),
+                                                                result.encode('utf-8'),
+                                                                expected.encode('utf-8'))
+      print '  result:   %s\n  expected: %s' % (
+          transliterate.uStringToHex(result).split(),
+          transliterate.uStringToHex(expected).split()
+      )
+
+
 def runTests(debug):
   testdata = translit_unicode2zawgyi.TestData()
 
@@ -63,9 +87,17 @@ def main(args):
   global uz_converter
   global z_normalizer
 
-  debug = True
+  debug = 0
+  do_one = -1
+  if len(args) > 1:
+    try:
+      debug = int(args[-1])
+    except:
+      debug = 1
+
   if len(args) > 2:
-    debug = True
+    do_one = int(args[1])
+
   uz_converter = transliterate.Transliterate(
       translit_unicode2zawgyi.UNICODE_ZAWGYI_TRANSLITERATE,
       translit_unicode2zawgyi.UZ_description)
@@ -76,9 +108,15 @@ def main(args):
 
   print 'RULES FOR %s' % translit_unicode2zawgyi.UZ_description
 
-  uz_converter.summary(show_rules=False)
+  show_the_rules = False
+  if debug > 1:
+    show_the_rules = True
+  uz_converter.summary(show_rules=show_the_rules)
 
-  runTests(debug)
+  if do_one >= 0:
+    runOneTest(do_one, debug)
+  else:
+    runTests(debug)
 
 
 if __name__ == "__main__":

@@ -151,7 +151,16 @@ def uStringsToText(string):
 def uStringToHex(string):
   result = ''
   for c in string:
-    result += '%4s ' % hex(ord(c))
+    result += '\\u%4x' % ord(c)
+  return result
+
+def uStringToHexAscii(string):
+  result = ''
+  for c in string:
+    if ord(c) < 127:
+      result += c
+    else:
+      result += '\\u%4x' % ord(c)
   return result
 
 
@@ -196,25 +205,31 @@ class Transliterate():
 
   def summary(self, show_rules=False):
     # Print the statistics
-    print '%4d raw rules' % len(self.raw_rules)
+    print '%4d characters in raw rules' % len(self.raw_rules)
     print '%4d shortcuts ' % len(self.shortcuts)
-    print '%4d reduced ' % len(self.reduced)
+    print '%4d characters in expanded rules' % len(self.reduced)
     print '%4d phaseStrings ' % len(self.phaseStrings)
     print '%4d phaseList ' % len(self.phaseList)
-    index = 0
+    if not show_rules:
+      return
+
+    phase_index = 0
     rule_index = 0
     for phase in self.phaseList:
-      print 'PHASE %2d has  %3d rules' % (index, len(self.phaseList[index].rules))
+      print 'PHASE %2d has  %3d rules' % (phase_index, len(self.phaseList[phase_index].rules))
       if show_rules:
-        for rule in self.phaseList[index].rules:
-          print '  Rule %2d: %s' % (rule_index, rule)
+        for rule in self.phaseList[phase_index].rules:
+          print ' P %d, rule %2d: %s -> %s' % (phase_index, rule_index, uStringToHexAscii(rule[0]),
+                                         uStringToHexAscii(rule[1]))
           rule_index += 1
-      index += 1
+      phase_index += 1
+      print '-'*60
 
   def substFunction(matchObj):
     return 'UNFINISHED'
 
   def applyPhase(self, index, instring,  debug):
+    count_rules_applied = 0
     if debug:
       print 'Applying phase %d to %s' % (index, instring.encode('utf-8'))
       print '  instring = %s' % uStringToHex(instring)
@@ -230,7 +245,7 @@ class Transliterate():
     ruleList = self.phaseList[index].RuleList
 
     currentString = instring
-    if debug:
+    if debug >= 3:
       print ' Phase %d has %d rules' % (index, len(ruleList))
       print '  start, limit = %3d %3d' % (self.start, self.limit)
     matchObj = True
@@ -265,31 +280,32 @@ class Transliterate():
                 rule.id,
                 self.start, matchObj.start(0), matchObj.end(0) )
             print '  Rule = %s' % (rule.rule_string.encode('utf-8'))
-            print '  Rule = %s' % (uStringToHex(rule.rule_string))
+            print '  Rule = %s' % (uStringToHexAscii(rule.rule_string))
 
           # Size of last part of old string after the replacement
           cSize = len(currentString) - matchObj.end(0) - self.start  # Last part of old string not matched
-          if debug and debug > 1:
-            print ' Rule %d: %s  Matched sequence = %s' % (rule.id, rule.pattern,
-            matchObj.string[matchObj.start(0):matchObj.end(0)])
+          if debug > 1:
+            print ' Rule %d: %s  Matched sequence = %s' % (rule.id, uStringToHexAscii(rule.pattern),
+                                                           uStringToHexAscii(matchObj.string[matchObj.start(0):matchObj.end(0)]))
           substitution = rule.subst
 
-          if debug and debug > 1:
+          if debug > 1:
             print '  replacing %s with %s' % (
               uStringToHex(matchObj.string[matchObj.start(0):matchObj.end(0)]),
               uStringToHex(substitution))
-          if debug  == 2:
+          if debug >= 2:
             print '  before: %s' % uStringToHex(currentString)
 
           outstring = re.sub(rule.pattern, substitution, currentString[self.start:], 1)
           # Try to advance start.
           newString = currentString[0:self.start] + outstring
-          if debug == 2:
+          if debug >= 2:
             print '  after:  %s' % uStringToHex(newString)
           self.limit = len(newString) - 1
           # Figure out the new start and limit.
 
           self.start = self.limit - cSize + 1
+          count_rules_applied += 1
           currentString = newString
 
         ruleIndex += 1
@@ -298,6 +314,11 @@ class Transliterate():
       if not foundRule:
         # Increment position since no rule matched
         self.start += 1
+
+    if debug:
+      print '  RULES APPLIED = %d' % (count_rules_applied)
+      if count_rules_applied > 0:
+        print '    outstring = %s' % uStringToHex(currentString)
 
     return currentString
 
