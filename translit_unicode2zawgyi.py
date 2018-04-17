@@ -129,6 +129,7 @@ $ukinzi ($consonant) > $1 \u1064 ;
 
 # a special case
 \u1014 \u1032 \u1037 > \u1014 \u1032 \u1094;
+\u1014 \u1037 > \u1014 \u1094;
 
 \u1014 \u1032 ($lowsignZ) \u1037 > \u108f $1 $2 \u1094;
 \u1014 ($highsignZ) ($lowsignZ) > \u108f $1 $2;
