@@ -195,7 +195,7 @@
       </div>
 
       <div>
-        <h4 style='margin:0;padding:0;'>Zawgyi OUT <strong>(UNDER CONSTRUCTION) </strong>
+        <h4 style='margin:0;padding:0;'>Zawgyi OUT
           <input type="button" value="-> Unicode" onclick="convertRequest('zoutput', 'Z', 'unicode_out', 'uOutHex')" />
         </h4>
         <textarea id="zoutput"  class='zawgyi_one'
@@ -249,14 +249,11 @@
   <div class='container'>
     <div>
       <p>Hex:</p>
-      <input type="text" id="hexText" onchange="enterHex()" size="100"/>
+      <input type="text" id="hexText" onchange="hexToOutput('hexText', 'TestEntry')" size="100"/>
       
-      <input type="submit" value="Convert hex to text" onSubmit="enterHex()" />
-      <input type="button" value="-> scratch" onclick="copyText('hexText', 'scratchText')" />
       <input type="button" value="-> Unicode" onclick="hexToOutput('hexText', 'unicode_in')" />
       <input type="button" value="-> Zawgyi" onclick="hexToOutput('hexText', 'z1')" />
-      <input type="button" value="-> Myazedi" onclick="hexToOutput('hexText', 'myazedi')" />
-    
+      <input type="button" value="-> scratch" onclick="copyText('hexText', 'scratchText')" />
     </div>
   
     <div>
@@ -269,19 +266,11 @@
       <br />
       <p>Scratch pad:</P>
       <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
-      <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans');" />
+      <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'unicode_in');" />
     </div>
     <hr>
     <br />
-    <form action="/feedback" method="get">
-      <input type="submit" value="Send feedback" />
-    </form>
-    <form action="/feedback" method="get">
-      <input type="submit" value="Report conversion problem"
-      onclick="return reportProblem('zawgyi');" />
-    </form>
     </div>
-    <input type='text' id='testOutput' input>
   </div> <!-- container -->
      </body>
 </html>
