@@ -17,7 +17,6 @@ def printDiff(a, b):
   # Compare the two strings, character by character.
   alen = len(a)
   blen = len(b)
-  print 'ALEN = %s, BLEN = %s' %(alen, blen)
   i = 0
   comp_str = ''
   while (i < min(alen, blen)):

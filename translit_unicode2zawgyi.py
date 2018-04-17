@@ -20,7 +20,7 @@ $ukinzi = \u1004\u103A\u1039;
 
 $medialraZ = [\u103b\u107e-\u1084];
 $lowsignZ = [\u102f\u1030\u1037\u103a\u103c\u103d\u1087-\u108a];
-$highsignZ = [\u102d\u102e\u1032\u1036\u1039\u103d-\u103e];
+$highsignZ = [\u102d\u102e\u1032\u1036\u1039\u103d-\u103e\u1064];
 
 #### Phase 0: CODEPOINT MAPPING FROM UNICODE TO ZAWGYI
 $ukinzi ($consonant) \u103B > $1 \u103A \u1064 ;
@@ -37,6 +37,8 @@ $ukinzi ($consonant) \u103B \u102D > $1 \u103A \u108b  ;
 $ukinzi ($consonant) \u103B \u102E \u102F > $1 \u103A \u108C \u1033 ;
 $ukinzi ($consonant) \u103B \u102E > $1 \u103A \u108C ;
 $ukinzi ($consonant) \u103B \u1036 > $1 \u103A \u108D ;
+
+$ukinzi ($consonant) \u103c > $1 \u103b \u1064; # Kinzi + medial ra
 
 $ukinzi \u102D > \u108B ;
 $ukinzi \u102E  > \u108C  ;
@@ -117,6 +119,10 @@ $ukinzi ($consonant) > $1 \u1064 ;
 # Is this a special case?
 ($consonant) \u103d \u1031 \u1037 > \u1031 $1 \u1094 \u103D ;
 
+# Ra + kinzi
+($consonant) \u1064 \u103b > \u103b $1 \u1064 ;
+
+
 # E vowel plus medials
 ($consonant) ([\u103a\u103c-\u103d]) \u1031 > \u1031 $1 $2 ;
 
@@ -126,6 +132,7 @@ $ukinzi ($consonant) > $1 \u1064 ;
 # Handle Na with lower modifiers.
 \u1014 ($lowsignZ) ($highsignZ) \u1037 > \u108f $1 $2 \u1094;
 \u1014 ($highsignZ) ($lowsignZ) \u1037 > \u108f $1 $2 \u1094;
+\u1014 ($highsignZ) \u1037 > \u1014 $1 \u1094;
 
 # a special case
 \u1014 \u1032 \u1037 > \u1014 \u1032 \u1094;
@@ -135,7 +142,6 @@ $ukinzi ($consonant) > $1 \u1064 ;
 \u1014 ($highsignZ) ($lowsignZ) > \u108f $1 $2;
 \u1014 ($lowsignZ) ($highsignZ) > \u108f $1 $2;
 
-#\u1014 \u1032 \u1037 > \u1014 \1032 \u1094;
 \u1014 ($lowsignZ) \u1037 > \u108f $1 \u1094;
 
 \u1014 ($lowsignZ) > \u108f $1;
@@ -157,7 +163,7 @@ $ukinzi ($consonant) > $1 \u1064 ;
 ## Phase 2: Further adjustments
 ::Null;
 
-\u103c \u1094 > \u103c \u1095 ;  ## ?? Is this correct?
+\u103c \u1094 > \u103c \u1095 ;
 
 # Medial ra variations, context dependent
 $medialraZ ($narrowconsonant) ($lowsignZ) ($highsignZ) > \u1083 $1 $2 $3 ;
@@ -319,7 +325,7 @@ def TestData():
       [40, u'ေၾကာင္းအျဖစ္', u'ကြောင်းအဖြစ်'],
       [41, u'နာဆံုးရႈံးရပံုေတြကို', u'နာဆုံးရှုံးရပုံတွေကို'],
       [42, u'ပြဲနဲ႔', u'ပွဲနဲ့'],
-
+      [43, u'အတာသႀကၤန္ပြဲေတာ္နဲ', u'အတာသင်္ကြန်ပွဲတော်နဲ့'],
   ]
 
   return test_samples_U2Z
