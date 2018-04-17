@@ -22,7 +22,7 @@ $medialraZ = [\u103b\u107e-\u1084];
 $lowsignZ = [\u102f\u1030\u1037\u103a\u103c\u103d\u1087-\u108a];
 $highsignZ = [\u102d\u102e\u1032\u1036\u1039\u103d-\u103e];
 
-#### STAGE 0: CODEPOINT MAPPING FROM UNICODE TO ZAWGYI
+#### Phase 0: CODEPOINT MAPPING FROM UNICODE TO ZAWGYI
 $ukinzi ($consonant) \u103B > $1 \u103A \u1064 ;
 
 $ukinzi ($consonant) \u102D \u1036 > $1 \u108e ;
@@ -106,7 +106,7 @@ $ukinzi ($consonant) > $1 \u1064 ;
 \u104E\u1004\u103A\u1038 > \u104E ;
 
 
-##### STAGE 1: Everything is not in Zawgyi code points. REORDERING RULES.
+##### PHASE 1: Everything is not in Zawgyi code points. REORDERING RULES.
 ::Null;
 
 # E Vowel + medial ra. Move the e vowel
@@ -120,24 +120,26 @@ $ukinzi ($consonant) > $1 \u1064 ;
 # E vowel plus medials
 ($consonant) ([\u103a\u103c-\u103d]) \u1031 > \u1031 $1 $2 ;
 
-# Move E vowel 
+# No medials intervening.
 ($consonant) \u1031 > \u1031 $1 ;
-
-# E vowel with stacked, and with ASAT
-
-# TODO: Fix these
 
 # Handle Na with lower modifiers.
 \u1014 ($lowsignZ) ($highsignZ) \u1037 > \u108f $1 $2 \u1094;
+\u1014 ($highsignZ) ($lowsignZ) \u1037 > \u108f $1 $2 \u1094;
+
+# a special case
+\u1014 \u1032 \u1037 > \u1014 \u1032 \u1094;
+
+\u1014 \u1032 ($lowsignZ) \u1037 > \u108f $1 $2 \u1094;
 \u1014 ($highsignZ) ($lowsignZ) > \u108f $1 $2;
 \u1014 ($lowsignZ) ($highsignZ) > \u108f $1 $2;
 
+#\u1014 \u1032 \u1037 > \u1014 \1032 \u1094;
 \u1014 ($lowsignZ) \u1037 > \u108f $1 \u1094;
-\u1014 ([\u1032]*) \u1037 > \u1014 $1 \u1094;
 
 \u1014 ($lowsignZ) > \u108f $1;
 
-# TODO: Move 1037 dot to right with other descenders.
+# Move 1037 dot to right with other descenders.
 ($lowsignZ) ($highsignZ*) \u1037 > $1 $2 \u1094;
 
 ($nondigits) \u1040 ([\u102B-\u103F]) > $1 \u101D $2;
@@ -151,7 +153,7 @@ $ukinzi ($consonant) > $1 \u1064 ;
 # Medial plus vowel sign U
 ($medialraZ) ($consonant) \u102f > $1 $2 \u1033;
 
-## Stage 2: Further adjustments
+## Phase 2: Further adjustments
 ::Null;
 
 \u103c \u1094 > \u103c \u1095 ;  ## ?? Is this correct?
@@ -165,6 +167,9 @@ $medialraZ ($wideconsonant) ($highsignZ) > \u1080 $1 $2 ;
 
 $medialraZ ($narrowconsonant) \u1030 > \u103b $1 \u1034 ;
 $medialraZ ($wideconsonant) \u1030 > \u107e $1 \u1034 ;
+
+$medialraZ ($narrowconsonant) (\u102f) > \u103b $1 \u1033 ;
+$medialraZ ($wideconsonant) (\u102f) > \u107e $1 \u1033 ;
 
 $medialraZ ($narrowconsonant) ($lowsignZ) > \u1081 $1 $2 ;
 $medialraZ ($wideconsonant) ($lowsignZ) > \u1082 $1 $2 ;
@@ -186,7 +191,7 @@ $medialraZ ($wideconsonant) > \u107e $1 ;
 
 \u103a \u102f > \u103a \u1033;
 
-##### Stage 3
+##### Phase 3
 ::Null;
 ([\u103C\u103D\u103E]+) \u103B > \u103B $1;
 ([\u103D\u103E]+) \u103C > \u103C $1;
@@ -203,7 +208,7 @@ $medialraZ ($wideconsonant) > \u107e $1 ;
 ($medialraZ) ($consonant) ($highsignZ) \u102f > $1 $2 $3 \u1033;
 
 
-##### Stage 4.  More reorderings of medials
+##### Phase 4.  More reorderings of medials
 ::Null;
 
 ([\u103D\u103E]) \u103C > \u103C $1;
@@ -213,7 +218,7 @@ $medialraZ ($wideconsonant) > \u107e $1 ;
 
 \u1036 \u102f > \u102f \u1036;
 
-#### Stage 5
+#### Phase 5
 ::Null;
 ($consonant) \u103B \u103A > $1 \u103A \u103B;
 ([\u103C\u103D\u103E]) \u103B > \u103B $1;
@@ -312,6 +317,7 @@ def TestData():
       [39, u'ေသေသခ်ာခ်ာ', u'သေသေချာချာ'],  # This one fails on the Z->Unicode conversion
       [40, u'ေၾကာင္းအျဖစ္', u'ကြောင်းအဖြစ်'],
       [41, u'နာဆံုးရႈံးရပံုေတြကို', u'နာဆုံးရှုံးရပုံတွေကို'],
+      [42, u'းပြဲနဲ႔', u'းပဲြနဲ႔'],
 
   ]
 

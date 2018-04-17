@@ -14,7 +14,7 @@ TRANS_LIT_RULES = ZAWGYI_NORMALIZE_TRANSLITERATE = u"""
 
 \u1039 \u1037 > \u1037 \u1039 ;
 
-\u103c ([\u102e]) > $1 \u103c ;
+\u103c ([\u102e\u1032]) > $1 \u103c ;
 
 \u103d \u102d > \u102d \u103d ;
 

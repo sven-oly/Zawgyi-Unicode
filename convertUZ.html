@@ -135,7 +135,7 @@
 
     <div class="span-20">
 
-      <h1>Test Myanmar text conversion</h1>
+      <h1>Myanmar Uniocde to Zawgyi Converter</h1>
       <p>Just paste your Myanmar text into the "Test" field. The characters will be shown
         in the fonts, and hex codes will be shown.
 
@@ -224,19 +224,22 @@
       <br />
       <textarea id="zInHex"  class='notosans14'
                 rows="5" cols="40"></textarea>
+      <input type="button" value="-> Zawgyi" onclick="hexToOutput('zInHex', 'z1');" />
+
       <hr>
       <h4 style='margin:0;padding:0;'>Zawgyi out hex:</h4>
-    
+
       <textarea id="zOutHex"  class='notosans14'
                 rows="5" cols="40"></textarea>
       <hr>
+
       <h4 style='margin:0;padding:0;'>Unicode in hex:</h4>
-    
       <textarea id="uInHex"  class='notosans14'
                 rows="5" cols="40"></textarea>
+      <input type="button" value="-> Unicode In" onclick="hexToOutput('uInHex', 'unicode_in');" />
       <hr>
+
       <h4 style='margin:0;padding:0;'>Unicode out hex:</h4>
-    
       <textarea id="uOutHex"  class='notosans14'
                 rows="5" cols="40"></textarea>
       <hr>
@@ -266,7 +269,7 @@
       <br />
       <p>Scratch pad:</P>
       <textarea id="scratchText" class='notosans14' rows="1" cols="80"></textarea>
-      <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans')" />
+      <input type="button" value="Scratch -> Unicode" onclick="hexToOutput('scratchText', 'notoSans');" />
     </div>
     <hr>
     <br />

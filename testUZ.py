@@ -13,6 +13,25 @@ import sys
 uz_converter = None
 
 
+def printDiff(a, b):
+  # Compare the two strings, character by character.
+  alen = len(a)
+  blen = len(b)
+  print 'ALEN = %s, BLEN = %s' %(alen, blen)
+  i = 0
+  comp_str = ''
+  while (i < min(alen, blen)):
+    if a[i] == b[i]:
+      add = '.'
+    else:
+      add = '^'
+    comp_str += add
+    i += 1
+
+  comp_str += '#' * (max(alen, blen) - i)
+  return comp_str
+
+
 def runOneTest(debug, id):
   # Run the one with the given id in debug mode.
   testdata = translit_unicode2zawgyi.TestData()
@@ -22,8 +41,9 @@ def runOneTest(debug, id):
 
     result = uz_converter.transliterate(input, debug)
     expected_normalized = z_normalizer.transliterate(expected, debug)
+    result_normalized = z_normalizer.transliterate(result, debug)
 
-    if result == expected_normalized:
+    if result_normalized == expected_normalized:
       print 'PASS %s: in=%s, result=%s, expected = %s' % (test_num, input.encode('utf-8'),
                                                                 result.encode('utf-8'),
                                                                 expected.encode('utf-8'))
@@ -32,8 +52,13 @@ def runOneTest(debug, id):
                                                                 result.encode('utf-8'),
                                                                 expected.encode('utf-8'))
       print '  result:   %s\n  expected: %s' % (
-          transliterate.uStringToHex(result).split(),
-          transliterate.uStringToHex(expected).split()
+          transliterate.uStringToHex(result),
+          transliterate.uStringToHex(expected)
+      )
+
+      print '            %s\n' % printDiff(
+          transliterate.uStringToHex(result),
+          transliterate.uStringToHex(expected)
       )
 
 
@@ -54,8 +79,9 @@ def runTests(debug):
 
     result = uz_converter.transliterate(input, debug)
     expected_normalized = z_normalizer.transliterate(expected, debug)
+    result_normalized = z_normalizer.transliterate(result, debug)
 
-    if result == expected_normalized:
+    if result_normalized == expected_normalized:
       print 'PASS %s: in=%s, result=%s, expected = %s' % (index, input.encode('utf-8'),
                                                                 result.encode('utf-8'),
                                                                 expected.encode('utf-8'))
@@ -65,8 +91,12 @@ def runTests(debug):
                                                                 result.encode('utf-8'),
                                                                 expected.encode('utf-8'))
       print '  result:   %s\n  expected: %s' % (
-          transliterate.uStringToHex(result).split(),
-          transliterate.uStringToHex(expected).split()
+          transliterate.uStringToHex(result),
+          transliterate.uStringToHex(expected)
+      )
+      print '            %s\n' % printDiff(
+          transliterate.uStringToHex(result),
+          transliterate.uStringToHex(expected)
       )
 
       failing.append(index)
@@ -114,7 +144,7 @@ def main(args):
   uz_converter.summary(show_rules=show_the_rules)
 
   if do_one >= 0:
-    runOneTest(do_one, debug)
+    runOneTest(debug, do_one)
   else:
     runTests(debug)
 

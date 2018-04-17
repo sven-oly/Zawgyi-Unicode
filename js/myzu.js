@@ -166,12 +166,14 @@ function hexToOutput(infield, outfield) {
 // Input is string of hex values, separated by spaces.
 // Also accept 0x, u+, and \u for each hex value.
 function intArrayFromHexString(inString) {
+  // Remove U+ or 0x. Split at space.
   var newString = inString.replace(/(U\+)|(u\+)|(0x)|(0X)|( 0x)|( 0X)|\\u|\\U/g, " ")
   var hStrings = newString.split(" ");
-  // Remove U+ or 0x. Split at \u.
   var intList = [];
   for (var i=0; i < hStrings.length; i ++) {
-    intList[i] = parseInt(hStrings[i], 16);
+    if (hStrings[i] != "") {
+      intList[i] = parseInt(hStrings[i], 16);
+    }
   }
   return intList;
 }

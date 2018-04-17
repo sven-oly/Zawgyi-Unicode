@@ -231,7 +231,7 @@ class Transliterate():
   def applyPhase(self, index, instring,  debug):
     count_rules_applied = 0
     if debug:
-      print 'Applying phase %d to %s' % (index, instring.encode('utf-8'))
+      print '++++ Applying phase %d to %s' % (index, instring.encode('utf-8'))
       print '  instring = %s' % uStringToHex(instring)
 
     # It should do:
@@ -242,12 +242,13 @@ class Transliterate():
     # For each rule, apply to instring.
     self.start = 0
     self.limit = len(instring) - 1
+    this_phase = self.phaseList[index]
     ruleList = self.phaseList[index].RuleList
 
     currentString = instring
     if debug >= 3:
-      print ' Phase %d has %d rules' % (index, len(ruleList))
-      print '  start, limit = %3d %3d' % (self.start, self.limit)
+      print '  Phase %d has %d rules' % (this_phase.phase_id, len(ruleList))
+      #print '  start, limit = %3d %3d' % (self.start, self.limit)
     matchObj = True
     while self.start <= self.limit:
       # Look for a rule that matches
