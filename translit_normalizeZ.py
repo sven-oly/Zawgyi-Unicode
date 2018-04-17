@@ -23,10 +23,11 @@ TRANS_LIT_RULES = ZAWGYI_NORMALIZE_TRANSLITERATE = u"""
 # Kinzi and others
 \u1064 \u103a > \u103a \u1064 ;
 \u1067 > \u1066;
-\u1071 > \u1072;
+\u1072 > \u1071;
+\u1074 > \u1073;
+\u1093 > \u107b;
 
 \u1095 > \u1094 ;
-# TODO: finish this.
 ::Null;
 """
 

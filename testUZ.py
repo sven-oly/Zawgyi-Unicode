@@ -45,19 +45,19 @@ def runOneTest(debug, id):
 
     if result_normalized == expected_normalized:
       print 'PASS %s: in=%s, result=%s, expected = %s' % (test_num, input.encode('utf-8'),
-                                                                result.encode('utf-8'),
+                                                                result_normalized.encode('utf-8'),
                                                                 expected.encode('utf-8'))
     else:
       print 'FAIL: %s: in=%s, result=%s, expected = %s' % (test_num, input.encode('utf-8'),
-                                                                result.encode('utf-8'),
+                                                                result_normalized.encode('utf-8'),
                                                                 expected.encode('utf-8'))
       print '  result:   %s\n  expected: %s' % (
-          transliterate.uStringToHex(result),
+          transliterate.uStringToHex(result_normalized),
           transliterate.uStringToHex(expected)
       )
 
       print '            %s\n' % printDiff(
-          transliterate.uStringToHex(result),
+          transliterate.uStringToHex(result_normalized),
           transliterate.uStringToHex(expected)
       )
 
@@ -83,19 +83,19 @@ def runTests(debug):
 
     if result_normalized == expected_normalized:
       print 'PASS %s: in=%s, result=%s, expected = %s' % (index, input.encode('utf-8'),
-                                                                result.encode('utf-8'),
+                                                                result_normalized.encode('utf-8'),
                                                                 expected.encode('utf-8'))
       passing.append(index)
     else:
       print 'FAIL: %s: in=%s, result=%s, expected = %s' % (index, input.encode('utf-8'),
-                                                                result.encode('utf-8'),
+                                                                result_normalized.encode('utf-8'),
                                                                 expected.encode('utf-8'))
       print '  result:   %s\n  expected: %s' % (
-          transliterate.uStringToHex(result),
+          transliterate.uStringToHex(result_normalized),
           transliterate.uStringToHex(expected)
       )
       print '            %s\n' % printDiff(
-          transliterate.uStringToHex(result),
+          transliterate.uStringToHex(result_normalized),
           transliterate.uStringToHex(expected)
       )
 
