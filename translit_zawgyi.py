@@ -8,14 +8,18 @@ import sys
 Description = ZAWGYI_description = u'Zawgyi font encoding conversion'
 
 TRANS_LIT_RULES = ZAWGYI_UNICODE_TRANSLITERATE = u"""# Modern Burmese digits & Unicode code points.
-$nondigits = [^\u1040-\u1049];
+nondigits = [^\u1040-\u1049];
 $consonant = [\u1000-\u1021];
 $vowelsign = [\u102B-\u1030\u1032];
 $umedial = [\u103B-\u103E];
 $vowelmedial = [\u102B-\u1030\u1032\u103B-\u103F];
 $ukinzi = \u1004\u103A\u1039;
+#$ukinziExpanded = [\u1004\u101b\u105a]\u103A\u1039;
 $zmedialra = [\u103B\u107E-\u1084];
 $spacetoremove = [\u0020\u00a0\u2002\u2008\u200b-\u200d\u2060\ufeff];
+
+$independentvowels = [\u1021-\u102a];
+$vowelsAndConsonants = [\u1000-\u102a];
 
 # #### STAGE (1): CODEPOINT MAPPING FROM ZAWGYI TO UNICODE
 ($consonant) \u103A \u1064 > $ukinzi $1 \u103B;
@@ -123,9 +127,11 @@ $zmedialra > \u103c;
 ([\u1031]+) $ukinzi ($consonant) > $ukinzi $2 \u1031;
 \u1031 \u103c ($consonant) > $1 \u103c \u1031;
 \u1031 ($consonant) ($umedial+) > $1 $2 \u1031;
-\u1031 ($consonant) > $1 \u1031;
+\u1031 ($vowelsAndConsonants) > $1 \u1031;
 
 \u1031 (\u1037+) ($consonant) > $2 \u1031 \u1037 ;
+
+\u1031 ($consonant) $ukinzi > $ukinzi \u1031 ;
 
 ##### STAGE (2): POST REORDERING RULES FOR UNICODE RENDERING
 ::Null;

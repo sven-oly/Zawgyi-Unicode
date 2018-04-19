@@ -16,11 +16,15 @@ $widenya = [\u100a\u106b];
 $othernya = [\u1009\u106a];
 $vowelsign = [\u102B-\u1030\u1032];
 $vowelmedial = [\u102B-\u1030\u1032\u103c-\u103F];
-$ukinzi = \u1004\u103A\u1039;
+$ukinzi = [\u1004\u101b\u105a]\u103A\u1039;
+#$ukinzi = \u1004\u103A\u1039;
 
 $medialraZ = [\u103b\u107e-\u1084];
 $lowsignZ = [\u102f\u1030\u1037\u103a\u103c\u103d\u1087-\u108a];
 $highsignZ = [\u102d\u102e\u1032\u1036\u1039\u103d-\u103e\u1064];
+$subscriptitem = [\u1060-\u1063\u1064-\u1068\u106c\u106d\u1070-\u107c\u1085\u1093\u1096];
+
+$vowelsAndConsonants = [\u1000-\u102a];
 
 #### Phase 0: CODEPOINT MAPPING FROM UNICODE TO ZAWGYI
 $ukinzi ($consonant) \u103B > $1 \u103A \u1064 ;
@@ -31,6 +35,7 @@ $ukinzi ($consonant) \u102D > $1 \u108b ;
 $ukinzi ($consonant) \u102E > $1 \u108C ;
 
 $ukinzi ($consonant) \u1036 > $1 \u108D ;
+$ukinzi ($consonant) \u1031 > \u1031 $1 \u1062 ;
 
 $ukinzi ($consonant) \u103B \u102D \u102F > $1 \u103A \u1033 \u108B ;
 $ukinzi ($consonant) \u103B \u102D > $1 \u103A \u108b  ;
@@ -47,6 +52,7 @@ $ukinzi \u1036 > \u108D  ;
 $ukinzi ($consonant) > $1 \u1064 ;
 
 \u1025 ($vowelsign) \u1038  > \u106A $1 \u1038 ;
+\u1025 \u102f \u1036  > \u1025 \u1036 \u1033 ;
 
 \u102D \u1036 > \u108E  ;
 
@@ -84,7 +90,10 @@ $ukinzi ($consonant) > $1 \u1064 ;
 \u1039 \u100B > \u106C ;
 \u1039 \u100C > \u106D ;
 \u1039 \u100D > \u106E ;
+
+\u100d \u1039 \u100E > \u106F ;
 \u1039 \u100E > \u106F ;
+
 
 \u1039 \u100F > \u1070 ;
 \u1039 \u1010 > \u1071 ;
@@ -127,9 +136,11 @@ $ukinzi ($consonant) > $1 \u1064 ;
 ($consonant) ([\u103a\u103c-\u103d]) \u1031 > \u1031 $1 $2 ;
 
 # No medials intervening.
-($consonant) \u1031 > \u1031 $1 ;
+($vowelsAndConsonants) \u1031 > \u1031 $1 ;
 
 # Handle Na with lower modifiers.
+\u1014 ($subscriptitem) > \u108f $1 ;
+
 \u1014 ($lowsignZ) ($highsignZ) \u1037 > \u108f $1 $2 \u1094;
 \u1014 ($highsignZ) ($lowsignZ) \u1037 > \u108f $1 $2 \u1094;
 \u1014 ($highsignZ) \u1037 > \u1014 $1 \u1094;
@@ -326,6 +337,14 @@ def TestData():
       [41, u'နာဆံုးရႈံးရပံုေတြကို', u'နာဆုံးရှုံးရပုံတွေကို'],
       [42, u'ပြဲနဲ႔', u'ပွဲနဲ့'],
       [43, u'အတာသႀကၤန္ပြဲေတာ္နဲ', u'အတာသင်္ကြန်ပွဲတော်နဲ'],
+      # Suggested by MJ
+      [44, u'\u1019\u108F\u1072\u1031\u101c\u1038 \u1025\u1036\u1033 \u1002\u102f\u100f\u101d\u102f\u106f\u102d ' +
+       u'\u1031\u1029\u102c\u1004\u1039\u1038 \u101e\u1031\u1018\u1064\u102c',
+       u'မန္တလေး ဥုံ ဂုဏဝုဍ္ဎိ ဩောင်း သင်္ဘော'],
+      # from unit tests
+      [45, u"\u1021\u102C\u100F\u102C\u1015\u102D\u102F\u1004\u1039\u1031\u1010\u103C",
+       u"\u1021\u102C\u100F\u102C\u1015\u102D\u102F\u1004\u103A\u1010\u103D\u1031"],
+      [46, u"ျမန္္မာကို", u"မြန်မာကို"],
   ]
 
   return test_samples_U2Z

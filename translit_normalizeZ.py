@@ -28,7 +28,10 @@ TRANS_LIT_RULES = ZAWGYI_NORMALIZE_TRANSLITERATE = u"""
 \u1093 > \u107b;
 
 \u1095 > \u1094 ;
+
+# Phase 1. Handle duplicate codes.
 ::Null;
+\u1039+ > \u1039;
 """
 
 test_data = [
