@@ -35,7 +35,7 @@ $ukinzi ($consonant) \u102D > $1 \u108b ;
 $ukinzi ($consonant) \u102E > $1 \u108C ;
 
 $ukinzi ($consonant) \u1036 > $1 \u108D ;
-$ukinzi ($consonant) \u1031 > \u1031 $1 \u1062 ;
+$ukinzi ($consonant) \u1031 > $1 \u1031 \u1064 ;
 
 $ukinzi ($consonant) \u103B \u102D \u102F > $1 \u103A \u1033 \u108B ;
 $ukinzi ($consonant) \u103B \u102D > $1 \u103A \u108b  ;

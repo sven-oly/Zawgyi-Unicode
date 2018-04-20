@@ -8,7 +8,7 @@ import sys
 Description = ZAWGYI_description = u'Zawgyi font encoding conversion'
 
 TRANS_LIT_RULES = ZAWGYI_UNICODE_TRANSLITERATE = u"""# Modern Burmese digits & Unicode code points.
-nondigits = [^\u1040-\u1049];
+$nondigits = [^\u1040-\u1049];
 $consonant = [\u1000-\u1021];
 $vowelsign = [\u102B-\u1030\u1032];
 $umedial = [\u103B-\u103E];
@@ -138,7 +138,6 @@ $zmedialra > \u103c;
 \u1044 \u103a > \u104E \u103A ;
 ($nondigits) \u1040 ([\u102B-\u103F]) > $1 \u101D $2;
 
-\u1025 \u103A > \u1009 \u103A;
 \u1025 \u102E > \u1026;
 \u1037 \u103A > \u103A \u1037;
 \u1036 ($umedial*) ($vowelsign+) > $1 $2 \u1036 ;
