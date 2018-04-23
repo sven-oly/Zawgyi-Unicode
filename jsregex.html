@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Test Javascript regex</title>
+
+    <script type="text/javascript">
+      function applyRegEx(regexIn, textIn, replaceIn, textOut) {
+        var input_area = document.getElementById(textIn);
+        var regex_area = document.getElementById(regexIn);
+        var output_area = document.getElementById(textOut);
+        var replace_area = document.getElementById(replaceIn);
+
+        var regIn = regex_area.value;
+        var regEx = RegExp(regIn);
+        var inText = input_area.value;
+
+        var replaceText = replace_area.value;
+
+        var matches = regEx.exec(inText);
+
+        if (matches) {
+          var newString = inText.replace(regEx, replaceText);
+
+          output_area.innerHTML = newString;
+
+        } else {
+          output_area.innerHTML = '** NO MATCH **';
+        }
+      }
+    </script>
+
+  </head>
+
+  <body>
+    <h3>Input regex</h3>
+    <textarea id="regexIn"
+              rows="3" cols="80">b[ctxd]*</textarea>
+
+    <h3>Input text</h3>
+    <textarea id="replaceIn"
+              rows="3" cols="80">XYZ</textarea>
+
+    <h3>Input text</h3>
+    <textarea id="textIn"
+              rows="3" cols="80">bxttcxdabc</textarea>
+
+    <hr />
+    <input type="button" value="Apply Regex"
+           onclick="applyRegEx('regexIn', 'textIn', 'replaceIn','textOut');" />
+
+    <h3>Output text</h3>
+    <textarea id="textOut"
+              rows="3" cols="80"></textarea>
+
+  </body>
+</html>
