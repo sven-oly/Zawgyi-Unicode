@@ -16,6 +16,8 @@ TRANS_LIT_RULES = ZAWGYI_NORMALIZE_TRANSLITERATE = u"""
 
 \u103c ([\u102e\u1032]) > $1 \u103c ;
 
+\u1033 \u102d > \u102d \u1033 ;
+
 \u103d \u102d > \u102d \u103d ;
 
 \u1089 > \u103d \u1034 ;
@@ -31,6 +33,7 @@ TRANS_LIT_RULES = ZAWGYI_NORMALIZE_TRANSLITERATE = u"""
 
 # Phase 1. Handle duplicate codes.
 ::Null;
+\u102f+ > \u102f;
 \u1039+ > \u1039;
 """
 

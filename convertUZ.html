@@ -83,9 +83,10 @@
 
           var inOutSizes = json_obj.inputSize + " " + json_obj.resultSize;
           var testArea = document.getElementById('testOutput');
-          testArea.innerHTML = inOutSizes;
-          testArea.value = inOutSizes;
-
+          if (testArea) {
+            testArea.innerHTML = inOutSizes;
+            testArea.value = inOutSizes;
+          }
           var msg_area = document.getElementById('msgArea');
           msg_area.innerHTML = json_obj.msg;
           msg_area.value = json_obj.msg;
@@ -116,6 +117,12 @@
       window.location.href = target;
   }
 
+  function newTextContent(area, hexArea) {
+    var z1 = document.getElementById("z1");
+    textToHexField(area, hexArea);
+    
+  }
+
   function onload() {
     textToHexField('z1', 'zInHex');
 
@@ -123,6 +130,13 @@
     convertRequest('z1', 'Z', 'unicode_in', 'uInHex');
     convertRequest('unicode_in', 'U', 'zoutput', 'zOutHex');
     convertRequest('zoutput', 'Z', 'unicode_out', 'uOutHex');
+
+    var z1 = document.getElementById("z1");
+    z1.onresize = function() {
+      var inarea = document.getElementById('z1');
+      var x = 0;
+    }
+
   }
   </script>
 
@@ -135,7 +149,7 @@
 
     <div class="span-20">
 
-      <h1>Myanmar Uniocde to Zawgyi Converter</h1>
+      <h1>Myanmar Unicode to Zawgyi Converter</h1>
       <p>Just paste your Myanmar text into the "Test" field. The characters will be shown
         in the fonts, and hex codes will be shown.
 
@@ -190,7 +204,7 @@
                  />
         </h4>
         <br />
-        <textarea id="z1"  class='zawgyi_one' onchange="textToHexField('z1', 'zInHex');"
+        <textarea id="z1"  class='zawgyi_one' onchange="newTextContent('z1', 'zInHex');"
                   rows="3" cols="80">{{default_zawgyi}}</textarea>
       </div>
 

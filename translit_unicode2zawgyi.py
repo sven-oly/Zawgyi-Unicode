@@ -209,6 +209,9 @@ $medialraZ ($wideconsonant) > \u107e $1 ;
 
 \u103a \u102f > \u103a \u1033;
 
+# Kinzi combo
+\u1064 \u102e > \u108c ;
+
 ##### Phase 3
 ::Null;
 ([\u103C\u103D\u103E]+) \u103B > \u103B $1;
@@ -236,6 +239,13 @@ $medialraZ ($wideconsonant) > \u107e $1 ;
 
 \u1036 \u102f > \u102f \u1036;
 
+\u103d \u102d > \u102d \u103d ;
+
+\u103a ([\u1064\u108b-\u108e]) \u102d \u102f > \u103a $1 \u102d \u1033;
+
+\u103a \u102d \u102f > \u103a \u102d \u1033;
+
+
 #### Phase 5
 ::Null;
 ($consonant) \u103B \u103A > $1 \u103A \u103B;
@@ -256,15 +266,16 @@ $medialraZ ($wideconsonant) > \u107e $1 ;
 \u1030 \u1030+ > \u1030;
 \u1031 \u1031+ > \u1031;
 \u1032 \u1032+ > \u1032;
+\u1036 \u1036+ > \u1036;
 \u103A \u103A+ > \u103A;
 \u103B \u103B+ > \u103B;
 \u103C \u103C+ > \u103C;
 \u103D \u103D+ > \u103D;
 \u103E \u103E+ > \u103E;
 
-\u1036 \u1036+ > \u1036;
 
 # Visually identical orderings - standardize
+\u102f \u102D > \u102D \u102f ;
 \u102f \u102D > \u102D \u102f ;
 \u102f \u1036 > \u1036 \u102f ;
 \u1039 \u1037 > \u1037 \u1039 ;
@@ -345,6 +356,7 @@ def TestData():
       [45, u"\u1021\u102C\u100F\u102C\u1015\u102D\u102F\u1004\u1039\u1031\u1010\u103C",
        u"\u1021\u102C\u100F\u102C\u1015\u102D\u102F\u1004\u103A\u1010\u103D\u1031"],
       [46, u"ျမန္္မာကို", u"မြန်မာကို"],
+      [47, u'က်ႌေတြ', u'င်္ကျီတွေ'],
   ]
 
   return test_samples_U2Z

@@ -109,6 +109,9 @@ function enterTestText(updateHex) {
 // Convert input string into hex string.
 function textToHex(intext) {
   var outHex = "";
+  if (!intext) {
+    return "";
+  }
   for (var i = 0; i < intext.length; i++) {
     var firstHex = fixedCharCodeAt(intext, i);
     var hexString = firstHex.toString(16);
