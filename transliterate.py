@@ -36,6 +36,8 @@ class Rule():
     self.re_pattern = re.compile(pattern, re.UNICODE)
     self.subst = substitution
     self.rule_string = raw_rule
+    self.revisit_position = -1
+    self.after_context = None
     #? Store info on repositioning cursor
 
 
@@ -60,6 +62,9 @@ class Phase():
       if rule:
         parts = rule.split('>')
         pattern = re.sub(' ', '', parts[0]) # but don't remove quoted space
+        # TODO: check for REVISIT position in the result part.
+
+        # TODO: check for AFTER_CONTEXT
         if debug:
           print '  rule %d is %s' % (index, parts)
           print '     Rule string in = %s' % rule1.encode('utf-8')

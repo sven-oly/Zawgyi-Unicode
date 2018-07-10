@@ -7,7 +7,19 @@ import sys
 
 Description = UZ_description = u'Unicode to Zawgyi conversion'
 
-UNICODE_ZAWGYI_TRANSLITERATE = u"""# Modern Burmese digits & Unicode code points.
+UNICODE_ZAWGYI_TRANSLITERATE = u"""# This transform converts Unicode Burmese text into Zawgyi font encoded
+# form. Zawgyi is a popular, non-standard encoding scheme in Myanmar
+# that uses the same code range as Myanmar Unicode but assigns different
+# characters or glyphs to some codepoints. In addition to character remapping,
+# context-based reordering of codepoints is needed to give readable
+# output when the output is displayed with a Zawgyi font such as
+# ZawgyiOne.ttf or ZawgyiOne2008.ttf.
+#
+# The transform is done in two main stages:
+# (1) Map all Unicode codepoints to their Zawgyi counterparts.
+# (2) Perform reordering.
+
+# Modern Burmese digits & Unicode code points.
 $nondigits = [^\u1040-\u1049];
 $consonant = [\u1000-\u1021];
 $narrowconsonant = [\u1001\u1002\u1004\u1005\u1007\u100b-\u100e\u1012\u1013\u1015-\u1017\u1019\u101d\u1020\u1025\u1026];
@@ -17,7 +29,6 @@ $othernya = [\u1009\u106a];
 $vowelsign = [\u102B-\u1030\u1032];
 $vowelmedial = [\u102B-\u1030\u1032\u103c-\u103F];
 $ukinzi = [\u1004\u101b\u105a]\u103A\u1039;
-#$ukinzi = \u1004\u103A\u1039;
 
 $medialraZ = [\u103b\u107e-\u1084];
 $lowsignZ = [\u102f\u1030\u1037\u103a\u103c\u103d\u1087-\u108a];
@@ -30,13 +41,10 @@ $vowelsAndConsonants = [\u1000-\u102a];
 $ukinzi ($consonant) \u103B > $1 \u103A \u1064 ;
 
 $ukinzi ($consonant) \u102D \u1036 > $1 \u108e ;
-
 $ukinzi ($consonant) \u102D > $1 \u108b ;
 $ukinzi ($consonant) \u102E > $1 \u108C ;
-
 $ukinzi ($consonant) \u1036 > $1 \u108D ;
 $ukinzi ($consonant) \u1031 > $1 \u1031 \u1064 ;
-
 $ukinzi ($consonant) \u103B \u102D \u102F > $1 \u103A \u1033 \u108B ;
 $ukinzi ($consonant) \u103B \u102D > $1 \u103A \u108b  ;
 $ukinzi ($consonant) \u103B \u102E \u102F > $1 \u103A \u108C \u1033 ;
@@ -74,8 +82,6 @@ $ukinzi ($consonant) > $1 \u1064 ;
 
 \u102B \u103A > \u105A ;
 
-\u1025 \u1079 > \u1009 \u1039 \u1016 ;
-
 \u1039 \u1010 \u103d > \u1096 ; # Very special case
 
 \u1039 \u1000 > \u1060 ;
@@ -83,7 +89,6 @@ $ukinzi ($consonant) > $1 \u1064 ;
 \u1039 \u1002 > \u1062 ;
 \u1039 \u1003 > \u1063 ;
 \u1039 \u1005 > \u1065 ;
-\u1039 \u1006 > \u1066 ;
 \u1039 \u1006 > \u1067 ;
 \u1039 \u1007 > \u1068 ;
 \u1039 \u1008 > \u1069 ;
@@ -94,11 +99,8 @@ $ukinzi ($consonant) > $1 \u1064 ;
 \u100d \u1039 \u100E > \u106F ;
 \u1039 \u100E > \u106F ;
 
-
 \u1039 \u100F > \u1070 ;
-\u1039 \u1010 > \u1071 ;
 \u1039 \u1010 > \u1072 ;
-\u1039 \u1011 > \u1073 ;
 \u1039 \u1011 > \u1074 ;
 \u1039 \u1012 > \u1075 ;
 \u1039 \u1013 > \u1076 ;
@@ -106,7 +108,6 @@ $ukinzi ($consonant) > $1 \u1064 ;
 \u1039 \u1015 > \u1078 ;
 \u1039 \u1016 > \u1079 ;
 \u1039 \u1017 > \u107A ;
-\u1039 \u1018 > \u107B ;
 \u1039 \u1018 > \u1093 ;
 \u1039 \u1019 > \u107C ;
 \u1039 \u101C > \u1085 ;
@@ -116,8 +117,7 @@ $ukinzi ($consonant) > $1 \u1064 ;
 \u100B\u1039\u100B > \u1097 ;
 \u104E\u1004\u103A\u1038 > \u104E ;
 
-
-##### PHASE 1: Everything is not in Zawgyi code points. REORDERING RULES.
+#### PHASE 1: Everything is now in Zawgyi code points. REORDERING RULES.
 ::Null;
 
 # E Vowel + medial ra. Move the e vowel
@@ -125,12 +125,10 @@ $ukinzi ($consonant) > $1 \u1064 ;
 
 ($consonant) \u103b > \u103b $1 ;
 
-# Is this a special case?
 ($consonant) \u103d \u1031 \u1037 > \u1031 $1 \u1094 \u103D ;
 
 # Ra + kinzi
 ($consonant) \u1064 \u103b > \u103b $1 \u1064 ;
-
 
 # E vowel plus medials
 ($consonant) ([\u103a\u103c-\u103d]) \u1031 > \u1031 $1 $2 ;
@@ -149,7 +147,7 @@ $ukinzi ($consonant) > $1 \u1064 ;
 \u1014 \u1032 \u1037 > \u1014 \u1032 \u1094;
 \u1014 \u1037 > \u1014 \u1094;
 
-\u1014 \u1032 ($lowsignZ) \u1037 > \u108f $1 $2 \u1094;
+\u1014 \u1032 ($lowsignZ) \u1037 > \u108f $1 \u1032 \u1094;
 \u1014 ($highsignZ) ($lowsignZ) > \u108f $1 $2;
 \u1014 ($lowsignZ) ($highsignZ) > \u108f $1 $2;
 
@@ -162,7 +160,7 @@ $ukinzi ($consonant) > $1 \u1064 ;
 
 ($nondigits) \u1040 ([\u102B-\u103F]) > $1 \u101D $2;
 \u1031 \u1040 ($nondigits) > \u1031 \u101D $1;
-\u1025 \u103A > \u1009 \u103A;
+# TODO: examine \u1025 \u103A > \u1009 \u103A;
 \u1025 \u102E > \u1026;
 \u1037 \u103A > \u103A \u1037;
 
@@ -177,6 +175,9 @@ $ukinzi ($consonant) > $1 \u1064 ;
 \u103c \u1094 > \u103c \u1095 ;
 
 # Medial ra variations, context dependent
+$medialraZ ($narrowconsonant) \u102d \u103d \u102f > \u107f $1 \u102d \u1087 \u1083 ;
+$medialraZ ($wideconsonant) \u102d \u103d \u102f > \u1080 $1 \u102d \u1087 \u1083 ;
+
 $medialraZ ($narrowconsonant) ($lowsignZ) ($highsignZ) > \u1083 $1 $2 $3 ;
 $medialraZ ($wideconsonant) ($lowsignZ) ($highsignZ) > \u1084 $1 $2 $3 ;
 
@@ -208,7 +209,6 @@ $medialraZ ($wideconsonant) > \u107e $1 ;
 \u103a \u102f [\u1037\u1094\u1095] > \u103a \u1033 \u1095;
 
 \u103a \u102f > \u103a \u1033;
-
 # Kinzi combo
 \u1064 \u102e > \u108c ;
 
@@ -228,23 +228,17 @@ $medialraZ ($wideconsonant) > \u107e $1 ;
 
 ($medialraZ) ($consonant) ($highsignZ) \u102f > $1 $2 $3 \u1033;
 
-
 ##### Phase 4.  More reorderings of medials
 ::Null;
 
 ([\u103D\u103E]) \u103C > \u103C $1;
 \u103E\u103D > \u103D\u103E ;
-\u1038 ([$vowelmedial]) > $1 \u1038;
+\u1038 ($vowelmedial) > $1 \u1038;
 \u1038 ([\u1036\u1037\u103A]) > $1 \u1038;
 
 \u1036 \u102f > \u102f \u1036;
-
-\u103d \u102d > \u102d \u103d ;
-
 \u103a ([\u1064\u108b-\u108e]) \u102d \u102f > \u103a $1 \u102d \u1033;
-
 \u103a \u102d \u102f > \u103a \u102d \u1033;
-
 
 #### Phase 5
 ::Null;
@@ -273,20 +267,18 @@ $medialraZ ($wideconsonant) > \u107e $1 ;
 \u103D \u103D+ > \u103D;
 \u103E \u103E+ > \u103E;
 
-
 # Visually identical orderings - standardize
-\u102f \u102D > \u102D \u102f ;
 \u102f \u102D > \u102D \u102f ;
 \u102f \u1036 > \u1036 \u102f ;
 \u1039 \u1037 > \u1037 \u1039 ;
 \u103c \u1032 > \u1032 \u103c ;
 \u103c \u102e > \u102e \u103c ;
 
-#
+\u103d \u1088 > \u1088 ;
 """
 
-date_entered = '27-Mar-2018'
-description = 'First try for transliteration rules for Unicode to Zawgyi'
+date_entered = '25-June-2018'
+description = 'Updated transliteration rules for Unicode to Zawgyi'
 
 def printRules():
   print 'Rules for %s' % Description
@@ -357,6 +349,7 @@ def TestData():
        u"\u1021\u102C\u100F\u102C\u1015\u102D\u102F\u1004\u103A\u1010\u103D\u1031"],
       [46, u"ျမန္္မာကို", u"မြန်မာကို"],
       [47, u'က်ႌေတြ', u'င်္ကျီတွေ'],
+      [48, u'ဂႏၴဝင္ အၿငိႇဳး အႀကိႇဳး', u'ဂန္ထဝင် အငြှိုး အကြှိုး'],
   ]
 
   return test_samples_U2Z

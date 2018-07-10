@@ -24,6 +24,8 @@ TRANS_LIT_RULES = ZAWGYI_NORMALIZE_TRANSLITERATE = u"""
 
 # Kinzi and others
 \u1064 \u103a > \u103a \u1064 ;
+
+# Similar subscripted consonants.
 \u1067 > \u1066;
 \u1072 > \u1071;
 \u1074 > \u1073;
