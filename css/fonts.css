@@ -104,6 +104,12 @@
     font-family: ZawgyiOne;
     font-size:28px;
    }
+
+  .zawgyi_16 {
+    font-family: ZawgyiOne;
+    font-size: 20px;
+  }
+  
   textarea.zawgyi_one {
     height:36px;
   }   
@@ -120,6 +126,11 @@
   .notosans {
     font-family: NotoSans;
     font-size:26px;
+  }
+
+  .notosans_16 {
+    font-family: NotoSans;
+    font-size: 20px;
   }
   
   .notosans14 {

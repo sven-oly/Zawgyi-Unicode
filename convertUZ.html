@@ -5,17 +5,21 @@
    </title>
 
   <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
-  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print">
+  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
   <!--[if lt IE 8]>
     <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
   <![endif]-->
-
+  
   <link rel="stylesheet" type="text/css" href="/css/fonts.css">
-
+  
    <script type="text/javascript" src="/js/shake-n-break.js">
    </script>
 
-  <script type="text/javascript" src="/js/myzu.js">
+  <script type="text/javascript" src="/js/myzu.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.1.0/zawgyi_converter.min.js">
+  </script>
+  
   </script>
 
   <style>
@@ -26,6 +30,8 @@
   </style>
 
   <script type="text/javascript" >
+  const zawgyi_converter = new google_myanmar_tools.ZawgyiConverter();
+
   // Test conversion with this data [zawgyi, unicode]
   var TEST_DATA = {
   {% for index, td_in, td_expected in testdata %}
@@ -49,6 +55,29 @@
   function convertRequest(source, type, outputId, outputHexId) {
     // Get the text and prepare the call to server.
     source_element = document.getElementById(source);
+
+    text_in = source_element.value;
+    var converted = false;    
+    var outText = "";
+    if (type == "Z") {
+        // Just call the javascript version.
+        outText = zawgyi_converter.zawgyiToUnicode(text_in);
+        converted = true;    
+    } else
+    if (type == "U") {
+        outText = zawgyi_converter.unicodeToZawgyi(text_in);
+        converted = true;    
+    }
+    if (converted) {
+        var output_area = document.getElementById(outputId);
+        output_area.innerHTML = output_area.value = outText;
+        
+        var hex_area = document.getElementById(outputHexId);
+        hex_area.value = textToHex(outText);
+        return;
+    }
+
+    // Otherwise, send to the backend for converting.
     text_in = encodeURIComponent(source_element.value);
 
     // Prepare for the call to the backendvar xmlhttp;

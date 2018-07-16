@@ -15,17 +15,33 @@
    <script type="text/javascript" src="/js/shake-n-break.js">
    </script>
 
-  <script type="text/javascript" src="/js/myzu.js">
+  <script type="text/javascript" src="/js/myzu.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.1.0/zawgyi_converter.min.js">
   </script>
   
   <script type="text/javascript" >
+  const zawgyi_converter = new google_myanmar_tools.ZawgyiConverter();
+
   // Code to request transliteration (conversion) and handle the return. 
   function convertRequest(source, type) {
     // Get the text and prepare the call to server.
     source_element = document.getElementById(source);  
-    text_in = encodeURIComponent(source_element.value);
 
-    // Prepare for the call to the backendvar xmlhttp;
+      if (type == 'Z') {
+          // Use Myanmar-Tools Javascript version.
+          text_in = source_element.value;
+          var outText = zawgyi_converter.zawgyiToUnicode(text_in);
+	  var output_area = document.getElementById('convertedText');
+          output_area.innerHTML = output_area.value = outText;
+
+	  var hex_area = document.getElementById('convertedHex');
+          hex_area.value = textToHex(json_obj.converted);
+          return;
+      }
+
+      // Otherwise, prepare for the call to the backendvar xmlhttp;b
+      text_in = encodeURIComponent(source_element.value);
 	if (window.XMLHttpRequest)
 	  {
 	  // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -60,7 +76,7 @@
           testArea.innerHTML = inOutSizes;
           testArea.value = inOutSizes;
 
-		  var msg_area = document.getElementById('msgArea');
+	  var msg_area = document.getElementById('msgArea');
           msg_area.innerHTML = json_obj.msg;         
           msg_area.value = json_obj.msg;         
      }
