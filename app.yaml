@@ -30,11 +30,15 @@ handlers:
 - url: /sounds
   static_dir: sounds
 
+- url: /comp/.*
+  script: compare.app
+
 - url: .*
   script: main.app
 
 - url: /translations
   static_dir: translations
+
 
 libraries:
 - name: webapp2

@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Compare text</title>
+
+  <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print"> 
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/css/fonts.css">
+
+  </head>
+
+  <body onload="onload()">
+
+    <h1>Comparing text pairs: {{description}}</h2>
+    {% for tuple in pairs %}
+    <p><div class="notosans">{{forloop.counter}}</div>
+      
+      <div class="zawgyi_16">{{tuple|first}}</div>
+      <div class="notosans_16">{{tuple|last}}</div>
+      <!-- TODO: Add buttons to OK or report -->
+    </p>
+    {% endfor %}
+    
+</body >
+</html>
