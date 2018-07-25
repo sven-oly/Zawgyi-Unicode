@@ -178,7 +178,7 @@
 
     <div class="span-20">
 
-      <h1>Myanmar Unicode to Zawgyi Converter</h1>
+      <h1>Myanmar Unicode - Zawgyi Converter</h1>
       <p>Just paste your Myanmar text into the "Test" field. The characters will be shown
         in the fonts, and hex codes will be shown.
 
@@ -246,9 +246,10 @@
       </div>
       <hr>
       <div>
-        <h4 style='margin:0;padding:0;'>Unicode IN:</h4>
-        <input type="button" value="-> Z" onclick="convertRequest('unicode_in', 'U', 'zoutput', 'zOutHex')" />
-
+        <h4 style='margin:0;padding:0;'>Unicode IN:
+          <input type="button" value="-> hex" onclick="textToHexField('unicode_in', 'uInHex');" />
+          <input type="button" value="-> Z" onclick="convertRequest('unicode_in', 'U', 'zoutput', 'zOutHex')" />
+        </h4>
         <div id="msgArea" class='notosans14'> </div>
         <textarea id="unicode_in"  class='notosans'
                   rows="5" cols="80"></textarea>
