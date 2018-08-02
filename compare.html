@@ -55,9 +55,37 @@
       message += '\n' + ndiffs + ' different words.';
     }
 
+    var firstLast = firstLastDiffPositions(t1, t2);
     var m1 = document.getElementById('diffinfo');
-    m1.value = message;
+      var textDiff = ["", ""];
+      if (ndiffs > 0) {
+          textDiff = [t1.substring(firstLast[0], firstLast[1]),
+                      t2.substring(firstLast[0], firstLast[2])];
+      }
+      m1.value = message + "\n First diff: " + firstLast +
+          "\n Diff1 = " + textDiff[0] + "\n Diff2 = " + textDiff[1];
+      
   }
+
+    function firstLastDiffPositions(m1, m2) {
+        var firstDiff = -1;
+        var shortLen = Math.min(m1.length, m2.length);
+        var index = 0;
+        while (index < shortLen && m1[index] == m2[index]) {
+            index += 1;
+        }
+        firstDiff = index;
+
+        var index1 = m1.length -1;
+        var index2 = m2.length -1;
+        while (index1 > firstDiff && index2 > firstDiff &&
+               m1[index1] == m2[index2]) {
+          index1 -= 1;
+          index2 -= 1;
+        }
+       
+         return [firstDiff, index1, index2];
+    }
   
   function hexBytesToOutput(area1, area2) {
     // Prepare for the call to the backendvar xmlhttp;
@@ -141,12 +169,17 @@ document.onreadystatechange = function(){
         </div>
     </div>
          <input type="button" value="hex to text" onclick="hexToOutput('text2_hex', 'text2')" />
+         <br />
+         <input type="button" value="COMPARE"
+                onclick="compareText('text1', 'text2');    fillHex('text1_hex', 'text1');
+    fillHex('text2_hex', 'text2');
+" />
 
     
     <form action="/feedback/" method="get" id="report">
       <input type="submit" value="Send feedback" />
     </form>  
     
-    <textarea id="diffinfo" rows="4" cols="80" style="font-size:14;">diffinfo</textarea>
+    <textarea id="diffinfo" rows="8" cols="80" style="font-size:14;">diffinfo</textarea>
   </body>
 </html>
