@@ -1,11 +1,20 @@
 // Javascript to support Myanmar Zawgyi / Unicode fonts.
 
+// GLOBALS
+var myanmar_tools_detector = null;
+var myanmar_tools_converter = null;
+
+function myzu_initialize(zawgyi_detector, zawgyi_converter) {
+  myanmar_tools_converter = zawgyi_converter;
+  myanmar_tools_detector = zawgyi_detector;
+}
+
 function onload() {
   var fill_area = document.getElementById("TestEntry");
   if (fill_area) {
     fill_area.focus();
     var intext = fill_area.value;
-  
+
     if (intext) {
       enterTestText(true);
     }
@@ -25,41 +34,33 @@ function compareConvert(area1,area2) {
   var area2Elem = document.getElementById(area2);
   var text1 = area1Elem.value;
   var text2 = area2Elem.value;
-   
+
   compareUrl = "/compare/?text1=" + text1 + "&font1=" + area1Elem.className +
     "&text2=" + text2 + "&font2=" + area2Elem.className;
   //xmlhttp.open("GET", compareUrl, true);
 
-  window.location=compareUrl;   
+  window.location=compareUrl;
 }
 
 function enterTestText(updateHex) {
   var infield = document.getElementById("TestEntry");
   var intext = infield.value;
-  
+
+  // Use myanmar-tools detection (https://github.com/googlei18n/myanmar-tools)
   var isZ = is_zawgyi(infield);
   var isU = is_unicode_my(infield);
   var isM = is_myzaedi(infield);
   var isUwithTypo = isMalformedUnicode(infield);
-  
+
   var detField = document.getElementById("detectedZU");
   var detMsg = "Detected: ";
 
-  if (isU) {
-    detMsg += "  Unicode";
-//     if (isUwithTypo) {
-//       detMsg += " with typos";
-//     }
-  }
-  if (isM) {
-    detMsg += "  Myazedi";
-  }
-  if (isZ) {
-    detMsg += " Zawgyi";
-  }
+  var zawgyi_score = myanmar_tools_detector.getZawgyiProbability(intext);
+  detMsg = "Zawgyi score: " + zawgyi_score;
   if (detField) {
     detField.innerHTML = detMsg;
   }
+
   // Put the text into the text areas.
   // Burmese
   var burmeseAreas = ["z1", "z2008", "myazedi", "padauk"];
@@ -137,12 +138,12 @@ function textToHexField(inElementName, outElementName) {
 // Take hex and put it into the fields.
 function enterHex() {
   // Get the hex values, converted to Unicode.
-  // Then set in the 
+  // Then set in the
   var inHexElem = document.getElementById("hexText");
   var textHex = intArrayFromHexString(inHexElem.value.replace(/ +(?= )/g,''));
   var uChars = fromCodePointHex(textHex);
   document.getElementById("TestEntry").value = uChars;
-  
+
   enterTestText(false);  // Not quite right!
 }
 
@@ -157,11 +158,11 @@ function copyText(infield, outfield) {
 // Take hex and put it into the fields.
 function hexToOutput(infield, outfield) {
   // Get the hex values, converted to Unicode.
-  // Then set in the 
+  // Then set in the
   var inHexElem = document.getElementById(infield);
   var textHex = intArrayFromHexString(inHexElem.value);
   var uChars = fromCodePointHex(textHex);
-  
+
   var outField = document.getElementById(outfield);
   outField.value = uChars;
 }
@@ -192,19 +193,19 @@ function fixedCharCodeAt (str, idx) {
     var code = str.charCodeAt(idx);
     var hi, low;
     if (0xD800 <= code && code <= 0xDBFF) { // High surrogate (could change last hex to 0xDB7F to treat high private surrogates as single characters)
-        hi = code;
-        low = str.charCodeAt(idx+1);
-        if (isNaN(low)) {
-            throw 'High surrogate not followed by low surrogate in fixedCharCodeAt()';
-        }
-        return ((hi - 0xD800) * 0x400) + (low - 0xDC00) + 0x10000;
+	hi = code;
+	low = str.charCodeAt(idx+1);
+	if (isNaN(low)) {
+	    throw 'High surrogate not followed by low surrogate in fixedCharCodeAt()';
+	}
+	return ((hi - 0xD800) * 0x400) + (low - 0xDC00) + 0x10000;
     }
     if (0xDC00 <= code && code <= 0xDFFF) { // Low surrogate
-        // We return false to allow loops to skip this iteration since should have already handled high surrogate above in the previous iteration
-        return false;
-        /*hi = str.charCodeAt(idx-1);
-        low = code;
-        return ((hi - 0xD800) * 0x400) + (low - 0xDC00) + 0x10000;*/
+	// We return false to allow loops to skip this iteration since should have already handled high surrogate above in the previous iteration
+	return false;
+	/*hi = str.charCodeAt(idx-1);
+	low = code;
+	return ((hi - 0xD800) * 0x400) + (low - 0xDC00) + 0x10000;*/
     }
     return code;
 }

@@ -49,6 +49,10 @@ var MY_LAYOUT = {
     }
   },
   'transform' : {
+    // NEW 13-Aug-2018.
+    // Reorder medial ra after consonant.
+    '\u103c([\u1000-\u102a\u103f\u104e])': '$1\u103c',
+
     // Reorder vowel E after consonant
     '\u200c\u1031([\u1000-\u102a\u103f\u104e])': '$1\u1031',
 

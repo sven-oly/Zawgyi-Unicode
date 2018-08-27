@@ -500,9 +500,9 @@ def intWithCommas(x):
 
 # Main handler setup.
 app = webapp2.WSGIApplication([
-    ('/', ConvertUIHandler),
+    ('/', ConvertUZHandler),
     ('/t2/', MainHandler2),
-    ('/convertui/', ConvertUIHandler),
+    ('/convertui/', ConvertUZHandler),
     ('/convert2/', Convert2UIHandler),
     ('/convert/', convertHandler.ConvertHandler),  # Handles backend conversions.
     ('/fonts/', FontsHandler),

@@ -15,13 +15,19 @@
    <script type="text/javascript" src="/js/shake-n-break.js">
    </script>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.1.0/zawgyi_converter.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.1.0/zawgyi_detector.min.js"></script>
+    
   <script type="text/javascript" src="/js/myzu.js"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.1.0/zawgyi_converter.min.js">
   </script>
   
   <script type="text/javascript" >
   const zawgyi_converter = new google_myanmar_tools.ZawgyiConverter();
+  const zawgyi_detector = new google_myanmar_tools.ZawgyiDetector();
+
+  // Store pointers.
+  myzu_initialize(zawgyi_detector, zawgyi_converter);
 
   // Code to request transliteration (conversion) and handle the return. 
   function convertRequest(source, type) {
@@ -114,7 +120,7 @@
 
   <div class="container">
 
-    <div class="span-18">
+    <div class="span-20">
 
     <h1>Test Myanmar text conversion</h1>
     <p>Just paste your Myanmar text into the "Test" field. The characters will be shown
@@ -128,6 +134,10 @@
         Known Unicode content: <a href="http://www.bbc.com/burmese"  target="_blank">
         bbc.com/burmese</a>
       </div>
+      <div>
+        <p>Note: This page uses <a href="https://github.com/googlei18n/myanmar-tools">myanmar-tools
+        on GitHib</a> for detection and converting Zawgyi text.
+      </div>
     </div>
     <div class="span-4 last">
 			<a href="/burmese/">Burmese & Zawgyi</a> <br />
@@ -135,11 +145,16 @@
 			<a href="/mon/">Mon</a> <br />
 			<a href="/karen/">Karen</a> <br />
                         <hr>
+                        <a href="/convertUZ/">Unicode to Zawgyi</a>
+                        <hr>
                         <a href="http://www.unicode.org/charts/PDF/U1000.pdf">Myanmar Unicode</a>
 	    	        <br />
                         <a href="http://www.unicode.org/charts/PDF/UAA60.pdf">Extended-A</a>
 	    	        <br />
                         <a href="http://www.unicode.org/charts/PDF/UA9E0.pdf">Extended-B</a>
+                        <br />
+                        <hr>
+                        <a href="https://github.com/googlei18n/myanmar-tools">Myanmar Tools on GitHub</a>
 
 	    	        <br />
                        <a href="https://www.unicode.org/notes/tn11/UTN11_3.pdf">Representing Myanmar in Unicode</a>
@@ -152,12 +167,10 @@
     </div>  <!-- container -->
     
   <div class="container">
-    <div class="span-1">
-    </div>
 
-    <div class='span-19 last'>
+    <div class='span-24 last'>
     <div>
-      <h4 style='margin:0;padding:0;'>Text Entry:</h4>
+      <h3 style='margin:0;padding:0;'>Text Entry:</h3>
       <p>
       <input type="text" id="TestEntry" class='notosans' size="40"
         onchange="enterTestText(true)" value="{{input_text}}" placeholder="<enter text here>" />
