@@ -235,85 +235,95 @@
   </div>  <!-- container -->
 
   <div class="container">
-    <div class='span-12'>
-      <hr>
-
-      <div>
-        <h4 style='margin:0;padding:0;'>Zawgyi IN
-          <input type="button" value="-> hex" onclick="textToHexField('z1', 'zInHex');" />
-          <input type="button" value="-> Unicode"
-                 onclick="convertRequest('z1', 'Z', 'unicode_in', 'uInHex');"
-                 />
-        </h4>
-        <br />
-        <textarea id="z1"  class='zawgyi_one' onchange="newTextContent('z1', 'zInHex');"
-                  rows="3" cols="80">{{default_zawgyi}}</textarea>
-      </div>
-
-      <hr>
-      <div>
-        <h4 style='margin:0;padding:0;'>Unicode IN:
-          <input type="button" value="-> hex" onclick="textToHexField('unicode_in', 'uInHex');" />
-          <input type="button" value="-> Z" onclick="convertRequest('unicode_in', 'U', 'zoutput', 'zOutHex')" />
-        </h4>
-        <div id="msgArea" class='notosans14'> </div>
-        <textarea id="unicode_in"  class='notosans'
-                  rows="5" cols="80"></textarea>
-
-      <div>
-        <h4 style='margin:0;padding:0;'>Zawgyi OUT
-          <input type="button" value="-> Unicode" onclick="convertRequest('zoutput', 'Z', 'unicode_out', 'uOutHex')" />
-        </h4>
-        <textarea id="zoutput"  class='zawgyi_one'
-                  rows="3" cols="80"></textarea>
-      </div>
-      <div id="uOut" class='notosans14'> </div>
-        <h4 style='margin:0;padding:0;'>Unicode OUT:</h4>
-        <textarea id="unicode_out"  class='notosans'
-                  rows="2" cols="80"></textarea>
-        <hr>
-      </div>
-    </div>  <!-- end of left column -->
-
-    <div class='span-12 last'>
-      <hr>
-      <h4 style='margin:0;padding:0;'>Zawgyi in hex:</h4>
-      <br />
+    <div class='span-2'>
+      Zawgyi IN
+      <input type="button" value="-> hex"
+             onclick="textToHexField('z1', 'zInHex');" />
+      <input type="button" value="-> U"
+             onclick="convertRequest('z1', 'Z', 'unicode_in', 'uInHex');"
+             />
+    </div>
+    <div class='span-10'>
+      <textarea id="z1"
+                class='zawgyi_one' onchange="newTextContent('z1', 'zInHex');"
+                rows="3" cols="40">{{default_zawgyi}}</textarea>
+    </div>
+    <div class='span-10'>
       <textarea id="zInHex"  class='notosans14'
-                rows="5" cols="40"></textarea>
-      <input type="button" value="-> Zawgyi" onclick="hexToOutput('zInHex', 'z1');" />
-
-      <hr>
-
-      <h4 style='margin:0;padding:0;'>Unicode in hex:</h4>
+                rows="3" cols="40"></textarea>
+    </div>
+    <div class='span-2 last'>
+      <input type="button" value="-> Z"
+             onclick="hexToOutput('zInHex', 'z1');" />
+    </div>
+    
+  </div>
+  <div class="container">
+    <div class='span-2'>
+      Uni IN
+      <input type="button" value="-> hex"
+             onclick="textToHexField('unicode_in', 'uInHex');" />
+      <input type="button" value="-> Z"
+             onclick="convertRequest('unicode_in', 'U', 'zoutput', 'zOutHex')" />
+    </div>
+    
+    <div class='span-10'>
+      <textarea id="unicode_in"  class='notosans'
+                rows="3" cols="40"></textarea>
+    </div>
+    <div class='span-10'>
       <textarea id="uInHex"  class='notosans14'
-                rows="5" cols="40"></textarea>
-      <input type="button" value="-> Unicode In" onclick="hexToOutput('uInHex', 'unicode_in');" />
-      <hr>
-      <h4 style='margin:0;padding:0;'>Zawgyi out hex:</h4>
+                rows="3" cols="40"></textarea>
+    </div>
+    <div class='span-2 last'>
+      <input type="button" value="-> U"
+             onclick="hexToOutput('uInHex', 'unicode_in');" />
+    </div>
+  </div>
 
+  <div class="container">
+    <div class='span-2'>
+      Zawgyi OUT
+      <input type="button" value="-> Unicode"
+             onclick="convertRequest('zoutput', 'Z', 'unicode_out', 'uOutHex')" />
+    </div>
+
+    <div class='span-10'>
+     <textarea id="zoutput"  class='zawgyi_one'
+                rows="3" cols="80"></textarea>
+    </div>
+    <div class='span-10'>
       <textarea id="zOutHex"  class='notosans14'
                 rows="5" cols="40"></textarea>
-      <hr>
-
+    </div>
+    <div class='span-2 last'>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class='span-2'>
+      <h4 style='margin:0;padding:0;'>Unicode OUT:</h4>
+    </div>
+    <div class='span-10'>
+      <div id="uOut" class='notosans14'> </div>
+      <textarea id="unicode_out"  class='notosans'
+                rows="2" cols="80"></textarea>
+    </div>
+    <div class='span-10'>
+      
       <h4 style='margin:0;padding:0;'>Unicode out hex:</h4>
       <textarea id="uOutHex"  class='notosans14'
                 rows="5" cols="40"></textarea>
-      <hr>
     </div>
-  </div>  <!-- end container -->
-  
-  <div class='container'>
-    <div>
-      <p>Hex:</p>
-      <input type="text" id="hexText" onchange="hexToOutput('hexText', 'TestEntry')" size="100"/>
-      
-      <input type="button" value="-> Unicode" onclick="hexToOutput('hexText', 'unicode_in')" />
-      <input type="button" value="-> Zawgyi" onclick="hexToOutput('hexText', 'z1')" />
+    <div class='span-2 last'>
     </div>
+  </div>
   
-    <div>
-      TEST DATA:
+  <div class="container">
+    <hr>
+    
+    <div class='span-14'>
+      <h4>TEST DATA:</h4>
       <select class="select-my" onchange="loadTest(this)">
         {% for index, td_in, td_expected in testdata %}
         <option value="{{td_in}}">{{index}}: {{td_expected}}</option>
@@ -321,9 +331,7 @@
       </select>
       <br />
     </div>
-    <hr>
     <br />
-    </div>
   </div> <!-- container -->
-     </body>
+  </body>
 </html>
