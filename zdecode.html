@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title>Convert Myanmar Text with Fonts, including Mon
+   </title>
+
+  <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
+  <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print">
+  <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/css/blueprint/ie.css" type="text/css" media="screen, projection">
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/css/fonts.css">
+
+   <script type="text/javascript" src="/js/shake-n-break.js">
+   </script>
+
+  <script type="text/javascript" src="/js/myzu.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.1.0/zawgyi_converter.min.js">
+  </script>
+
+  <script type="text/javascript" >
+
+  </script>
+
+  </head>
+  <body onload="onload()">
+  <div class="container">
+
+      <div class='span-24 last'>
+          <div>
+          Zawgyi text:
+          <br />
+          <textarea id="z1"  class='zawgyi_one'
+                    rows="1" cols="40">{{default_zawgyi}}</textarea>
+          Zawgyi One
+          <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
+          <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z')" />
+          </div>
+
+          <div>
+          ZDecode text:
+          <br />
+          <textarea id="z1"  class='zdecode'
+                    rows="1" cols="40">{{default_text}}</textarea>
+          Zawgyi One
+          <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
+          <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z')" />
+</div>
+          <div>
+          Unicode text:
+          <br />
+          <textarea id="z1"  class='notosans'
+                    rows="1" cols="40">{{default_unicode}}</textarea>
+          Zawgyi One
+          <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
+          <input type="button" value="-> Unicode" onclick="convertRequest('z1', 'Z')" />
+</div>
+      </div>
+  </div>
+  </body>
+</html>

@@ -100,6 +100,11 @@
     src: url(/fonts/ZawgyiTai-2013.ttf);
   }  
 
+  @font-face {
+    font-family: ZDecode;
+    src: url(/fonts/fonts/NotoSansMyanmar-Regular-ZawDecode.ttf);
+  }
+
   .zawgyi_one {
     font-family: ZawgyiOne;
     font-size:28px;
@@ -232,4 +237,8 @@
     font-family: Zwekabin;
     font-size:27px;
   }
- 
+
+.zdecode {
+    font-family: ZDecode;
+    font-size:26px;
+  }
