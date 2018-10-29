@@ -1,7 +1,6 @@
 <html>
   <head>
-    <title>Convert Myanmar Text with Fonts, including Mon
-   </title>
+    <title>ZDecode</title>
 
   <link rel="stylesheet" href="/css/blueprint/screen.css" type="text/css" media="screen, projection">
   <link rel="stylesheet" href="/css/blueprint/print.css" type="text/css" media="print">
@@ -11,42 +10,41 @@
 
   <link rel="stylesheet" type="text/css" href="/css/fonts.css">
 
-   <script type="text/javascript" src="/js/shake-n-break.js">
-   </script>
-
   <script type="text/javascript" src="/js/myzu.js"></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.1.0/zawgyi_converter.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.1.0/zawgyi_detector.min.js"></script>
-  </script>  </script>
 
   <script type="text/javascript" >
-// Converts Zawgyi to/from Unicode
-function convertRequest(source, type, outputId, outputHexId) {
-    // Get the text and prepare the call to server.
-    source_element = document.getElementById(source);
+    // Converts Zawgyi to/from Unicode
+    function convertRequest(source, type, outputId, outputHexId) {
+        // Get the text and prepare the call to server.
+        source_element = document.getElementById(source);
 
-    text_in = source_element.value;
-    var converted = false;
-    var outText = "";
-    if (type == "Z") {
-        // Just call the javascript version.
-        outText = zawgyi_converter.zawgyiToUnicode(text_in);
-        converted = true;
-    } else
-    if (type == "U") {
-        outText = zawgyi_converter.unicodeToZawgyi(text_in);
-        converted = true;
-    }
-    if (converted) {
-        var output_area = document.getElementById(outputId);
-        output_area.innerHTML = output_area.value = outText;
+        text_in = source_element.value;
+        var converted = false;
+        var outText = "";
+        if (type == "Z") {
+            // Just call the javascript version.
+            outText = zawgyi_converter.zawgyiToUnicode(text_in);
+            converted = true;
+        } else
+        if (type == "U") {
+            outText = zawgyi_converter.unicodeToZawgyi(text_in);
+            converted = true;
+        }
+        if (converted) {
+            var output_area = document.getElementById(outputId);
+            output_area.innerHTML = output_area.value = outText;
 
-        var hex_area = document.getElementById(outputHexId);
-        hex_area.value = textToHex(outText);
-        return;
+            var hex_area = document.getElementById(outputHexId);
+            hex_area.value = textToHex(outText);
+            return;
+        }
     }
-}
+
+  function onload() {
+  }
   </script>
 
   </head>
@@ -61,9 +59,9 @@ function convertRequest(source, type, outputId, outputHexId) {
                     rows="1" cols="40">{{default_zawgyi}}</textarea>
           Zawgyi One
           <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
+
           <input type="button" value="-> Unicode"
-                 onclick="convertRequest('z1', 'Z', 'u1', 'textHex');"
-          </div>
+                 onclick="convertRequest('z1', 'Z', 'u1', 'textHex');" />          </div>
 
           <div>
           ZDecode text:
@@ -79,8 +77,8 @@ function convertRequest(source, type, outputId, outputHexId) {
           <textarea id="u1"  class='notosans'
                     rows="1" cols="40">{{default_unicode}}</textarea>
           <input type="button" value="-> hex" onclick="textToHexField('u1', 'hexText')" />
-          <input type="button" value="-> Unicode"
-                                  onclick="convertRequest('u1', 'U', 'z1', 'textHex');"
+          <input type="button" value="-> Zawgyi"
+                                  onclick="convertRequest('u1', 'U', 'z1', 'textHex');" />
 
           </div>
           <div>Hex<br />

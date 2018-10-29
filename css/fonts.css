@@ -102,7 +102,7 @@
 
   @font-face {
     font-family: ZDecode;
-    src: url(/fonts/NotoSansMyanmar-Regular-ZawDecode.ttf);
+    src: url('/fonts/NotoSansMyanmar-Regular-ZawDecode.ttf');
   }
 
   .zawgyi_one {
