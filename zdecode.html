@@ -16,6 +16,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.1.0/zawgyi_detector.min.js"></script>
 
   <script type="text/javascript" >
+  const zawgyi_converter = new google_myanmar_tools.ZawgyiConverter();
+    const zawgyi_detector = new google_myanmar_tools.ZawgyiDetector();
+
     // Converts Zawgyi to/from Unicode
     function convertRequest(source, type, outputId, outputHexId) {
         // Get the text and prepare the call to server.
@@ -49,43 +52,51 @@
 
   </head>
   <body onload="onload()">
-  <div class="container">
-
+    <div class="container">
+      
       <div class='span-24 last'>
-          <div>
-          Zawgyi text:
-          <br />
-          <textarea id="z1"  class='zawgyi_one'
-                    rows="1" cols="40">{{default_zawgyi}}</textarea>
-          Zawgyi One
+        <h2>Compare text in Zawgyi, ZDecode, Noto Sans Myanmar</h2>
+        <p>Use this page to compare text rendering in Zawgyi, ZDecode, and Unicode font. Put text in a box, then transfer to ZDecode to compare the text rendering.
+          <p>Note that Zawgyi and Unicode text can be converted to the other.
+        <div>
+          Zawgyi One:
           <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
-
+          
           <input type="button" value="-> Unicode"
-                 onclick="convertRequest('z1', 'Z', 'u1', 'textHex');" />          </div>
-
-          <div>
-          ZDecode text:
+                 onclick="convertRequest('z1', 'Z', 'u1', 'textHex');" />       
+          <input type="button" value="-> ZDecode" onclick="copyText('z1', 'zd');" />
+        </div>
+        <textarea id="z1"  class='zawgyi_one'
+                  rows="3" columns="60">{{default_zawgyi}}</textarea>
+        
+        
+        <div>
+          ZDecode:
           <br />
           <textarea id="zd"  class='zdecode'
-                    rows="1" cols="40">{{default_text}}</textarea>
-          Zawgyi One
-          <input type="button" value="-> hex" onclick="textToHexField('zd', 'hexText')" />
-</div>
-          <div>
-          Unicode text:
-          <br />
+                    rows="3" cols="60">{{default_text}}</textarea>
+          
+        </div>
+
+        <div>
           <textarea id="u1"  class='notosans'
-                    rows="1" cols="40">{{default_unicode}}</textarea>
+                    rows="3" cols="60">{{default_unicode}}</textarea>
+          <br />
+          Unicode:
           <input type="button" value="-> hex" onclick="textToHexField('u1', 'hexText')" />
           <input type="button" value="-> Zawgyi"
-                                  onclick="convertRequest('u1', 'U', 'z1', 'textHex');" />
-
-          </div>
-          <div>Hex<br />
-               <textarea id="hexText"  class='notosans'
-                    rows="1" cols="40">{{default_unicode}}</textarea>
-</div>
+                 onclick="convertRequest('u1', 'U', 'z1', 'textHex');" />
+          <input type="button" value="-> ZDecode" onclick="copyText('u1', 'zd');" />
+        </div>
+        <br />
+        <hr />
+        <textarea id="hexText"  class='notosans'
+                  rows="1" cols="40">{{default_unicode}}</textarea>
       </div>
-  </div>
+      <div>Hex
+        <input type="button" value="-> Unicode" onclick="hexToOutput('hexText', 'u1');" />
+        <input type="button" value="-> Zawgyi" onclick="hexToOutput('hexText', 'z1');" />
+        </div>
+    </div>
   </body>
 </html>
