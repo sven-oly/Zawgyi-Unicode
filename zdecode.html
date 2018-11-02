@@ -46,6 +46,12 @@
         }
     }
 
+   function onFontSelected(selected, area) {
+     var output_text = document.getElementById(area);
+     var fontFam = selected.value + ", MyFont";
+     output_text.style.fontFamily = fontFam;
+   }
+
   function onload() {
   }
   </script>
@@ -53,7 +59,7 @@
   </head>
   <body onload="onload()">
     <div class="container">
-      
+
       <div class='span-24 last'>
         <h2>Compare text in Zawgyi, ZDecode, Noto Sans Myanmar</h2>
         <p>Use this page to compare text rendering in Zawgyi, ZDecode, and Unicode font. Put text in a box, then transfer to ZDecode to compare the text rendering.
@@ -61,21 +67,26 @@
         <div>
           Zawgyi One:
           <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
-          
+
           <input type="button" value="-> Unicode"
-                 onclick="convertRequest('z1', 'Z', 'u1', 'textHex');" />       
+                 onclick="convertRequest('z1', 'Z', 'u1', 'textHex');" />
           <input type="button" value="-> ZDecode" onclick="copyText('z1', 'zd');" />
+          Font: <select onchange="onFontSelected(this, 'z1');" id="selectFont">
+            {% for font in font_encodings %}
+            <option value="{{font}}">{{font}}</option>
+            {% endfor %}
+          </select>
         </div>
         <textarea id="z1"  class='zawgyi_one'
                   rows="3" columns="60">{{default_zawgyi}}</textarea>
-        
-        
+
+
         <div>
           ZDecode:
           <br />
           <textarea id="zd"  class='zdecode'
                     rows="3" cols="60">{{default_text}}</textarea>
-          
+
         </div>
 
         <div>
@@ -87,6 +98,11 @@
           <input type="button" value="-> Zawgyi"
                  onclick="convertRequest('u1', 'U', 'z1', 'textHex');" />
           <input type="button" value="-> ZDecode" onclick="copyText('u1', 'zd');" />
+          Font: <select onchange="onFontSelected(this, 'u1');" id="selectFont">
+            {% for font in unicode_font_list %}
+            <option value="{{font}}">{{font}}</option>
+            {%endfor%}
+      </select>
         </div>
         <br />
         <hr />

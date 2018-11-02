@@ -7,7 +7,7 @@
     font-family: Zawgyi2008;
     src: url(/fonts/ZawgyiOne2008.ttf);
   }
-  
+
   @font-face {
     font-family: MyaZedi;
     src: url(/fonts/MyaZedi06.ttf);
@@ -242,3 +242,20 @@
     font-family: ZDecode;
     font-size:26px;
   }
+
+  @font-face {
+    font-family: Zawgyi2009;
+    src: url(/fonts/Zawgyi-One_v4.30_November_14_20.ttf);
+  } 
+
+  @font-face {
+    font-family: Zawgyi2007;
+    src: url(/fonts/Zawgyi-One-Burmese-Font-v3-dec4-2007.ttf);
+  } 
+
+  @font-face {
+    font-family: MM3;
+    src: url(/fonts/mm3.ttf);
+  } 
+
+  

@@ -9,6 +9,15 @@ import webapp2
 
 from google.appengine.ext.webapp import template
 
+font_encodings = [
+    'Zawgyi2009', 'Zawgyi2008', 'Zawgyi2007']
+
+unicode_fonts = [
+    'NotoSans',
+    'MonAnonta', 'MM3',
+    'Padauk', 'PangLong',
+]
+
 
 class ZDecodeHandler(webapp2.RequestHandler):
   def get(self):
@@ -16,7 +25,8 @@ class ZDecodeHandler(webapp2.RequestHandler):
     text = self.request.get("text", "")
 
     template_values = {
-
+        'font_encodings': font_encodings,
+        'unicode_font_list': unicode_fonts,
     }
 
     path = os.path.join(os.path.dirname(__file__), 'zdecode.html')
