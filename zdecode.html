@@ -52,6 +52,17 @@
      output_text.style.fontFamily = fontFam;
    }
 
+  function SyncScroll(div) {
+      var div1 = document.getElementById("u1");
+      div1.scrollTop = div.scrollTop;
+  }
+
+    function resizeSync(div, otherDivId) {
+        var div1 = document.getElementById(otherDivId);
+        var newWidth = div.innerWidth;
+        div1.innerWIdth = newWidth;
+  }
+
   function onload() {
   }
   </script>
@@ -78,20 +89,21 @@
           </select>
         </div>
         <textarea id="z1"  class='zawgyi_one'
-                  rows="3" columns="60">{{default_zawgyi}}</textarea>
+                  rows="13" columns="80">{{default_zawgyi}}</textarea>
 
 
         <div>
           ZDecode:
           <br />
-          <textarea id="zd"  class='zdecode'
-                    rows="3" cols="60">{{default_text}}</textarea>
+          <textarea id="zd" class='zdecode' onscroll="SyncScroll(this);"
+                    onresize="resizeSync(this, 'u1');"
+                    rows="1" cols="80">{{default_text}}</textarea>
 
         </div>
 
         <div>
           <textarea id="u1"  class='notosans'
-                    rows="3" cols="60">{{default_unicode}}</textarea>
+                    rows="1" cols="80">{{default_unicode}}</textarea>
           <br />
           Unicode:
           <input type="button" value="-> hex" onclick="textToHexField('u1', 'hexText')" />
