@@ -81,7 +81,7 @@
           <input type="button" value="-> hex" onclick="textToHexField('z1', 'hexText')" />
 
           <input type="button" value="-> Unicode"
-                 onclick="convertRequest('z1', 'Z', 'u1', 'textHex');" />
+                 onclick="convertRequest('z1', 'Z', 'u1', 'hexText');" />
           <input type="button" value="-> ZDecode" onclick="copyText('z1', 'zd');" />
           Font: <select onchange="onFontSelected(this, 'z1');" id="selectFont">
             {% for font in font_encodings %}
@@ -95,7 +95,14 @@
 
         <div>
           ZDecode:
+          Font: <select onchange="onFontSelected(this, 'zd');" id="selectFont">
+            {% for font in zdecode_font_list %}
+              <option value="{{font.family}}">{{font.display}}</option>
+            {% endfor %}
+              </select>
           <br />
+          <br />
+
           <textarea id="zd" class='zdecode' onscroll="SyncScroll(this);"
                     onresize="resizeSync(this, 'u1');"
                     rows="1" cols="80">{{default_text}}</textarea>
@@ -115,6 +122,7 @@
             {% for font in unicode_font_list %}
             <option value="{{font}}">{{font}}</option>
             {%endfor%}
+          <br />
       </select>
         </div>
         <br />
