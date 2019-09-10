@@ -137,8 +137,8 @@
 
   // TODO: report data problem.
   function reportProblem(type) {
-          var converted_area = document.getElementById('convertedText');
-          var input_area = document.getElementById('TestEntry');
+        var converted_area = document.getElementById('convertedText');
+        var input_area = document.getElementById('TestEntry');
         var target = "/entererror/?input=" + input_area.value +
           "&converted=" + converted_area.value +
           "&type=" + type +
@@ -151,6 +151,15 @@
     var z1 = document.getElementById("z1");
     textToHexField(area, hexArea);
     
+  }
+
+  function getTextRange(source, output) {
+    var area = document.getElementById(source);
+    var start = area.selectionStart;
+    var end = area.selectionEnd;
+    var outArea = document.getElementById(output);
+    outArea.innerHTML = outArea.value = start + " - " + end;
+    return start + "-" + end;
   }
 
   function onload() {
@@ -238,11 +247,16 @@
       <input type="button" value="-> U"
              onclick="convertRequest('z1', 'Z', 'unicode_in', 'uInHex');"
              />
+      <input type="button" value="range"
+             onclick="getTextRange('z1', 'z1Range');"
+             />
     </div>
     <div class='span-10'>
       <textarea id="z1"
                 class='zawgyi_one' onchange="newTextContent('z1', 'zInHex');"
                 rows="3" cols="40">{{default_zawgyi}}</textarea>
+      <textarea id="z1Range"  class='notosans'
+                rows="1" cols="20"></textarea>
     </div>
     <div class='span-10'>
       <textarea id="zInHex"  class='notosans14'
@@ -261,11 +275,16 @@
              onclick="textToHexField('unicode_in', 'uInHex');" />
       <input type="button" value="-> Z"
              onclick="convertRequest('unicode_in', 'U', 'zoutput', 'zOutHex')" />
+      <input type="button" value="range"
+             onclick="getTextRange('unicode_in', 'u1_Range');"
+             />
     </div>
     
     <div class='span-10'>
       <textarea id="unicode_in"  class='notosans'
                 rows="3" cols="40"></textarea>
+      <textarea id="u1_Range"  class='notosans'
+                rows="1" cols="20"></textarea>
     </div>
     <div class='span-10'>
       <textarea id="uInHex"  class='notosans14'
