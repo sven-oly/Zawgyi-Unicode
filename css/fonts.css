@@ -105,6 +105,18 @@
     src: url('/fonts/NotoSansMyanmar-Regular-ZawDecode.ttf');
   }
 
+  @font-face {
+    font-family: ZDecode6;
+    src: url('/fonts/NotoSansMyanmar-Regular-ZawDecode6_MOD.ttf');
+
+  }
+
+  @font-face {
+    font-family: ZDecode6Bold;
+    src: url('/fonts/NotoSansMyanmar-Bold-ZawDecode6_MOD.ttf');
+
+  }
+  
   .zawgyi_one {
     font-family: ZawgyiOne;
     font-size:28px;
@@ -238,8 +250,13 @@
     font-size:27px;
   }
 
-.zdecode {
+.zdecodeold {
     font-family: ZDecode;
+    font-size:26px;
+  }
+
+.zdecode {
+    font-family: ZDecode6;
     font-size:26px;
   }
 
