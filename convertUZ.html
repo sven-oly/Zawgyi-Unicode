@@ -16,8 +16,8 @@
 
   <script type="text/javascript" src="/js/myzu.js"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.1.0/zawgyi_converter.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.1.0/zawgyi_detector.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.1.3/zawgyi_converter.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.1.3/zawgyi_detector.min.js"></script>
 
   <style>
     .select-my {
@@ -67,6 +67,9 @@
     } else
     if (type == "U") {
         outText = zawgyi_converter.unicodeToZawgyi(text_in);
+        converted = true;    
+    } else {
+        outText = zawgyi_converter.normalizeZawgyi(text_in);
         converted = true;    
     }
     if (converted) {
@@ -247,6 +250,10 @@
       <input type="button" value="-> U"
              onclick="convertRequest('z1', 'Z', 'unicode_in', 'uInHex');"
              />
+      <input type="button" value="Norm "
+             onclick="convertRequest('z1', 'Znormalize', 'zoutput', 'zOutHex');"
+             />
+
       <input type="button" value="range"
              onclick="getTextRange('z1', 'z1Range');"
              />
