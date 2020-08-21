@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JS test for normalize Zawgyi</title>
+
+    <script type="text/javascript">
+      // Testing prototype for Javascript rules using
+      // Zawgyi normalization as an example.
+
+    function runPhase(instring, ruleList) {
+      var outstring = "";
+      var count_rules_applied = 0;
+      var start = 0;
+      var limit = instring.length - 1;
+
+      var currentString = instring;
+
+      var matchObj = true;
+
+      // The following is Python RegEx stuff.
+      while (start <= limit) {
+        // Look for a rule that matches
+        var ruleIndex = 0;
+        matchObj = null;
+        limit = currentString.length - 1;
+
+        var currentStart = currentString.substring(start);
+        var firstPart;
+        if (start > 0) {
+          var firstPart = currentString.substring(0, start - 1);
+        } else {
+          // first time
+          firstPart = "";
+        }
+
+        var foundRule = null;
+        for (ruleNum in ruleList) {
+          rule = ruleList[ruleNum];
+          if (rule == null || rule == "") {
+            continue;
+          }
+
+          // Try to match each rule at the current start point.
+          var re_pattern = rule.split(" > ")[0];
+          var substitution = rule.split(" > ")[1];
+
+          // look at the current position and test.
+          var newString = currentStart.replace(re_pattern, substitution);;
+          if (newString != currentStart) {
+            currentStart = newString;
+            foundRule = ruleIndex;
+          }
+
+          /* OLD VERSION
+          matchObj = re_pattern.match(currentStart);
+
+          if (matchObj) {
+            // Do just one substitution!
+            foundRule = ruleIndex;
+
+            // Size of last part of old string after the replacement
+            var matchEnd = matchObj.index + matchObj.length - 1;
+            cSize = currentString.length - matchEnd - start; // Last part of old string not matched
+
+            var substitution = rule.split(" > ")[1];
+
+            var outstring = currentStart.replace(re_pattern, substitution);
+
+            // Try to advance start.
+            var newString = currentString.substring(0, start) + outstring;
+
+            limit = newString.length - 1;
+
+            start = limit - cSize + 1;
+            count_rules_applied += 1;
+            currentString = newString;
+          }
+          */
+
+          ruleIndex += 1;
+        }
+        // ??? What it the substitution is not at this start point?
+      if (! foundRule) {
+        // Increment position since no rule matched
+        start += 1;
+      }
+    }
+
+    return currentString;
+  }
+
+  function getNormalizePhases() {
+    var allRules =
+      "\u1025\u102E > \u1026;\
+\u102F([\u102D\u1036]) > $1 \u102F;\
+\u1039([\u1037\u1094\u1095]) > $1 \u1039;\
+\u103C([\u102E\u1032]) > $1 \u103C;\
+\u1033\u102D > \u102D\u1033;\
+\u103D\u102D > \u102D\u103D;\
+\u1089 > \u103D\u1034;\
+\u1064\u103A > \u103A\u1064;\
+\u1067 > \u1066;\
+\u1072 > \u1071;\
+\u1074 > \u1073;\
+\u1093 > \u107B;\
+::Null;\u102F+ > \u102F;\
+\u103B+ > \u103B;\
+\u1039+ > \u1039;\
+[\u1037\u1094\u1095]+ > \u1037;";
+
+   var phases = allRules.split("::Null;");
+
+   return phases;
+  }
+
+  function normalizeZawgyi(input, expected) {
+
+  }
+
+  function testNormalize(input, expected) {
+    var inArea = document.getElementById("input");
+    inArea.value = inArea.InnerHTML = input;
+
+    var expectedArea = document.getElementById("expected");
+    expectedArea.value = inArea.InnerHTML = expected;
+
+    var outArea = document.getElementById("output");
+
+    var result = runRules(input, expected);
+    outArea.value = outArea.InnerHTML = result;
+    return (expected == output, output);
+  }
+
+  function normalizeTests() {
+    testNormalize("႔တုိင္းမွာ", "့တိုင္းမွာ");
+
+    /* testNormalize("စစ္တမ္းေကာက္တာတို႔၊", "စစ္တမ္းေကာက္တာတို့၊");
+
+    testNormalize("ေဒၚေအာင္ဆန္းစုၾကည္ရဲ႕", "ေဒၚေအာင္ဆန္းစုၾကည္ရဲ့");
+    */
+  }
+
+  function runRules(t1, e1) {
+    // For normalizing Zawgyi strings.
+    var phases = getNormalizePhases();
+
+    // var t1 = "႔တုိင္းမွာ";
+    // var e1 =  "့တိုင္းမွာ";
+    var splitter = ";";
+    for (var phaseId in phases) {
+      var ruleList = phases[phaseId].split(splitter);
+      var result = runPhase(t1, ruleList);
+      if (t1 != result) {
+        t1 = result;
+      }
+    }
+    var same = (t1 == e1);
+    return result;
+  }
+
+  function testNamedGroupRegex() {
+    var pattern = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/u;
+    var rpattern = new RegExp('(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})', 'u');
+    var instring = '2017-07-10';
+    var result = pattern.exec(instring);
+
+    var result2 = instring.match(rpattern);
+
+    var replaced = instring.replace(pattern, '$<month>/$<day>/$<year>')
+
+    var replacedString = instring.replace(rpattern, '$<month>/$<day>/$<year>')
+
+  }
+    </script>
+  </head>
+
+<body onload="testNamedGroupRegex();">
+  <h1>LOADED THE FILE</h1>
+  <p>Content
+  </p>
+  <button onclick="normalizeTests();" value="run">Test</button>
+
+  <p>Input :
+  <textarea id="input"></textarea></p>
+  <p>Expected: <textarea id="expected"></textarea></p>
+  <p>Output: <textarea id="output"></textarea></p>
+</body>
+</html>
