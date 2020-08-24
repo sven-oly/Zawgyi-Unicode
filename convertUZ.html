@@ -16,8 +16,8 @@
 
   <script type="text/javascript" src="/js/myzu.js"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.2.0/zawgyi_converter.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/myanmar-tools/1.2.0/zawgyi_detector.js"></script>
+  <script src="{{myanmar_tools_info.detector_url}}"></script>
+  <script src="{{myanmar_tools_info.converter_url}}"></script>
 
   <style>
     .select-my {
@@ -169,7 +169,7 @@
   function callVisualization(sourceName) {
     var area = document.getElementById(sourceName);
     var intext = area.value;
-    var url_call = 'https://sffc.github.io/myanmar-tools-demos/detector_demo.html#s=' + intext;
+    var url_call = '{{myanmar_tools_info.detector_demo}}#s=' + intext;
     window.open(url_call, "_blank");
   }
 
@@ -212,8 +212,9 @@
               bbc.com/burmese</a>
         </div>
         <div>
-          <p>Note: This page uses <a href="https://github.com/googlei18n/myanmar-tools">myanmar-tools
-              on GitHib</a> for detection and converting Zawgyi text.
+          <p>This page uses <a href="{{myanmar_tools_info.mm_tools_source}}">myanmar-tools
+              on GitHib</a> for detection (V{{myanmar_tools_info.detector_version}})
+            and converting (V{{myanmar_tools_info.converter_version}}) Zawgyi text.
         </div>
         <div>
           <h4 style='margin:0;padding:0;'>Text Entry:</h4>
@@ -241,7 +242,7 @@ onclick="callVisualization('TestEntry');"/>
       <br />
       <a href="http://www.unicode.org/charts/PDF/UA9E0.pdf">Extended-B</a>
       <hr>
-      <a href="https://github.com/googlei18n/myanmar-tools">Myanmar Tools on GitHub</a>
+      <a href="{{myanmar_tools_info.mm_tools_source}}">Learn about Myanmar Tools on GitHub</a>
       <hr>
       <a href="https://www.unicode.org/notes/tn11/UTN11_3.pdf">Representing Myanmar in Unicode</a>
       <br />
@@ -275,12 +276,12 @@ onclick="callVisualization('TestEntry');"/>
       <textarea id="z1"
                 class='zawgyi_one' onchange="newTextContent('z1', 'zInHex');"
                 rows="3" cols="40">{{default_zawgyi}}</textarea>
-      <textarea id="z1Range"  class='notosans'
-                rows="1" cols="20"></textarea>
     </div>
     <div class='span-10'>
       <textarea id="zInHex"  class='notosans14'
                 rows="3" cols="40"></textarea>
+      <textarea id="z1Range"  class='notosans'
+                rows="1" cols="20"></textarea>
     </div>
     <div class='span-2 last'>
       <input type="button" value="-> Z"

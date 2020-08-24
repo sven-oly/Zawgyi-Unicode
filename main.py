@@ -51,6 +51,19 @@ mon_converter = None
 knu_converter = None
 saw_converter = None
 
+class DefaultData():
+  def __init__(self):
+    self.mm_tools_source = 'https://github.com/googlei18n/myanmar-tools'
+    self.detector_demo = 'https://sffc.github.io/myanmar-tools-demos/detector_demo.html'
+
+    myanmar_tools_path = 'https://ajax.googleapis.com/ajax/libs/myanmar-tools/'
+    self.detector_version = '1.2.1'
+    self.converter_version = '1.2.1'
+    #self.detector_url = myanmar_tools_path + self.detector_version + '/zawgyi_detector.min.js'
+    # Note that min version seems broken.
+    self.detector_url = myanmar_tools_path + self.detector_version + '/zawgyi_detector.min.js'
+    self.converter_url = myanmar_tools_path + self.detector_version + '/zawgyi_converter.min.js'
+
 def SetDefaultTemplate(text):
   if text:
     template_values = {
@@ -79,6 +92,7 @@ class FontsHandler(webapp2.RequestHandler):
 
     text = self.request.get("text", "")
     template_values = SetDefaultTemplate(text)
+    template_values['myanmar_tools_info'] = DefaultData()
 
     path = os.path.join(os.path.dirname(__file__), 'mainmyfonts.html')
     self.response.out.write(template.render(path, template_values))
@@ -90,6 +104,7 @@ class MainHandler2(webapp2.RequestHandler):
     text = self.request.get("text", "")
 
     template_values = SetDefaultTemplate(text)
+    template_values['myanmar_tools_info'] = DefaultData()
 
     path = os.path.join(os.path.dirname(__file__), 'mainmyfonts2.html')
     self.response.out.write(template.render(path, template_values))
@@ -101,11 +116,11 @@ class DetectionHandler(webapp2.RequestHandler):
     self.response.headers['Content-Type'] = 'application/json'
     if (text):
       # Call detectors and return values.
-      isZ = detector.isZawgyi(text);
-      isU = detector.isUnicode(text);
-      isZShake = detector.isZawgyiShake(text);
-      isUShake = detector.isUnicodeShake(text);
-      isMyazedi = detector.isMyazedi(text);
+      isZ = detector.isZawgyi(text)
+      isU = detector.isUnicode(text)
+      isZShake = detector.isZawgyiShake(text)
+      isUShake = detector.isUnicodeShake(text)
+      isMyazedi = detector.isMyazedi(text)
 
       obj = { 'input': text,
                'isZ': isZ, 'isU': isU,
@@ -130,6 +145,7 @@ class CompareTextHandler(webapp2.RequestHandler):
       't2': text2,
       'font2': self.request.get("font2", "notosans")
     }
+    template_values['myanmar_tools_info'] = DefaultData()
 
     logging.info('CompareTextHandler: %s vs %s' % (text1, text2))
     path = os.path.join(os.path.dirname(__file__), 'compare.html')
@@ -278,9 +294,11 @@ class ConvertUIHandler(webapp2.RequestHandler):
   def get(self):
     text = self.request.get("text", "")
     template_values = SetDefaultTemplate(text)
+    template_values['myanmar_tools_info'] = DefaultData()
 
     path = os.path.join(os.path.dirname(__file__), 'convert.html')
     self.response.out.write(template.render(path, template_values))
+
 
 # Shows user interface for converting from Zawgyi & Myazedi
 class ConvertUZHandler(webapp2.RequestHandler):
@@ -289,6 +307,7 @@ class ConvertUZHandler(webapp2.RequestHandler):
       text = self.request.get("text", "")
       template_values = SetDefaultTemplate(text)
       template_values['testdata'] = translit_unicode2zawgyi.TestData()
+      template_values['myanmar_tools_info'] = DefaultData()
 
       path = os.path.join(os.path.dirname(__file__), 'convertUZ.html')
       self.response.out.write(template.render(path, template_values))
@@ -300,9 +319,11 @@ class Convert2UIHandler(webapp2.RequestHandler):
   def get(self):
     text = self.request.get("text", "")
     template_values = SetDefaultTemplate(text)
+    template_values['myanmar_tools_info'] = DefaultData()
 
     path = os.path.join(os.path.dirname(__file__), 'convert2.html')
     self.response.out.write(template.render(path, template_values))
+
 
 # Shows user interface for converting from Zawgyi, Myazedi, and Mon fonts.
 class MonHandler(webapp2.RequestHandler):
@@ -314,6 +335,7 @@ class MonHandler(webapp2.RequestHandler):
     path = os.path.join(os.path.dirname(__file__), 'mon.html')
     self.response.out.write(template.render(path, template_values))
 
+
 # Shows user interface for converting from Zawgyi, Myazedi, and Mon fonts.
 class KarenHandler(webapp2.RequestHandler):
   # Show feedback form.
@@ -323,6 +345,7 @@ class KarenHandler(webapp2.RequestHandler):
 
     path = os.path.join(os.path.dirname(__file__), 'karen.html')
     self.response.out.write(template.render(path, template_values))
+
 
 # Shows user interface for Shan fonts and conversions.
 class ShanHandler(webapp2.RequestHandler):
@@ -396,7 +419,6 @@ class TestTranslitHandler(webapp2.RequestHandler):
 
 # Trial segmentation
 class SegmentHandler(webapp2.RequestHandler):
-
   def get(self):
     text = self.request.get("text", "")
 
@@ -428,6 +450,7 @@ class convertBtoCHandler(webapp2.RequestHandler):
             'errmsg': None }
 
     self.response.out.write(json.dumps(obj))
+
 
 # Show the ranges for the languages
 class RangeHandler(webapp2.RequestHandler):
